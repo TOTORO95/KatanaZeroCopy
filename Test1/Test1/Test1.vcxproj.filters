@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.Default">
+      <UniqueIdentifier>{703f2745-b54f-4c7f-99a4-cd96cf406fe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.WinMain">
+      <UniqueIdentifier>{3c34934c-d8c7-47f9-964b-81ef82e298d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject">
+      <UniqueIdentifier>{3d8dde92-44cf-4fc3-b626-05914f553c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Managers">
+      <UniqueIdentifier>{947911b9-fb7d-4e06-b041-84468b07f54d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.MainGame">
+      <UniqueIdentifier>{2c6119fb-12ad-4b51-a787-1349557dbb07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Header">
+      <UniqueIdentifier>{ffc7d70a-08e4-46de-ba54-020486a9934d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Header\Headers">
+      <UniqueIdentifier>{c66b2f62-25bb-4856-a60b-aec9dc7b96f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\00.Player">
+      <UniqueIdentifier>{c81e9ba6-d29f-4071-97bc-52964e9f4219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\03.Bullet">
+      <UniqueIdentifier>{0997c927-fab2-4d72-b055-6fc2fec9b3c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\02.Katana">
+      <UniqueIdentifier>{51c93ba4-b9cf-4e14-a916-cf9067246c47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\01.Monster">
+      <UniqueIdentifier>{4bb34483-1225-4800-8b8c-e34cc04c6cbf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Test1.h">
+      <Filter>00.WinMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>98.Header\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>98.Header\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Typedef.h">
+      <Filter>98.Header\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>98.Header\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Extern.h">
+      <Filter>98.Header\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>01.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>10.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>10.GameObject\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h" />
+    <ClInclude Include="AbsFactory.h">
+      <Filter>98.Header\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="Test1.cpp">
+      <Filter>00.WinMain</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>01.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>10.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>10.GameObject\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+    <Image Include="Test1.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Test1.rc">
+      <Filter>99.Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>99.Default</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
