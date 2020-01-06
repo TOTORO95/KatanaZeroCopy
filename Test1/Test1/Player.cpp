@@ -54,18 +54,18 @@ void CPlayer::KeyInput()
 		SetAngle(g_tArea.ptStart.x, g_tArea.ptStart.y);
 		cout << "cos    X=" << cosf(m_fRadian) << endl;
 		cout << "sin    Y=" << sinf(m_fRadian) << endl;
-		//if(m_tInfo.fPosX>g_tArea.ptStart.x)
-		//	m_tInfo.fPosX -= fabs(cosf(m_fRadian) * 30);
-		//else
-		//	m_tInfo.fPosX += fabs(cosf(m_fRadian) * 30);
+		if(m_tInfo.fPosX>g_tArea.ptStart.x)
+			m_tInfo.fPosX -= fabs(cosf(m_fRadian) * 30);
+		else
+			m_tInfo.fPosX += fabs(cosf(m_fRadian) * 30);
 
-		//if(m_tInfo.fPosY>g_tArea.ptStart.y)
-		//	m_tInfo.fPosY -= fabs(sinf(m_fRadian) * 30);
-		//else
-		//	m_tInfo.fPosY += fabs(sinf(m_fRadian) * 30);
+		if(m_tInfo.fPosY>g_tArea.ptStart.y)
+			m_tInfo.fPosY -= fabs(sinf(m_fRadian) * 30);
+		else
+			m_tInfo.fPosY += fabs(sinf(m_fRadian) * 30);
 
-		m_tInfo.fPosX += cosf(m_fRadian)*10;
-		m_tInfo.fPosY -= sinf(m_fRadian)*10;
+		//m_tInfo.fPosX += cosf(m_fRadian)*10;
+		//m_tInfo.fPosY -= sinf(m_fRadian)*10;
 		//TODO: 공격방향에따른 이동방ㅇ향 결정!
 
 		//Attack();
