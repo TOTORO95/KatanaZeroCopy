@@ -17,7 +17,7 @@ void CGameObject::SetAngle(INFO _info)
 	float fy = _info.fPosY - m_tInfo.fPosY;
 	m_fRadian=atan2f(fx, fy);
 	m_fDegree = m_fRadian / PI * 180;
-	cout << m_fDegree<<" 도" << endl;
+	cout << m_fDegree << " 도" << endl;
 	m_tAimInfo.fPosX = -cosf(m_fRadian);
 	m_tAimInfo.fPosY = sinf(m_fRadian);
 
@@ -25,14 +25,29 @@ void CGameObject::SetAngle(INFO _info)
 
 void CGameObject::SetAngle(float _x, float _y)
 {
-	float fx = _x-m_tInfo.fPosX ;
-	float fy = _y-m_tInfo.fPosY ;
-	m_fRadian = atan2f(fx,fy);
+	//float fx = _x-m_tInfo.fPosX ;
+	//float fy = _y-m_tInfo.fPosY ;
+	//m_fRadian = atan2f(fx,fy);
+
+	//m_fDegree = m_fRadian / PI * 180;
+	//cout << m_fDegree<<"도"<< endl;
+	//m_tAimInfo.fPosX = -cosf(m_fRadian);
+	//m_tAimInfo.fPosY = sinf(m_fRadian);
+	// 
+
+	float w = _x - m_tInfo.fPosX + g_fScrollX;
+	float h = _y - m_tInfo.fPosY;
+	float d = sqrtf(w * w + h * h);
+
+	// 라디안 단위.
+	m_fRadian = acosf(w / d);
+	// acosf 함수가 구한 끼인각의 범위는 0 ~ 180도 이기에 다음과 같은 예외처리!
+	if (m_tInfo.fPosY < _y)
+		m_fRadian *= -1.f;
 
 	m_fDegree = m_fRadian / PI * 180;
-	cout << m_fDegree<<"도"<< endl;
-	m_tAimInfo.fPosX = -cosf(m_fRadian);
-	m_tAimInfo.fPosY = sinf(m_fRadian);
+	cout << m_fDegree << " 도" << endl;
+
 
 }
 

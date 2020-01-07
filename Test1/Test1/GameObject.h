@@ -7,6 +7,8 @@ public:
 
 
 public:
+	bool GetIsAttk() const { return m_bIsAttk; }
+	void SetIsAttk(bool val) { m_bIsAttk = val; }
 	OBJTYPE GetObjType() const { return m_ObjType; }
 	void SetObjType(OBJTYPE val) { m_ObjType = val; }
 	INFO GetInfo() const { return m_tInfo; }
@@ -39,12 +41,12 @@ protected:
 	RECT	m_tRect;
 	RECT	m_tHitBox;
 	OBJTYPE m_ObjType;
-
 	float	m_fJumpForce;
 	float	m_fJumpAcc;
 	float	m_fSpeed;
 	float	m_fRadian;
 	float	m_fDegree;
+	bool	m_bIsAttk;
 	bool	m_bIsJump;
 	bool	m_bIsDead;
 	bool	m_bIsColl;

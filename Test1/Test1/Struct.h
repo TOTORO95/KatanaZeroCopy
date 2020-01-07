@@ -7,6 +7,18 @@ typedef struct Info
 	float fPosX, fPosY;
 	float fCX, fCY;
 }INFO;
+
+typedef struct tagLinePoint
+{
+	float	fX;
+	float	fY;
+}LINE_POS;
+typedef struct tagLineInfo
+{
+	LINE_POS	tStart;
+	LINE_POS	tEnd;
+}LINE_INFO;
+
 typedef struct TagArea
 {
 	bool bStart;

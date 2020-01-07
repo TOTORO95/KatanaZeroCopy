@@ -34,6 +34,21 @@
     <Filter Include="10.GameObject\01.Monster">
       <UniqueIdentifier>{4bb34483-1225-4800-8b8c-e34cc04c6cbf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="90.Managers\03.BmpMgr">
+      <UniqueIdentifier>{abac367d-0820-4981-8c1c-e95700b9f5bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Managers\03.BmpMgr\00.MyBmp">
+      <UniqueIdentifier>{29293edb-8cad-4d14-89e1-f90a96baaf03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Managers\02.LineMgr">
+      <UniqueIdentifier>{84ecdcf6-a020-4e2d-9483-a81466aff91e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Managers\02.LineMgr\00.CLine">
+      <UniqueIdentifier>{340164b0-f393-448a-b510-f5acaef45507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Managers\00.Camera">
+      <UniqueIdentifier>{c5fc88a6-e21d-47a8-b612-206850ea1a87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -72,10 +87,28 @@
     <ClInclude Include="Player.h">
       <Filter>10.GameObject\00.Player</Filter>
     </ClInclude>
-    <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="AbsFactory.h">
       <Filter>98.Header\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="MyBmp.h">
+      <Filter>90.Managers\03.BmpMgr\00.MyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMgr.h">
+      <Filter>90.Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpMgr.h">
+      <Filter>90.Managers\03.BmpMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>98.Header\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>90.Managers\02.LineMgr\00.CLine</Filter>
+    </ClInclude>
+    <ClInclude Include="LineMgr.h">
+      <Filter>90.Managers\02.LineMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -93,7 +126,22 @@
     <ClCompile Include="Player.cpp">
       <Filter>10.GameObject\00.Player</Filter>
     </ClCompile>
-    <ClCompile Include="KeyMgr.cpp" />
+    <ClCompile Include="MyBmp.cpp">
+      <Filter>90.Managers\03.BmpMgr\00.MyBmp</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMgr.cpp">
+      <Filter>90.Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpMgr.cpp">
+      <Filter>90.Managers\03.BmpMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>90.Managers\02.LineMgr\00.CLine</Filter>
+    </ClCompile>
+    <ClCompile Include="LineMgr.cpp">
+      <Filter>90.Managers\02.LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">

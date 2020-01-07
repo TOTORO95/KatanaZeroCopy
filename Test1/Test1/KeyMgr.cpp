@@ -21,9 +21,9 @@ void CKeyMgr::Update()
 		m_dwCurKey |= KEY_UP;
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 		m_dwCurKey |= KEY_DOWN;
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+	if (GetAsyncKeyState('A') & 0x8000)
 		m_dwCurKey |= KEY_LEFT;
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (GetAsyncKeyState('D') & 0x8000)
 		m_dwCurKey |= KEY_RIGHT;
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 		m_dwCurKey |= KEY_SPACE;

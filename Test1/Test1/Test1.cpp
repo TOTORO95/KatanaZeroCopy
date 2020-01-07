@@ -13,6 +13,7 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND g_hWnd;
 TagArea  g_tArea;
 LPARAM g_lParam;
+POINT g_Point;
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -165,9 +166,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//LOWORD,HIWORD 매크로를 이용해 하위 ,상위 16비트의 값을 얻어올수 있다.
 		if (!g_tArea.bStart)
 		{
-			//g_tArea.bStart = true;
+			g_tArea.bStart = true;
 			g_tArea.ptStart.x = LOWORD(lParam);
 			g_tArea.ptStart.y = HIWORD(lParam);
+			GetCursorPos(&g_Point);
+			//ScreenToClient(g_hWnd, &g_Point);
 		}
 	}
 	break;
