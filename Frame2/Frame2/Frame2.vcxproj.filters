@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.default">
+      <UniqueIdentifier>{5294b26e-3019-41e0-ae33-1b5c92e0d033}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Headers">
+      <UniqueIdentifier>{912e9e5d-4b6f-47e5-bd68-eebe0edcd60d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager">
+      <UniqueIdentifier>{95192932-d989-4b8a-a97a-151a4ceb82b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.WinMain">
+      <UniqueIdentifier>{5f3bb5cd-7765-4742-8ee8-69ed4177e2d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.MainGame">
+      <UniqueIdentifier>{31cd8225-b439-425e-9111-e505279e2815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject">
+      <UniqueIdentifier>{18de821b-5a29-41e0-8dc9-2d1d31505bae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Headers\00.UserHeaders">
+      <UniqueIdentifier>{603ef83f-4637-4b82-9467-a1729c20b667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\00.FactoryPattern">
+      <UniqueIdentifier>{d3cc2a6d-8c0d-4ef1-8f53-2455b2536872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\00.Player">
+      <UniqueIdentifier>{48fa74f7-2a80-437b-b63b-39cf4fc55a04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\01.ObjectManager">
+      <UniqueIdentifier>{3d295e8f-3132-46fa-a00f-caee4a8a89a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\02KeyManager">
+      <UniqueIdentifier>{2527a9fb-5bb0-4ed2-bdd0-7ce89d8f26a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\03.CollisionManager">
+      <UniqueIdentifier>{0774e766-749a-4bb6-890b-dd7e8f3f7325}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\04.LineManager">
+      <UniqueIdentifier>{84f7f8cf-e7c6-4b5c-a484-09230aff22c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\05.BmpManager">
+      <UniqueIdentifier>{9c5b55eb-e92c-4c41-b86a-931412b6d39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager">
+      <UniqueIdentifier>{b565743c-bddf-4a34-bceb-3d7a5b2eec4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\05.BmpManager\00.MyBmp">
+      <UniqueIdentifier>{d4e0797f-bf29-41be-afcd-b7c41c0c4af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager\00.Scene">
+      <UniqueIdentifier>{76a4a761-eab9-432a-8c00-8cc07899abe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager\03.Stage">
+      <UniqueIdentifier>{460df9b5-e5ff-4295-92f1-6d6e730613f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager\04.Stage2">
+      <UniqueIdentifier>{cd68f7cf-4848-477d-a088-5b1648855e33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager\05.BossStage">
+      <UniqueIdentifier>{2f3d9f72-8131-4a7a-9e81-1dc84e2f4577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager\01.Logo">
+      <UniqueIdentifier>{dca6aa6e-ccad-44e1-bf0d-f1cbc2dc5a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager\02.Title">
+      <UniqueIdentifier>{eb67d743-7af1-43fe-b262-ea4b4625d562}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>99.default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.default</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame2.h">
+      <Filter>00.WinMain</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>01.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>98.Headers\00.UserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>98.Headers\00.UserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>98.Headers\00.UserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Extern.h">
+      <Filter>98.Headers\00.UserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>98.Headers\00.UserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Typedef.h">
+      <Filter>98.Headers\00.UserHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>10.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjFactory.h">
+      <Filter>90.Manager\00.FactoryPattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>10.GameObject\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>90.Manager\01.ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>90.Manager\02KeyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpManager.h">
+      <Filter>90.Manager\05.BmpManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBmp.h">
+      <Filter>90.Manager\05.BmpManager\00.MyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>90.Manager\06.SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>90.Manager\06.SceneManager\00.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Logo.h">
+      <Filter>90.Manager\06.SceneManager\01.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Frame2.cpp">
+      <Filter>00.WinMain</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.default</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>01.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>10.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>10.GameObject\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>90.Manager\01.ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>90.Manager\02KeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpManager.cpp">
+      <Filter>90.Manager\05.BmpManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBmp.cpp">
+      <Filter>90.Manager\05.BmpManager\00.MyBmp</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>90.Manager\06.SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>90.Manager\06.SceneManager\00.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>90.Manager\06.SceneManager\01.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Frame2.ico">
+      <Filter>99.default</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>99.default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Frame2.rc">
+      <Filter>99.default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>99.default</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
