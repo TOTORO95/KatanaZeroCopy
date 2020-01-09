@@ -25,7 +25,7 @@ void CMainGame::Initialize()
 
 	CBmpMgr::GetInstance()->LoadBmp(L"BackGound", L"../Image/BackGround/BigClub.bmp");
 
-	CBmpMgr::GetInstance()->LoadBmp(L"Player", L"../Image/Player/Player6.bmp");
+	CBmpMgr::GetInstance()->LoadBmp(L"Player", L"../Image/Player/Player.bmp");
 
 
 }
@@ -66,15 +66,16 @@ void CMainGame::Render()
 		}
 	}
 
-	CLineMgr::GetInstance()->Render(m_hdc);
-	TCHAR strMouse[64] = {};
-	TCHAR strMouse2[64] = {};
-	//wsprintf 유니코드 문자열을 만드는함수
-	wsprintf(strMouse, TEXT("MousePos X= %d Y= %d"), g_tArea.ptStart.x, g_tArea.ptStart.y);
-	wsprintf(strMouse2, TEXT("MousePos X= %d Y= %d"),g_Point.x, g_Point.y);
-	//lstrlen 유니코드 문자열의 길이를 출력
-	TextOut(m_hdc, 600, 30, strMouse, lstrlen(strMouse));
-	TextOut(m_hdc, 600, 60, strMouse2, lstrlen(strMouse2));
+
+	//CLineMgr::GetInstance()->Render(m_hdc);
+	//TCHAR strMouse[64] = {};
+	//TCHAR strMouse2[64] = {};
+	////wsprintf 유니코드 문자열을 만드는함수
+	//wsprintf(strMouse, TEXT("MousePos X= %d Y= %d"), g_tArea.ptStart.x, g_tArea.ptStart.y);
+	//wsprintf(strMouse2, TEXT("MousePos X= %d Y= %d"),g_Point.x, g_Point.y);
+	////lstrlen 유니코드 문자열의 길이를 출력
+	//TextOut(m_hdc, 600, 30, strMouse, lstrlen(strMouse));
+	//TextOut(m_hdc, 600, 60, strMouse2, lstrlen(strMouse2));
 
 }
 

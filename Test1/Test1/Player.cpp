@@ -73,7 +73,7 @@ void CPlayer::Render(HDC _hDC)
 
 	// Source DC에 그려진 비트맵을 Dest DC로 복사하는 함수. 이 때 지정한 색상을 제거할 수 있다.
 	GdiTransparentBlt(_hDC, (m_tRect.left)- m_tInfo.fCX*0.5-g_fScrollX, m_tRect.top- m_tInfo.fCY * 0.5, (int)m_tInfo.fCX*2, (int)m_tInfo.fCY*2,
-		hMemDC, m_iAnim, 0, (int)m_tInfo.fCX, (int)m_tInfo.fCY, RGB(0, 0, 0));
+		hMemDC, m_iAnim, 0, (int)m_tInfo.fCX, (int)m_tInfo.fCY, RGB(0,0,0));
 
 
 	MoveToEx(_hDC, m_tInfo.fPosX-g_fScrollX, m_tInfo.fPosY, nullptr);
@@ -83,7 +83,6 @@ void CPlayer::Render(HDC _hDC)
 		Rectangle(_hDC, m_tHitBox.left, m_tHitBox.top, m_tHitBox.right, m_tHitBox.bottom);
 
 	}
-//TODO Render ,setAngle 확인
 }
 void CPlayer::KeyInput()
 {
@@ -148,7 +147,7 @@ void CPlayer::Jump()
 	else//하강
 	{
 		//cout << "PosY= "<<m_tInfo.fPosY <<"바닥= " <<fY - m_tInfo.fCY*0.5f << endl;
-
+		
 		if (m_tInfo.fPosY >= fY - m_tInfo.fCY*0.5f-11)//바닥보다 아래에잇을때
 		{
 			m_tInfo.fPosY = fY - m_tInfo.fCY*0.5f;
@@ -157,7 +156,6 @@ void CPlayer::Jump()
 		else //위에 
 		{
 
-			//cout << "dd" << fRightVal<<endl;
 			fRightVal = GRAVITY * m_fJumpAcc * m_fJumpAcc * 0.5f;
 			m_fJumpAcc += 0.3f;
 			m_tInfo.fPosY +=  fRightVal;
