@@ -40,6 +40,7 @@ void CBmpMgr::LoadBmp(const wstring& wstrImgKey, const wstring& wstrFilePath)
 		return;
 	}
 
+
 	m_mapBmp.insert(make_pair(wstrImgKey, pBmp));
 }
 

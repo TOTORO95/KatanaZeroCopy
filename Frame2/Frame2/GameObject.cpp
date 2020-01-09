@@ -18,12 +18,12 @@ CGameObject::~CGameObject()
 {
 }
 
-const INFO & CGameObject::GetInfo() const
+INFO & CGameObject::GetInfo() 
 {
 	return m_tInfo;
 }
 
-const RECT & CGameObject::GetRect() const
+RECT & CGameObject::GetRect() 
 {
 	return m_tRect;
 }

@@ -50,3 +50,4 @@ using namespace std;
 #include "KeyManager.h"
 #include "BmpManager.h"
 #include  "SceneManager.h"
+#include "LineManager.h"

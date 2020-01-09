@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "Logo.h"
 #include "Title.h"
+#include "Stage1.h"
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 CSceneManager * CSceneManager::GetInstance()
 {
@@ -46,9 +47,9 @@ void CSceneManager::SceneChange(SCENE_TYPE eCurType)
 		case SCENE_TITLE:
 			m_pCurScene = new CTitle;
 			break;
-		//case SCENE_STAGE:
-		//	m_pCurScene = new CStage;
-		//	break;
+		case SCENE_STAGE1:
+			m_pCurScene = new CStage1;
+			break;
 		}
 
 		m_pCurScene->Initialize();

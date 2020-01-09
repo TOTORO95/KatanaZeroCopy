@@ -67,6 +67,9 @@
     <Filter Include="90.Manager\06.SceneManager\02.Title">
       <UniqueIdentifier>{eb67d743-7af1-43fe-b262-ea4b4625d562}</UniqueIdentifier>
     </Filter>
+    <Filter Include="90.Manager\04.LineManager\00.LineManager">
+      <UniqueIdentifier>{060b107a-ca58-4beb-ba08-0263f3f45a7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -132,7 +135,16 @@
     <ClInclude Include="Logo.h">
       <Filter>90.Manager\06.SceneManager\01.Logo</Filter>
     </ClInclude>
-    <ClInclude Include="Title.h" />
+    <ClInclude Include="Title.h">
+      <Filter>90.Manager\06.SceneManager\02.Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>90.Manager\04.LineManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1.h">
+      <Filter>90.Manager\06.SceneManager\03.Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="LineManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -171,7 +183,16 @@
     <ClCompile Include="Logo.cpp">
       <Filter>90.Manager\06.SceneManager\01.Logo</Filter>
     </ClCompile>
-    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Title.cpp">
+      <Filter>90.Manager\06.SceneManager\02.Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>90.Manager\04.LineManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1.cpp">
+      <Filter>90.Manager\06.SceneManager\03.Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="LineManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

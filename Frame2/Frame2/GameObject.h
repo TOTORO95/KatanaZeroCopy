@@ -5,8 +5,8 @@ public:
 	CGameObject();
 	virtual ~CGameObject();
 public:
-	const INFO& GetInfo() const;
-	const RECT& GetRect() const;
+	INFO& GetInfo() ;
+	RECT& GetRect() ;
 	void SetImageKey(const wstring& wstrImageKey);
 	void SetPos(float x, float y);
 	void SetSize(float x, float y);

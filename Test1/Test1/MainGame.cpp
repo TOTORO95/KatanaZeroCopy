@@ -23,7 +23,7 @@ void CMainGame::Initialize()
 	CLineMgr::GetInstance()->Initialize();
 
 
-	CBmpMgr::GetInstance()->LoadBmp(L"BackGound", L"../Image/BackGround/BigClub.bmp");
+	CBmpMgr::GetInstance()->LoadBmp(L"BackGound", L"../Image/BackGround/Stage1BG.bmp");
 
 	CBmpMgr::GetInstance()->LoadBmp(L"Player", L"../Image/Player/Player.bmp");
 
