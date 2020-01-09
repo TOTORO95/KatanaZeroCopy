@@ -9,7 +9,7 @@ public:
 
 public:
 	bool LoadBmp(const wstring& wstrFilePath);
-
+	
 private:
 	void Release();
 

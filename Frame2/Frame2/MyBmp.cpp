@@ -22,7 +22,7 @@ bool CMyBmp::LoadBmp(const wstring& wstrFilePath)
 	m_hBitmap = (HBITMAP)LoadImage(nullptr, wstrFilePath.c_str(), IMAGE_BITMAP,
 		0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 	NULL_CHECK_RETURN(m_hBitmap, false);
-
+	
 	HDC hDC = GetDC(g_hWnd);
 
 	// CreateCompatibleDC: 출력DC와 호환이 되는 메모리DC를 생성하는 함수.
@@ -36,6 +36,8 @@ bool CMyBmp::LoadBmp(const wstring& wstrFilePath)
 
 	return true;
 }
+
+
 
 void CMyBmp::Release()
 {

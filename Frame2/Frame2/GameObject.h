@@ -15,6 +15,8 @@ public:
 
 	bool GetIsDead() { return m_bIsDead; }
 	bool SetIsDead(bool _bool) { m_bIsDead = _bool; }
+	bool GetIsAttk() const { return m_bIsAttk; }
+	void SetIsAttk(bool val) { m_bIsAttk = val; }
 public:
 	virtual void Initialize()=0;
 	virtual int  Update()=0;
@@ -32,7 +34,8 @@ protected:
 	float	m_fAngle;
 	float   m_fRadian;
 	wstring	m_wstrImageKey;
-
+	bool	m_bIsAttk;
+	int		m_iCount;
 
 };
 

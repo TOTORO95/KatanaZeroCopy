@@ -33,10 +33,10 @@ void CLineManager::Initialize()
 {
 	LINE_POS tLinePos[4] =
 	{
-		{ 100.f, 500.f },
-		{ 300.f, 500.f },
-		{ 500.f, 300.f },
-		{ 700.f, 300.f }
+		{ 0.f, 710.f },//1280,800
+		{ 280, 710.f },
+		{ 300.f, 738.f },
+		{ 1280.f, 738.f }
 	};
 
 	m_LineList.push_back(new CLine(tLinePos[0], tLinePos[1]));
@@ -76,7 +76,7 @@ bool CLineManager::CollisionLine(CGameObject* pObject, float* pOutY)
 	float x2 = pTarget->GetInfo().tEnd.fX;
 	float y2 = pTarget->GetInfo().tEnd.fY;
 
-	*pOutY = (y2 - y1) / (x2 - x1) * (pObject->GetInfo().fX - x1) + y1;
+	*pOutY =( (y2 - y1) / (x2 - x1) * (pObject->GetInfo().fX - x1) + y1);
 
 	return true;
 }

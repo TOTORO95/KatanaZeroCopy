@@ -65,7 +65,7 @@ void CGameObject::SetAngle(float _x, float _y)
 		m_fRadian *= -1.f;
 
 	m_fAngle = m_fRadian / PI * 180;
-	cout << m_fAngle << " µµ" << endl;
+	//cout << m_fAngle << " µµ" << endl;
 }
 
 void CGameObject::UpdateRect()

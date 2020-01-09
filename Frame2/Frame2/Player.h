@@ -16,9 +16,12 @@ private:
 private:
 	void KeyInput();
 	void Jump();
+	void Attack();
+
 	void ScrollOffset();
 	void Animate();
 	void ChangeState();
+	void AniDirection();
 
 private:
 	bool		m_bIsJump;
@@ -26,10 +29,16 @@ private:
 	float		m_fJumpAcc;		// °¡¼Óµµ
 	float		m_fRightVal;
 	float		m_fLeftVal;
+	float		m_fAtkRange;
+	float		m_fAtkPower;
 
 
 	OBJ_STATE	m_ePreState;
 	OBJ_STATE	m_eCurState;
 	FRAME		m_tFrame;
+	FRAME		m_tAtkFrame;
+	bool		m_bIsFlat;
+	wstring		m_wstrImageKey2;
+
 };
 
