@@ -1,0 +1,28 @@
+#pragma once
+class CMyBmp;
+
+
+class CBmpManager
+{
+public:
+	static CBmpManager* GetInstance();
+	void DestroyInstance();
+private:
+	static CBmpManager* m_pInstance;
+public:
+	CBmpManager();
+	~CBmpManager();
+public:
+	HDC GetMemDC(const wstring& wstrImgKey) const;
+
+public:
+	void LoadBmp(const wstring& wstrImgKey, const wstring& wstrFilePath);
+
+private:
+	void Release();
+
+private:
+	map<wstring, CMyBmp*>	m_mapBmp;
+
+};
+

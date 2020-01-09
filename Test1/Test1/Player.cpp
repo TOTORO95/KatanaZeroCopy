@@ -90,14 +90,14 @@ void CPlayer::KeyInput()
 	{
 		m_tInfo.fPosX -= m_fSpeed;
 		//g_fScrollX -= m_fSpeed;
-		m_LocInfo.fPosX -= m_fSpeed;
+		//m_LocInfo.fPosX -= m_fSpeed;
 
 	}
 	if (CKeyMgr::GetInstance()->KeyPressing(KEY_RIGHT))
 	{
 		m_tInfo.fPosX += m_fSpeed;
 
-		m_LocInfo.fPosX += m_fSpeed;
+		//m_LocInfo.fPosX += m_fSpeed;
 		//g_fScrollX += m_fSpeed;
 	}
 	if (CKeyMgr::GetInstance()->KeyDown(KEY_SPACE))
@@ -222,11 +222,11 @@ void CPlayer::ScrollOffset()
 	if (WinCX * 0.5f + 200.f <= m_tInfo.fPosX - g_fScrollX)
 	{
 		g_fScrollX += m_fSpeed;
-		m_LocInfo.fPosX += m_fSpeed;
+		//m_LocInfo.fPosX += m_fSpeed;
 	}
 	if (WinCX* 0.5f - 200.f >= m_tInfo.fPosX - g_fScrollX)
 	{
 		g_fScrollX -= m_fSpeed;
-		m_LocInfo.fPosX += m_fSpeed;
+		//m_LocInfo.fPosX += m_fSpeed;
 	}
 }

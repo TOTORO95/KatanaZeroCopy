@@ -1,0 +1,39 @@
+#pragma once
+#ifndef __ENUM_H__
+
+enum OBJ_TYPE
+{
+	PLAYER,
+	MONSTER,
+	BULLET,
+	FLAT,
+	BUTTON,
+	OBJ_END
+
+};
+enum OBJ_STATE
+{
+	STATE_IDLE,
+	STATE_RUN,
+	STATE_JUMP,
+	STATE_ROLL,
+	STATE_FALL,
+	STATE_ATTACK,
+	STATE_KNOCKBACK,
+	STATE_DEAD,
+	STATE_END
+};
+enum SCENE_TYPE
+{
+	SCENE_LOGO,
+	SCENE_TITLE,
+	SCENE_STAGE1,
+	SCENE_STAGE2,
+	BOSS_STAGE,
+	SCENE_END
+
+};
+
+
+#define __ENUM_H__
+#endif // !__ENUM_H__

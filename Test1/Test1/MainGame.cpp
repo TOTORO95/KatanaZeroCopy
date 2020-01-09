@@ -19,7 +19,7 @@ void CMainGame::Initialize()
 {
 	g_tArea.bStart = false;
 	m_hdc = GetDC(g_hWnd);
-	m_ObjpList[PLAYER].push_back( AbsFactory<CPlayer>::CreateObject());
+	m_ObjpList[PLAYER].push_back(AbsFactory<CPlayer>::CreateObject());
 	CLineMgr::GetInstance()->Initialize();
 
 
