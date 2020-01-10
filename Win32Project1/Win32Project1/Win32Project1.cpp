@@ -1,8 +1,9 @@
-// Frame2.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
+// Win32Project1.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 //
 
 #include "stdafx.h"
-#include "Frame2.h"
+#include "Win32Project1.h"
+#include "Extern.h"
 #include "MainGame.h"
 #define MAX_LOADSTRING 100
 
@@ -10,9 +11,7 @@
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
-HWND g_hWnd;
-MOUSE_INFO g_tMouseInfo;
-
+HWND g_hwnd;
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -31,7 +30,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_FRAME2, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_WIN32PROJECT1, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 응용 프로그램 초기화를 수행합니다.
@@ -40,31 +39,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FRAME2));
-	DWORD dwOldTime = GetTickCount();
-	DWORD dwCurTime = 0;
-    MSG msg;
-	msg.message = WM_NULL;
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WIN32PROJECT1));
 	CMainGame mainGame;
 	mainGame.Initialize();
+    MSG msg;
+	msg.message = WM_NULL;
 
     // 기본 메시지 루프입니다.
     while (msg.message!=WM_QUIT)
     {
-        if (PeekMessage(&msg,nullptr,0,0,PM_REMOVE))
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-		dwCurTime = GetTickCount();
-		if(dwCurTime-dwOldTime>=10)
+		else
 		{
 			mainGame.Update();
 			mainGame.Render();
-
-			dwOldTime = dwCurTime;
 		}
-
     }
 
     return (int) msg.wParam;
@@ -88,10 +81,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_FRAME2));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WIN32PROJECT1));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = nullptr;
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WIN32PROJECT1);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -111,17 +104,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
-   RECT rc = { 0,0, WinCX,WinCY };
-   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, rc.right-rc.left, rc.bottom-rc.top, nullptr, nullptr, hInstance, nullptr);
-
+      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   GdiplusStartupInput			m_GdiplusStartupInput;
+   ULONG_PTR					m_GdiplusToken;
+   GdiplusStartup(&m_GdiplusToken, &m_GdiplusStartupInput, NULL);
    if (!hWnd)
    {
       return FALSE;
    }
-   g_hWnd = hWnd;
+   g_hwnd = hWnd;
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -149,32 +142,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DestroyWindow(hWnd);
 		}
 		break;
-	case WM_LBUTTONDOWN:
-	{
-		//마우스 위치는 lParam에 들어오게 되는데 16비트로 쪼개져서 x,y값이 32비트 변수에 들어온다
-		//LOWORD,HIWORD 매크로를 이용해 하위 ,상위 16비트의 값을 얻어올수 있다.
-		if (!g_tMouseInfo.bStart)
-		{
-			g_tMouseInfo.bStart = true;
-			g_tMouseInfo.ptStart.x = LOWORD(lParam);
-			g_tMouseInfo.ptStart.y = HIWORD(lParam);
-			//GetCursorPos(&g_Point);
-			//ScreenToClient(g_hWnd, &g_Point);
-		}
-	}
-	break;
-	case WM_LBUTTONUP:
-	{
-		if (g_tMouseInfo.bStart)
-		{
-			//g_tArea.bStart = false;
-			g_tMouseInfo.ptEnd.x = LOWORD(lParam);
-			g_tMouseInfo.ptEnd.y = HIWORD(lParam);
-			g_tMouseInfo.bStart = false;
-		}
-	}
-	break;
-    case WM_DESTROY:
+
+	case WM_DESTROY:
         PostQuitMessage(0);
         break;
     default:
