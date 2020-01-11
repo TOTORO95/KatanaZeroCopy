@@ -19,6 +19,7 @@ void CObjectManager::DestroyInstance()
 
 CObjectManager::CObjectManager()
 {
+	//
 }
 
 
