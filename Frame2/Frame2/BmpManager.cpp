@@ -39,16 +39,16 @@ HDC CBmpManager::GetMemDC(const wstring & wstrImgKey) const
 	return iter_find->second->GetMemDC();
 }
 
-void CBmpManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePath)
+void CBmpManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePath) //이미지를 키값과함께 맵에 저장
 {
 	auto iter_find = m_mapBmp.find(wstrImgKey);
 
-	if (m_mapBmp.end() != iter_find)
+	if (m_mapBmp.end() != iter_find) //해당 키값 존재하면 함수 종료
 		return;
 
-	CMyBmp* pBmp = new CMyBmp;
+	CMyBmp* pBmp = new CMyBmp; //맵에 키값이 존재하지않으면 새로운 비트맵 클래스를 생성
 
-	if (!pBmp->LoadBmp(wstrFilePath))
+	if (!pBmp->LoadBmp(wstrFilePath))// 이미지를 CMyBmp 클래스에 저장하지못하면 메세지박스 출력
 	{
 		SafeDelete(pBmp);
 		MessageBox(nullptr, wstrFilePath.c_str(), L"Image Load Failed", MB_OK);

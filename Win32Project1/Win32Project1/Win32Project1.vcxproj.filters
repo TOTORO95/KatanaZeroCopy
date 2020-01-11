@@ -16,6 +16,9 @@
     <Filter Include="01.MainGame">
       <UniqueIdentifier>{a62959ba-a6dc-4c1c-b5a3-49d0a0a1b848}</UniqueIdentifier>
     </Filter>
+    <Filter Include="50.ImageManager">
+      <UniqueIdentifier>{22d6447d-e350-4531-867d-43ec9ed3c7cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -36,6 +39,13 @@
     <ClInclude Include="Extern.h">
       <Filter>98.Headers</Filter>
     </ClInclude>
+    <ClInclude Include="MyImage.h">
+      <Filter>50.ImageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="Struct.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -47,6 +57,10 @@
     <ClCompile Include="MainGame.cpp">
       <Filter>01.MainGame</Filter>
     </ClCompile>
+    <ClCompile Include="MyImage.cpp">
+      <Filter>50.ImageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">

@@ -291,7 +291,7 @@ void CPlayer::Jump()
 
 void CPlayer::Attack()
 {
-	cout << m_fAngle << "µµ " << endl;
+	//cout << m_fAngle << "µµ " << endl;
 	m_eCurState = STATE_ATTACK;
 
 	float fratio = 0.25f;

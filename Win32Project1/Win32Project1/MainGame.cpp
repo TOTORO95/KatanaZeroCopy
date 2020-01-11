@@ -27,11 +27,11 @@ void CMainGame::Update()
 
 void CMainGame::Render()
 {
-	Graphics g(hdc);
+	//Graphics g(hdc);
 
 	//Rectangle(hdc, 0, 0, 50, 50);
-	g.DrawImage(m_Image, 0, 0, 0, 0, 1280, 700, Gdiplus::Unit::UnitPixel);
-	g.DrawImage(m_Image2, 100, 100, 0,0, 106, 32, Gdiplus::Unit::UnitPixel);
+	//g.DrawImage(m_Image, 0, 0, 0, 0, 1280, 700, Gdiplus::Unit::UnitPixel);
+	//g.DrawImage(m_Image2, 100, 100, 0,0, 106, 32, Gdiplus::Unit::UnitPixel);
 	
 
 }

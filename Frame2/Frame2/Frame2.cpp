@@ -153,14 +153,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		//마우스 위치는 lParam에 들어오게 되는데 16비트로 쪼개져서 x,y값이 32비트 변수에 들어온다
 		//LOWORD,HIWORD 매크로를 이용해 하위 ,상위 16비트의 값을 얻어올수 있다.
-		if (!g_tMouseInfo.bStart)
-		{
+		//if (!g_tMouseInfo.bStart)
+		//{
 			g_tMouseInfo.bStart = true;
 			g_tMouseInfo.ptStart.x = LOWORD(lParam);
 			g_tMouseInfo.ptStart.y = HIWORD(lParam);
 			//GetCursorPos(&g_Point);
 			//ScreenToClient(g_hWnd, &g_Point);
-		}
+		//}
 	}
 	break;
 	case WM_LBUTTONUP:

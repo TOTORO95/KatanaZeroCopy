@@ -32,8 +32,8 @@ bool CMyBmp::LoadBmp(const wstring& wstrFilePath)
 	NULL_CHECK_RETURN(m_hMemDC, false);
 
 	// 메모리DC에 불러온 비트맵을 미리 그린다.
-	m_hOldBmp = (HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
-
+	//m_hOldBmp = (HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
+	//(HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
 	return true;
 }
 
@@ -42,7 +42,7 @@ bool CMyBmp::LoadBmp(const wstring& wstrFilePath)
 void CMyBmp::Release()
 {
 	// 당장 DC가 선택한 대상은 바로 해제할 수 없어 해방 시켜주어야 한다.
-	SelectObject(m_hMemDC, m_hOldBmp);
+	//SelectObject(m_hMemDC, m_hOldBmp);
 
 	// GDI 오브젝트 해제.
 	DeleteObject(m_hBitmap);
