@@ -29,11 +29,11 @@ CBmpManager::~CBmpManager()
 
 }
 
-HDC CBmpManager::GetMemDC(const wstring & wstrImgKey) const
+HDC CBmpManager::GetMemDC(const wstring & wstrImgKey) const	//해당 키값 존재시 dc 반환 
 {
 	auto iter_find = m_mapBmp.find(wstrImgKey);
 
-	if (m_mapBmp.end() == iter_find)
+	if (m_mapBmp.end() == iter_find) // 해당 키값 없으면 nullptr반환
 		return nullptr;
 
 	return iter_find->second->GetMemDC();
@@ -55,7 +55,7 @@ void CBmpManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePa
 		return;
 	}
 
-	m_mapBmp.insert(make_pair(wstrImgKey, pBmp));
+	m_mapBmp.insert(make_pair(wstrImgKey, pBmp)); //키값,클래스 맵에 저장
 }
 
 void CBmpManager::Release()

@@ -14,9 +14,9 @@ public:
 
 public:
 	HDC GetMemDC(const wstring& wstrImgKey) const;
-
+	Gdiplus::Image* GetMemImage (const wstring& wstrImgKey) const;
 public:
-	void LoadBmp(const wstring& wstrImgKey, const wstring& wstrFilePath);
+	void LoadImg(const wstring& wstrImgKey, const wstring& wstrFilePath);
 
 private:
 	void Release();

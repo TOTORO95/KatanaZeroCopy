@@ -34,5 +34,10 @@ using namespace Gdiplus;
 using namespace std;
 
 //User Header
+#include "Define.h"
 #include "Extern.h"
 #include "Struct.h"
+
+//Manager
+
+#include "ImageManager.h"

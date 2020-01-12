@@ -32,6 +32,7 @@ bool CMyBmp::LoadBmp(const wstring& wstrFilePath)
 	NULL_CHECK_RETURN(m_hMemDC, false);
 
 	// 메모리DC에 불러온 비트맵을 미리 그린다.
+	SelectObject(m_hMemDC, m_hBitmap);
 	//m_hOldBmp = (HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
 	//(HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
 	return true;

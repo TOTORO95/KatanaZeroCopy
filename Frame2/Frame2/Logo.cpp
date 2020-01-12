@@ -41,7 +41,6 @@ void CLogo::Render(HDC hDC)
 {
 	HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(L"Logo");
 	NULL_CHECK(hMemDC);
-
 	BitBlt(hDC, 0, 0, WinCX, WinCY, hMemDC, 0, 0, SRCCOPY);
 }
 

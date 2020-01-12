@@ -10,8 +10,11 @@ public:
 	void Update();
 	void Render();
 	void Release();
-	
-	
+	void GrassAnimate();
+
+
+public:
+	FRAME m_GrassFrame;
 	Image* m_Image;
 	Image* m_Image2;
 	HDC hdc;

@@ -46,6 +46,9 @@
     <ClInclude Include="Struct.h">
       <Filter>98.Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

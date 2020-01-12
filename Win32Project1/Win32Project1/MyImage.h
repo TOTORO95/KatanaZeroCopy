@@ -7,9 +7,9 @@ public:
 	~CMyImage();
 public:
 	HDC GetMemDC() const;
-
+	Gdiplus::Image* GetIMG(){return m_CurImg; }
 public:
-	bool LoadBmp(const wstring& wstrFilePath);
+	bool LoadImg(const wstring& wstrFilePath);
 
 private:
 	void Release();

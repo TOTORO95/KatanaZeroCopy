@@ -33,11 +33,20 @@ HDC CImageManager::GetMemDC(const wstring & wstrImgKey) const
 	auto itr_find = m_mapImg.find(wstrImgKey);
 	if (itr_find == m_mapImg.end())
 		return nullptr;
-
 	return itr_find->second->GetMemDC();
 }
 
-void CImageManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePath)
+Gdiplus::Image * CImageManager::GetMemImage(const wstring & wstrImgKey) const
+{
+	auto itr_find = m_mapImg.find(wstrImgKey);
+	if (itr_find == m_mapImg.end())
+		return nullptr;
+
+	return itr_find->second->GetIMG();
+
+}
+
+void CImageManager::LoadImg(const wstring & wstrImgKey, const wstring & wstrFilePath)
 {
 	auto itr_find = m_mapImg.find(wstrImgKey);
 	if (itr_find != m_mapImg.end())
@@ -45,7 +54,7 @@ void CImageManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFile
 
 	CMyImage *p_Img = new CMyImage;
 
-	if (!(p_Img->LoadBmp(wstrFilePath)))
+	if (!(p_Img->LoadImg(wstrFilePath)))
 	{
 		delete p_Img;
 		p_Img = nullptr;
