@@ -5,6 +5,12 @@
 #define PI 3.141592f
 #define GRAVITY 9.8f
 
+#define TILECX 20
+#define TILECY 20
+#define TILE_COUNT_X 112
+#define TILE_COUNT_Y 74
+
+
 #define NO_EVENT 0
 #define DEAD_OBJ 1
 #define CHANGE_SCENE 2

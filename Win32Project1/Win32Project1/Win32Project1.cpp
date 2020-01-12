@@ -18,6 +18,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -104,12 +105,11 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
-
+   RECT rc = { 0,0, WinCX,WinCY };
+   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-   GdiplusStartupInput			m_GdiplusStartupInput;
-   ULONG_PTR					m_GdiplusToken;
-   GdiplusStartup(&m_GdiplusToken, &m_GdiplusStartupInput, NULL);
+      CW_USEDEFAULT, 0, rc.right - rc.left, rc.bottom - rc.top,  nullptr, nullptr, hInstance, nullptr);
+ 
    if (!hWnd)
    {
       return FALSE;

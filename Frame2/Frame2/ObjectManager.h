@@ -15,10 +15,10 @@ private:
 public:
 	CObjectManager();
 	~CObjectManager();
-private: // 싱글톤 객체는 외부에서 생성과 소멸을 할 수 없다.
+public: // 싱글톤 객체는 외부에서 생성과 소멸을 할 수 없다.
 	CGameObject* GetPlayer() const;
 	CGameObject* GetNearTarget(CGameObject* pObject, OBJ_TYPE eType);
-
+	CGameObject* GetTerrain();
 public:
 	void AddObject(OBJ_TYPE eType, CGameObject* pObject);
 	int Update();

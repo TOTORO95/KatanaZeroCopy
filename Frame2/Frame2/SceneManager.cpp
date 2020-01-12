@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SceneManager.h"
+#include "MyEdit.h"
 #include "Logo.h"
 #include "Title.h"
 #include "Stage1.h"
@@ -49,6 +50,9 @@ void CSceneManager::SceneChange(SCENE_TYPE eCurType)
 			break;
 		case SCENE_STAGE1:
 			m_pCurScene = new CStage1;
+			break;
+		case SCENE_EDIT:
+			m_pCurScene = new CMyEdit;
 			break;
 		}
 

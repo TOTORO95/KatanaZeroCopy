@@ -12,6 +12,6 @@ public:
 	virtual void Render(HDC hDC) override;
 private:
 	virtual void Release() override;
-
+	vector<pair<RECT*,int>> m_pTile;
 };
 

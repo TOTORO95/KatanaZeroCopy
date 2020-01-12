@@ -40,7 +40,11 @@ int CTitle::Update()
 		CSceneManager::GetInstance()->SceneChange(SCENE_STAGE1);
 		return CHANGE_SCENE;
 	}
-
+	if (CKeyManager::GetInstance()->KeyDown(KEY_R))
+	{
+		CSceneManager::GetInstance()->SceneChange(SCENE_EDIT);
+		return CHANGE_SCENE;
+	}
 	GrassAnimate();
 	PinkAnimate();
 

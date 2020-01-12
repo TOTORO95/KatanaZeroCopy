@@ -2,6 +2,7 @@
 #include "MainGame.h"
 #include "Player.h"
 float g_fScrollX = 0.f;
+float g_fScrollY = 0.f;
 CMainGame::CMainGame()
 {
 }
