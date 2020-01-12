@@ -70,6 +70,9 @@
     <Filter Include="90.Manager\04.LineManager\00.LineManager">
       <UniqueIdentifier>{060b107a-ca58-4beb-ba08-0263f3f45a7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="90.Manager\06.SceneManager\06.EditMap">
+      <UniqueIdentifier>{c3cd5ec6-232e-4ce1-a6e8-b562b25f65c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -145,6 +148,8 @@
       <Filter>90.Manager\06.SceneManager\03.Stage</Filter>
     </ClInclude>
     <ClInclude Include="LineManager.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="EditMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -193,6 +198,8 @@
       <Filter>90.Manager\06.SceneManager\03.Stage</Filter>
     </ClCompile>
     <ClCompile Include="LineManager.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="EditMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

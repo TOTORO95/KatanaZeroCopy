@@ -24,10 +24,6 @@
 #include <memory.h>
 #include <tchar.h>
 #include <iostream>
-#include <ole2.h> 
-#include <GdiPlus.h> 
-using namespace Gdiplus;
-#pragma comment(lib, "gdiplus.lib")
 
 #include <map>
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
@@ -37,7 +33,7 @@ using namespace std;
 #include "Define.h"
 #include "Extern.h"
 #include "Struct.h"
-
+#include "Function.h"
 //Manager
 
-#include "ImageManager.h"
+#include "BmpManager.h"

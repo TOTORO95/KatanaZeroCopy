@@ -12,6 +12,13 @@ public:
 
 		return pObject;
 	}
+	static CGameObject* CreateObject(OBJ_TYPE objtype, float fMapX, float fMapY)
+	{
+		CGameObject* pObject = new T(fMapX,fMapY);
+		pObject->Initialize();
+
+		return pObject;
+	}
 
 	static CGameObject* CreateObject(float x, float y)
 	{

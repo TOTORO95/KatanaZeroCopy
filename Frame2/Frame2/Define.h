@@ -2,8 +2,13 @@
 #ifndef __DEFINE_H__
 #define WinCX 1280
 #define WinCY 800
+#define TileCX 50.f
+#define TileCY 50.f
+
 #define PI 3.141592f
 #define GRAVITY 9.8f
+
+
 
 #define NO_EVENT 0
 #define DEAD_OBJ 1

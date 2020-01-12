@@ -39,14 +39,19 @@
     <ClInclude Include="Extern.h">
       <Filter>98.Headers</Filter>
     </ClInclude>
-    <ClInclude Include="MyImage.h">
-      <Filter>50.ImageManager</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h" />
     <ClInclude Include="Struct.h">
       <Filter>98.Headers</Filter>
     </ClInclude>
     <ClInclude Include="Define.h">
+      <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpManager.h">
+      <Filter>50.ImageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBmp.h">
+      <Filter>50.ImageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
       <Filter>98.Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,10 +65,12 @@
     <ClCompile Include="MainGame.cpp">
       <Filter>01.MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="MyImage.cpp">
+    <ClCompile Include="BmpManager.cpp">
       <Filter>50.ImageManager</Filter>
     </ClCompile>
-    <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="MyBmp.cpp">
+      <Filter>50.ImageManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">

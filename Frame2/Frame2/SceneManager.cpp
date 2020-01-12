@@ -3,6 +3,7 @@
 #include "Logo.h"
 #include "Title.h"
 #include "Stage1.h"
+#include "EditMap.h"
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 CSceneManager * CSceneManager::GetInstance()
 {
@@ -49,6 +50,9 @@ void CSceneManager::SceneChange(SCENE_TYPE eCurType)
 			break;
 		case SCENE_STAGE1:
 			m_pCurScene = new CStage1;
+			break;
+		case SCENE_EDIT:
+			m_pCurScene = new CEditMap;
 			break;
 		}
 

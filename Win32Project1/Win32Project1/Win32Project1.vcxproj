@@ -141,11 +141,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BmpManager.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Extern.h" />
-    <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="Function.h" />
     <ClInclude Include="MainGame.h" />
-    <ClInclude Include="MyImage.h" />
+    <ClInclude Include="MyBmp.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
@@ -153,9 +154,9 @@
     <ClInclude Include="Win32Project1.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
-    <ClCompile Include="MyImage.cpp" />
+    <ClCompile Include="MyBmp.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

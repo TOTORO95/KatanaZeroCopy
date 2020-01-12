@@ -109,9 +109,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, rt.right-rt.left, rt.bottom-rt.top, nullptr, nullptr, hInstance, nullptr);
-   GdiplusStartupInput			m_GdiplusStartupInput;
-   ULONG_PTR					m_GdiplusToken;
-   GdiplusStartup(&m_GdiplusToken, &m_GdiplusStartupInput, NULL);
    if (!hWnd)
    {
       return FALSE;

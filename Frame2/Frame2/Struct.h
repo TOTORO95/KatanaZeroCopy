@@ -14,6 +14,12 @@ typedef struct tagLinePoint
 	float	fY;
 }LINE_POS;
 
+typedef struct tagTile
+{
+	float fX, fY;
+	int iDraw, iOption;
+}TILE_INFO;
+
 typedef struct tagLineInfo
 {
 	LINE_POS	tStart;

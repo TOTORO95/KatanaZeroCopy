@@ -56,9 +56,10 @@ void CPlayer::Initialize()
 int CPlayer::Update()
 {
 	KeyInput();
-	Jump();
+	//Jump();
 	if (GetIsAttk())
 	{
+		
 		m_iCount++;
 		Attack();
 		//cout << m_iCount<<"X=Èû" << sinf(m_fRadian)*m_fAtkPower << endl;
@@ -73,7 +74,7 @@ int CPlayer::Update()
 			
 		}
 
-		
+		//cout << "°¢= " << m_fAngle << endl;
 	}
 	
 	
