@@ -76,7 +76,10 @@
     <Filter Include="10.GameObject\01.Terrain">
       <UniqueIdentifier>{45c02e50-a156-45e2-bb6c-5ffb9e726c54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="10.GameObject\02.Player">
+    <Filter Include="10.GameObject\02.Tile">
+      <UniqueIdentifier>{d29ec909-6b1a-43dc-8916-9b47aba8e560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\03.Player">
       <UniqueIdentifier>{48fa74f7-2a80-437b-b63b-39cf4fc55a04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -121,7 +124,7 @@
       <Filter>90.Manager\00.FactoryPattern</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>10.GameObject\02.Player</Filter>
+      <Filter>10.GameObject\03.Player</Filter>
     </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>90.Manager\01.ObjectManager</Filter>
@@ -163,6 +166,7 @@
     <ClInclude Include="BackGround.h">
       <Filter>10.GameObject\00.BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -178,7 +182,7 @@
       <Filter>10.GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>10.GameObject\02.Player</Filter>
+      <Filter>10.GameObject\03.Player</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>90.Manager\01.ObjectManager</Filter>
@@ -220,6 +224,7 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>10.GameObject\00.BackGround</Filter>
     </ClCompile>
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

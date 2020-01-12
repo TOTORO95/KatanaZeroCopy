@@ -34,7 +34,7 @@ void CTerrain::Initialize()
 			m_vecTile.push_back(pTile);
 		}
 	}
-
+	
 }
 
 int CTerrain::Update()

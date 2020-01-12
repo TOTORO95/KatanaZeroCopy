@@ -12,12 +12,18 @@ public:
 
 		return pObject;
 	}
-
 	static CGameObject* CreateObject(float x, float y)
 	{
 		CGameObject* pObject = new T;
 		pObject->Initialize();
 		pObject->SetPos(x, y);
+
+		return pObject;
+	}
+	static CGameObject* CreateObject(float x, float y, int option)
+	{
+		CGameObject* pObject = new T(x,y,option);
+		pObject->Initialize();
 
 		return pObject;
 	}

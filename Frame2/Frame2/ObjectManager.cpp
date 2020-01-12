@@ -19,7 +19,7 @@ void CObjectManager::DestroyInstance()
 
 CObjectManager::CObjectManager()
 {
-	//
+	
 }
 
 
@@ -42,6 +42,8 @@ CGameObject* CObjectManager::GetTerrain()
 
 	return m_ObjectList[TERRAIN].front();
 }
+
+
 
 CGameObject * CObjectManager::GetNearTarget(CGameObject * pObject, OBJ_TYPE eType)
 {
