@@ -26,7 +26,7 @@ CBmpManager::CBmpManager()
 
 CBmpManager::~CBmpManager()
 {
-
+	Release();
 }
 
 HDC CBmpManager::GetMemDC(const wstring & wstrImgKey) const	//해당 키값 존재시 dc 반환 

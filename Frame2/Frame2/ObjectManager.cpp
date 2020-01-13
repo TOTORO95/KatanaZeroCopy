@@ -12,7 +12,7 @@ CObjectManager * CObjectManager::GetInstance()
 
 void CObjectManager::DestroyInstance()
 {
-	if (m_pInstance == nullptr)
+	if (m_pInstance != nullptr)
 		delete m_pInstance;
 	m_pInstance=nullptr;
 }
@@ -25,6 +25,7 @@ CObjectManager::CObjectManager()
 
 CObjectManager::~CObjectManager()
 {
+	Release();
 }
 
 CGameObject * CObjectManager::GetPlayer() const

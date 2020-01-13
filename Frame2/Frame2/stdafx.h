@@ -51,3 +51,4 @@ using namespace std;
 #include "BmpManager.h"
 #include  "SceneManager.h"
 #include "LineManager.h"
+#include "vld.h"

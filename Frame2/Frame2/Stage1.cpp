@@ -16,7 +16,9 @@ CStage1::~CStage1()
 
 void CStage1::Initialize()
 {
-	CLineManager::GetInstance()->Initialize();
+	//CLineManager::GetInstance()->Initialize();
+
+
 	CBmpManager::GetInstance()->LoadBmp(L"bg", L"../Image/BackGround/Stage1BG.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_R", L"../Image/Player/Player_R.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_L", L"../Image/Player/Player_L.bmp");

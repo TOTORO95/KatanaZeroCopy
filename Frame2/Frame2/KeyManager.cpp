@@ -13,7 +13,7 @@ CKeyManager * CKeyManager::GetInstance()
 
 void CKeyManager::DestroyInstance()
 {
-	if (m_pInstance == nullptr)
+	if (m_pInstance != nullptr)
 		delete m_pInstance;
 
 	m_pInstance = nullptr;
