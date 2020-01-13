@@ -25,9 +25,6 @@
     <Filter Include="90.Manager\00.FactoryPattern">
       <UniqueIdentifier>{d3cc2a6d-8c0d-4ef1-8f53-2455b2536872}</UniqueIdentifier>
     </Filter>
-    <Filter Include="10.GameObject\00.Player">
-      <UniqueIdentifier>{48fa74f7-2a80-437b-b63b-39cf4fc55a04}</UniqueIdentifier>
-    </Filter>
     <Filter Include="90.Manager\01.ObjectManager">
       <UniqueIdentifier>{3d295e8f-3132-46fa-a00f-caee4a8a89a1}</UniqueIdentifier>
     </Filter>
@@ -70,8 +67,20 @@
     <Filter Include="90.Manager\04.LineManager\00.LineManager">
       <UniqueIdentifier>{060b107a-ca58-4beb-ba08-0263f3f45a7c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="90.Manager\06.SceneManager\06.EditMap">
-      <UniqueIdentifier>{c3cd5ec6-232e-4ce1-a6e8-b562b25f65c9}</UniqueIdentifier>
+    <Filter Include="90.Manager\06.SceneManager\EditMap">
+      <UniqueIdentifier>{eafe8af8-e3a8-4029-904d-2e66476bad6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\00.BackGround">
+      <UniqueIdentifier>{1e660125-80ce-4568-b49a-33238c0d38db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\01.Terrain">
+      <UniqueIdentifier>{45c02e50-a156-45e2-bb6c-5ffb9e726c54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\02.Tile">
+      <UniqueIdentifier>{d29ec909-6b1a-43dc-8916-9b47aba8e560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\03.Player">
+      <UniqueIdentifier>{48fa74f7-2a80-437b-b63b-39cf4fc55a04}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +124,7 @@
       <Filter>90.Manager\00.FactoryPattern</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>10.GameObject\00.Player</Filter>
+      <Filter>10.GameObject\03.Player</Filter>
     </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>90.Manager\01.ObjectManager</Filter>
@@ -148,8 +157,16 @@
       <Filter>90.Manager\06.SceneManager\03.Stage</Filter>
     </ClInclude>
     <ClInclude Include="LineManager.h" />
-    <ClInclude Include="Terrain.h" />
-    <ClInclude Include="EditMap.h" />
+    <ClInclude Include="Terrain.h">
+      <Filter>10.GameObject\01.Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="MyEdit.h">
+      <Filter>90.Manager\06.SceneManager\EditMap</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>10.GameObject\00.BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -165,7 +182,7 @@
       <Filter>10.GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>10.GameObject\00.Player</Filter>
+      <Filter>10.GameObject\03.Player</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>90.Manager\01.ObjectManager</Filter>
@@ -198,8 +215,16 @@
       <Filter>90.Manager\06.SceneManager\03.Stage</Filter>
     </ClCompile>
     <ClCompile Include="LineManager.cpp" />
-    <ClCompile Include="Terrain.cpp" />
-    <ClCompile Include="EditMap.cpp" />
+    <ClCompile Include="Terrain.cpp">
+      <Filter>10.GameObject\01.Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="MyEdit.cpp">
+      <Filter>90.Manager\06.SceneManager\EditMap</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>10.GameObject\00.BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

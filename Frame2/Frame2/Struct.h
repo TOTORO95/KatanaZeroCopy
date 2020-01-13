@@ -32,6 +32,11 @@ typedef struct tagMouseInfo
 	POINT	ptStart;
 	POINT	ptEnd;
 }MOUSE_INFO;
+typedef struct tagTile
+{
+	float fX, fY;
+	int iDrawID, iOption;
+}TILE_INFO;
 
 typedef struct tagFrame
 {

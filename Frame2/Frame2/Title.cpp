@@ -45,7 +45,6 @@ int CTitle::Update()
 		CSceneManager::GetInstance()->SceneChange(SCENE_EDIT);
 		return CHANGE_SCENE;
 	}
-
 	GrassAnimate();
 	PinkAnimate();
 

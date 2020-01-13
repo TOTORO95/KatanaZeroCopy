@@ -19,7 +19,7 @@ void CObjectManager::DestroyInstance()
 
 CObjectManager::CObjectManager()
 {
-	//
+	
 }
 
 
@@ -34,6 +34,16 @@ CGameObject * CObjectManager::GetPlayer() const
 
 	return m_ObjectList[PLAYER].front();
 }
+
+CGameObject* CObjectManager::GetTerrain()
+{
+	if (m_ObjectList[TERRAIN].empty())
+		return nullptr;
+
+	return m_ObjectList[TERRAIN].front();
+}
+
+
 
 CGameObject * CObjectManager::GetNearTarget(CGameObject * pObject, OBJ_TYPE eType)
 {

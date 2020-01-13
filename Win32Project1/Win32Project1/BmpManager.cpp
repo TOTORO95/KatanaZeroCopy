@@ -29,34 +29,65 @@ CBmpManager::~CBmpManager()
 
 }
 
-HDC CBmpManager::GetMemDC(const wstring & wstrImgKey) const	//해당 키값 존재시 dc 반환 
+HDC CBmpManager::GetMemDC(const wstring & wstrImgKey) const
 {
 	auto iter_find = m_mapBmp.find(wstrImgKey);
 
-	if (m_mapBmp.end() == iter_find) // 해당 키값 없으면 nullptr반환
+	if (m_mapBmp.end() == iter_find)
 		return nullptr;
 
 	return iter_find->second->GetMemDC();
 }
 
-void CBmpManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePath) //이미지를 키값과함께 맵에 저장
+HBITMAP CBmpManager::GetBMP(const wstring & wstrImgKey)
 {
 	auto iter_find = m_mapBmp.find(wstrImgKey);
 
-	if (m_mapBmp.end() != iter_find) //해당 키값 존재하면 함수 종료
+	if (m_mapBmp.end() == iter_find)
+		return nullptr;
+	return iter_find->second->GetBMP();
+}
+
+
+void CBmpManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePath)
+{
+	auto iter_find = m_mapBmp.find(wstrImgKey);
+
+	if (m_mapBmp.end() != iter_find)
 		return;
 
-	CMyBmp* pBmp = new CMyBmp; //맵에 키값이 존재하지않으면 새로운 비트맵 클래스를 생성
+	CMyBmp* pBmp = new CMyBmp;
 
-	if (!pBmp->LoadBmp(wstrFilePath))// 이미지를 CMyBmp 클래스에 저장하지못하면 메세지박스 출력
+	if (!pBmp->LoadBmp(wstrFilePath))
 	{
 		SafeDelete(pBmp);
 		MessageBox(nullptr, wstrFilePath.c_str(), L"Image Load Failed", MB_OK);
 		return;
 	}
 
-	m_mapBmp.insert(make_pair(wstrImgKey, pBmp)); //키값,클래스 맵에 저장
+	m_mapBmp.insert(make_pair(wstrImgKey, pBmp));
 }
+
+void CBmpManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePath, bool IsRot)
+{
+	auto iter_find = m_mapBmp.find(wstrImgKey);
+
+	if (m_mapBmp.end() != iter_find)
+		return;
+
+	CMyBmp* pBmp = new CMyBmp;
+
+	if (!pBmp->LoadBmp(wstrFilePath, IsRot))
+	{
+		SafeDelete(pBmp);
+		MessageBox(nullptr, wstrFilePath.c_str(), L"Image Load Failed", MB_OK);
+		return;
+	}
+
+	m_mapBmp.insert(make_pair(wstrImgKey, pBmp));
+}
+
+
 
 void CBmpManager::Release()
 {
@@ -65,4 +96,3 @@ void CBmpManager::Release()
 
 	m_mapBmp.clear();
 }
-

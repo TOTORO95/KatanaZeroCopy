@@ -18,6 +18,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -84,7 +85,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WIN32PROJECT1));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = nullptr;
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WIN32PROJECT1);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -104,11 +105,11 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
-   RECT rt = { 0,0,WinCX,WinCY };
-   AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
-
+   RECT rc = { 0,0, WinCX,WinCY };
+   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, rt.right-rt.left, rt.bottom-rt.top, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, rc.right - rc.left, rc.bottom - rc.top,  nullptr, nullptr, hInstance, nullptr);
+ 
    if (!hWnd)
    {
       return FALSE;

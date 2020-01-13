@@ -8,6 +8,5 @@ extern float g_fScrollX;
 extern float g_fScrollY;
 
 
-
 #define __EXTERN_H__
 #endif // !__EXTERN_H__

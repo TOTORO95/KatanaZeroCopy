@@ -21,7 +21,8 @@ bool CMyBmp::LoadBmp(const wstring& wstrFilePath)
 	// 비트맵 읽어오기.
 	m_hBitmap = (HBITMAP)LoadImage(nullptr, wstrFilePath.c_str(), IMAGE_BITMAP,
 		0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-	NULL_CHECK_RETURN(m_hBitmap, false);
+	if(m_hBitmap==nullptr)
+		return false;
 	
 	HDC hDC = GetDC(g_hwnd);
 
@@ -29,13 +30,24 @@ bool CMyBmp::LoadBmp(const wstring& wstrFilePath)
 	m_hMemDC = CreateCompatibleDC(hDC);
 
 	ReleaseDC(g_hwnd, hDC);
-	NULL_CHECK_RETURN(m_hMemDC, false);
+	if(m_hMemDC==nullptr)
+		return false;
 
 	// 메모리DC에 불러온 비트맵을 미리 그린다.
-	SelectObject(m_hMemDC, m_hBitmap);
 	m_hOldBmp = (HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
-	(HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
+
 	return true;
+}
+
+
+bool CMyBmp::LoadBmp (const wstring& wstrFilePath, bool isRot)
+{
+	// 비트맵 읽어오기.
+	m_hBitmap = (HBITMAP)LoadImage(nullptr, wstrFilePath.c_str(), IMAGE_BITMAP,
+		0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+	if (m_hBitmap == nullptr)
+		return false;
+
 }
 
 

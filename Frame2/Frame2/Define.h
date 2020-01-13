@@ -2,12 +2,13 @@
 #ifndef __DEFINE_H__
 #define WinCX 1280
 #define WinCY 800
-#define TileCX 50.f
-#define TileCY 50.f
-
 #define PI 3.141592f
 #define GRAVITY 9.8f
 
+#define TILECX 20
+#define TILECY 20
+#define TILE_COUNT_X 112
+#define TILE_COUNT_Y 74
 
 
 #define NO_EVENT 0
