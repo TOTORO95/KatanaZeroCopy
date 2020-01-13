@@ -43,15 +43,15 @@ void CStage1::Initialize()
 	for (auto tile : dynamic_cast<CTerrain*>(pTerrain)->GetTiles())
 	{
 		//RECT *temp = new RECT((int)(tile->fX-TILECX*0.5), );
-		if (tile->iDrawID != 0)
+		if (tile->iDrawID !=0&& tile->iDrawID!=3)
 		{
 			
 			CObjectManager::GetInstance()->AddObject(TILE,
-				CObjFactory<CTile>::CreateObject(tile->fX, tile->fY, tile->iOption));
+				CObjFactory<CTile>::CreateObject(tile->fX, tile->fY, tile->iDrawID));
 		}
 	}
 	CObjectManager::GetInstance()->DeleteGroup(TERRAIN);
-
+	
 
 }
 
@@ -67,7 +67,7 @@ int CStage1::Update()
 		g_fScrollX = float(TILE_COUNT_X * TILECX - WinCX);
 	if (float(TILE_COUNT_Y * TILECY - WinCY) < g_fScrollY)
 		g_fScrollY = float(TILE_COUNT_Y * TILECY - WinCY);
-
+	
 	return NO_EVENT;
 }
 

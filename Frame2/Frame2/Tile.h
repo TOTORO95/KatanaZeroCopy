@@ -7,7 +7,7 @@ public:
 	CTile(float fx, float fy,int option);
 	~CTile();
 	
-
+	int GetTileOpt() { return m_iOption; }
 	// CGameObject을(를) 통해 상속됨
 	virtual void Initialize() override;
 

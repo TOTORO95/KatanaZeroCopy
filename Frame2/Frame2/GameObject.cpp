@@ -6,7 +6,8 @@ CGameObject::CGameObject()
 	: m_bIsDead(false),
 	m_fSpeed(0.f),
 	m_fAngle(0.f),
-	m_wstrImageKey(L"")
+	m_wstrImageKey(L""),
+	m_bIsColl(false)
 {
 	ZeroMemory(&m_tInfo, sizeof(INFO));
 	ZeroMemory(&m_tRect, sizeof(RECT));

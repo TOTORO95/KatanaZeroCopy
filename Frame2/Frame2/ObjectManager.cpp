@@ -103,7 +103,7 @@ int CObjectManager::Update()
 				++iter_begin;
 		}
 	}
-	//CCollisionMgr::CollisionRect(m_ObjectList[BULLET], m_ObjectList[MONSTER]);
+	CCollisionManager::CollisionRectTile(m_ObjectList[TILE], m_ObjectList[PLAYER]);
 	//CCollisionMgr::CollisionSphere(m_ObjectList[BULLET], m_ObjectList[MONSTER]);
 	//CCollisionMgr::CollisionSphere(m_ObjectList[SHIELD], m_ObjectList[MONSTER]);
 	//CCollisionMgr::CollisionRectEx(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);

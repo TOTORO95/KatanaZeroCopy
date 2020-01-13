@@ -12,12 +12,13 @@ public:
 	virtual void Render(HDC hdc) override;
 private:
 	virtual void Release() override;
-
+public:
+	void SetIsDbJump(bool val) { m_bDJump = val; }
 private:
 	void KeyInput();
 	void Jump();
 	void Attack();
-
+	void Move();
 	void ScrollOffset();
 	void Animate();
 	void ChangeState();
@@ -31,14 +32,14 @@ private:
 	float		m_fLeftVal;
 	float		m_fAtkRange;
 	float		m_fAtkPower;
-
+	
 
 	OBJ_STATE	m_ePreState;
 	OBJ_STATE	m_eCurState;
 	FRAME		m_tFrame;
 	FRAME		m_tAtkFrame;
-	bool		m_bIsFlat;
+	bool		m_bDJump;
 	wstring		m_wstrImageKey2;
-
+	
 };
 

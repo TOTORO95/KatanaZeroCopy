@@ -156,7 +156,6 @@
     <ClInclude Include="Stage1.h">
       <Filter>90.Manager\06.SceneManager\03.Stage</Filter>
     </ClInclude>
-    <ClInclude Include="LineManager.h" />
     <ClInclude Include="Terrain.h">
       <Filter>10.GameObject\01.Terrain</Filter>
     </ClInclude>
@@ -166,7 +165,15 @@
     <ClInclude Include="BackGround.h">
       <Filter>10.GameObject\00.BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h" />
+    <ClInclude Include="CollisionManager.h">
+      <Filter>90.Manager\03.CollisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="LineManager.h">
+      <Filter>90.Manager\04.LineManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>10.GameObject\02.Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -214,7 +221,6 @@
     <ClCompile Include="Stage1.cpp">
       <Filter>90.Manager\06.SceneManager\03.Stage</Filter>
     </ClCompile>
-    <ClCompile Include="LineManager.cpp" />
     <ClCompile Include="Terrain.cpp">
       <Filter>10.GameObject\01.Terrain</Filter>
     </ClCompile>
@@ -224,7 +230,15 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>10.GameObject\00.BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>90.Manager\03.CollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="LineManager.cpp">
+      <Filter>90.Manager\04.LineManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>10.GameObject\02.Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

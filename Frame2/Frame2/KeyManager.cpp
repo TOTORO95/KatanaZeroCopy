@@ -56,7 +56,12 @@ void CKeyManager::Update()
 		m_dwCurKey |= KEY_F;
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 		m_dwCurKey |= KEY_RETURN;
+	if (GetAsyncKeyState('O') & 0x8000)
+		m_dwCurKey |= KEY_O;
+
 }
+
+
 
 bool CKeyManager::KeyDown(DWORD dwKey)
 {

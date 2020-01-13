@@ -4,11 +4,7 @@
 //
 
 #pragma once
-#ifdef UNICODE
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-#else
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-#endif
+
 
 #include "targetver.h"
 
@@ -51,4 +47,15 @@ using namespace std;
 #include "BmpManager.h"
 #include  "SceneManager.h"
 #include "LineManager.h"
+#include "CollisionManager.h"
+
+#ifdef _DEBUG
+// 콘솔창 띄우기
+#ifdef UNICODE
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#else
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#endif
+// VLD (Visual Leak Detector)
 #include "vld.h"
+#endif
