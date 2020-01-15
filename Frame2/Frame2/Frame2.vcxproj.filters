@@ -28,9 +28,6 @@
     <Filter Include="90.Manager\01.ObjectManager">
       <UniqueIdentifier>{3d295e8f-3132-46fa-a00f-caee4a8a89a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="90.Manager\02KeyManager">
-      <UniqueIdentifier>{2527a9fb-5bb0-4ed2-bdd0-7ce89d8f26a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="90.Manager\03.CollisionManager">
       <UniqueIdentifier>{0774e766-749a-4bb6-890b-dd7e8f3f7325}</UniqueIdentifier>
     </Filter>
@@ -81,6 +78,15 @@
     </Filter>
     <Filter Include="10.GameObject\03.Player">
       <UniqueIdentifier>{48fa74f7-2a80-437b-b63b-39cf4fc55a04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\04.Monster">
+      <UniqueIdentifier>{57ee4e99-4d30-4498-9c1e-6a665edb7d0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\02KeyManager">
+      <UniqueIdentifier>{2527a9fb-5bb0-4ed2-bdd0-7ce89d8f26a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\03.Player\00.AfterImage">
+      <UniqueIdentifier>{d7e116b4-96a7-4413-a52f-bd1796b885e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +180,8 @@
     <ClInclude Include="Tile.h">
       <Filter>10.GameObject\02.Tile</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="AfterImage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -239,6 +247,8 @@
     <ClCompile Include="Tile.cpp">
       <Filter>10.GameObject\02.Tile</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="AfterImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

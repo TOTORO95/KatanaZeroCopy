@@ -38,6 +38,33 @@ HDC CBmpManager::GetMemDC(const wstring & wstrImgKey) const	//해당 키값 존재시 d
 
 	return iter_find->second->GetMemDC();
 }
+HBITMAP CBmpManager::GetBMP(const wstring & wstrImgKey)
+{
+	auto iter_find = m_mapBmp.find(wstrImgKey);
+
+	if (m_mapBmp.end() == iter_find)
+		return nullptr;
+	return iter_find->second->GetBMP();
+}
+
+void CBmpManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePath, bool IsRot)
+{
+	auto iter_find = m_mapBmp.find(wstrImgKey);
+
+	if (m_mapBmp.end() != iter_find)
+		return;
+
+	CMyBmp* pBmp = new CMyBmp;
+
+	if (!pBmp->LoadBmp(wstrFilePath, IsRot))
+	{
+		SafeDelete(pBmp);
+		MessageBox(nullptr, wstrFilePath.c_str(), L"Image Load Failed", MB_OK);
+		return;
+	}
+
+	m_mapBmp.insert(make_pair(wstrImgKey, pBmp));
+}
 
 void CBmpManager::LoadBmp(const wstring & wstrImgKey, const wstring & wstrFilePath) //이미지를 키값과함께 맵에 저장
 {

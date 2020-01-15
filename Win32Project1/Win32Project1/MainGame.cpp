@@ -15,7 +15,7 @@ CMainGame::~CMainGame()
 void CMainGame::Initialize()
 {
 	m_hdc = GetDC(g_hwnd);
-	CBmpManager::GetInstance()->LoadBmp(L"BG", L"../Image/Player.bmp",true);//1280 485
+	CBmpManager::GetInstance()->LoadBmp(L"BG", L"../Image/BackGround/Stage1BG.bmp",true);//1280 485
 	LoadBmp(L"../Image/Player.bmp");
 	m_fAngle = 0;
 }
@@ -40,7 +40,8 @@ void CMainGame::Render()
 	//SelectObject(m_hdc, CBmpManager::GetInstance()->GetBMP(L"BG"));						//ตส
 	//SelectObject(m_hdc, m_hBitmap);
 
-	RotateSizingImage(m_hdc, CBmpManager::GetInstance()->GetBMP(L"BG"), m_fAngle, 300, 300, 0,150,50,50, 500, 400,trg,0.1);
+	//RotateSizingImage(m_hdc, CBmpManager::GetInstance()->GetBMP(L"BG"), m_fAngle, 300, 300, 0, 150, 50, 50, 500, 400, trg, 0.1);
+	RotateSizingImage(m_hdc, CBmpManager::GetInstance()->GetBMP(L"BG"), 50, 800, 300, 0, 0, 1600, 800, 500, 400, trg, 1);
 
 
 	//BITMAP bm = RotateSizingImage(m_hdc, m_hBitmap, m_fAngle, 1280 / 2, 485 / 2, 600, 300);
@@ -92,39 +93,6 @@ bool CMainGame::RotateSizingImage(HDC& hdc, HBITMAP hBmp, float dblAngle, int ix
 
 
 
-	HDC hMemdc;
-	HDC hMemdc2;
-	HBITMAP hOldBmp, hTemp;
-
-	hMemdc = CreateCompatibleDC(hdc);
-	hMemdc2 = CreateCompatibleDC(hdc);
-	//RECT rt;
-	//GetClientRect (
-	//FillRect(hMemdc, &rt, (HBRUSH)NULL_BRUSH);
-	//FillRect(hMemdc2, &rt, (HBRUSH)NULL_BRUSH);
-	// 
-
-	hOldBmp = (HBITMAP)SelectObject(hMemdc2, hBmp);
-	hTemp = CreateCompatibleBitmap(hdc, bm.bmWidth, bm.bmHeight);
-	SelectObject(hMemdc, hTemp);
-	//BOOL iRes = PlgBlt(hdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
-
-	//SelectObject(hMemdc2, hOldBmp);
-	BOOL iRes = PlgBlt(hdc, apt, hMemdc2, srcX, srcY, srcWidth, srcHeight, hMaskBmp, ixMask, iyMask);
-	//TransparentBlt(hdc, 0, 0, srcWidth, srcHeight, hMemdc, 0, 0, srcWidth, srcHeight, RGB(0, 0, 0));
-
-	//GdiTransparentBlt(hdc, 0, 0, srcWidth, srcHeight, hMemdc2, 0, 0, srcWidth, srcHeight, RGB(0, 0, 0));
-	//cout << iRes << endl;
-
-	//cout << bm.bmWidth << "                    " << bm.bmHeight << endl;
-
-	SelectObject(hMemdc2, hOldBmp);
-	//SelectObject(hMemdc, hOldBmp);
-	DeleteDC(hMemdc);
-	DeleteDC(hMemdc2);
-	return true;
-	
-	
 	//HDC hMemdc;
 	//HDC hMemdc2;
 	//HBITMAP hOldBmp, hTemp;
@@ -142,58 +110,11 @@ bool CMainGame::RotateSizingImage(HDC& hdc, HBITMAP hBmp, float dblAngle, int ix
 	//SelectObject(hMemdc, hTemp);
 	////BOOL iRes = PlgBlt(hdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
 
-	////SelectObject(hMemdc2, hOldBmp);
-	//BOOL iRes = PlgBlt(hMemdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
-	//TransparentBlt(hdc, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
-
-	////GdiTransparentBlt(hdc, 0, 0, srcWidth, srcHeight, hMemdc2, 0, 0, srcWidth, srcHeight, RGB(0, 0, 0));
-	////cout << iRes << endl;
-
-	////cout << bm.bmWidth << "                    " << bm.bmHeight << endl;
-
 	//SelectObject(hMemdc2, hOldBmp);
-	////SelectObject(hMemdc, hOldBmp);
-	//DeleteDC(hMemdc);
-	//DeleteDC(hMemdc2);
-	//return true;
+	////BOOL iRes = PlgBlt(hdc, apt, hMemdc2, srcX, srcY, srcWidth, srcHeight, hMaskBmp, ixMask, iyMask);
+	////TransparentBlt(hdc, 0, 0, srcWidth, srcHeight, hMemdc, 0, 0, srcWidth, srcHeight, RGB(0, 0, 0));
 
-
-
-
-
-
-
-
-
-	//HDC hMemdc, hMemdc2, hMemdc3;
-	////HDC hMemdc2;
-	//HBITMAP hOldBmp, hTemp,hTemp2;
-
-	//hMemdc = CreateCompatibleDC(hdc);
-	//hMemdc2 = CreateCompatibleDC(hdc);
-	//hMemdc3 = CreateCompatibleDC(hdc);
-
-	//hTemp = CreateCompatibleBitmap(hdc, bm.bmWidth, bm.bmHeight);
-	//hTemp2 = CreateCompatibleBitmap(hdc, bm.bmWidth, bm.bmHeight);
-
-
-	//hOldBmp = (HBITMAP)SelectObject(hMemdc, hBmp);
-	//SelectObject(hMemdc2, hTemp);
-	//SelectObject(hMemdc3, hTemp2);
-
-	////BOOL iRes = PlgBlt(hdc, apt, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
-
-	////GdiTransparentBlt(hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
-	//TransparentBlt(hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
-	//BOOL iRes = PlgBlt(hdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
-	//TransparentBlt(hMemdc3, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, RGB(255, 255, 255));
-
-	////SelectObject(hMemdc2, hOldBmp);
-
-	////BOOL iRes = PlgBlt(hMemdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
-	////TransparentBlt(hdc, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
-	////GdiTransparentBlt(hdc, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
-	////GdiTransparentBlt(hdc, ixDisplay- bm.bmWidth, iyDisplay - bm.bmHeight, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
+	//GdiTransparentBlt(hdc, 0, 0, srcWidth, srcHeight, hMemdc2, 0, 0, srcWidth, srcHeight, RGB(0, 0, 0));
 	////cout << iRes << endl;
 
 	//cout << bm.bmWidth << "                    " << bm.bmHeight << endl;
@@ -202,8 +123,88 @@ bool CMainGame::RotateSizingImage(HDC& hdc, HBITMAP hBmp, float dblAngle, int ix
 	//SelectObject(hMemdc, hOldBmp);
 	//DeleteDC(hMemdc);
 	//DeleteDC(hMemdc2);
-	//DeleteDC(hMemdc3);
 	//return true;
+	//
+	
+//	HDC hMemdc;
+//	HDC hMemdc2;
+//	HBITMAP hOldBmp, hTemp;
+//
+//	hMemdc = CreateCompatibleDC(hdc);
+//	hMemdc2 = CreateCompatibleDC(hdc);
+//	/*RECT rt;
+//	GetClientRect (
+//	FillRect(hMemdc, &rt, (HBRUSH)NULL_BRUSH);
+//	FillRect(hMemdc2, &rt, (HBRUSH)NULL_BRUSH);
+//	 
+//*/
+//	hOldBmp = (HBITMAP)SelectObject(hMemdc2, hBmp);
+//	hTemp = CreateCompatibleBitmap(hdc, bm.bmWidth, bm.bmHeight);
+//	SelectObject(hMemdc, hTemp);
+//	//BOOL iRes = PlgBlt(hdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
+//
+//	//SelectObject(hMemdc2, hOldBmp);
+//	BOOL iRes = PlgBlt(hMemdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
+//	TransparentBlt(hdc, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
+//
+//	//GdiTransparentBlt(hdc, 0, 0, srcWidth, srcHeight, hMemdc2, 0, 0, srcWidth, srcHeight, RGB(0, 0, 0));
+//	//cout << iRes << endl;
+//
+//	//cout << bm.bmWidth << "                    " << bm.bmHeight << endl;
+//
+//	SelectObject(hMemdc2, hOldBmp);
+//	//SelectObject(hMemdc, hOldBmp);
+//	DeleteDC(hMemdc);
+//	DeleteDC(hMemdc2);
+//	return true;
+//
+
+
+
+
+
+
+
+
+	HDC hMemdc, hMemdc2, hMemdc3;
+	//HDC hMemdc2;
+	HBITMAP hOldBmp, hTemp,hTemp2;
+
+	hMemdc = CreateCompatibleDC(hdc);
+	hMemdc2 = CreateCompatibleDC(hdc);
+	hMemdc3 = CreateCompatibleDC(hdc);
+
+	hTemp = CreateCompatibleBitmap(hdc, bm.bmWidth, bm.bmHeight);
+	hTemp2 = CreateCompatibleBitmap(hdc, bm.bmWidth, bm.bmHeight);
+
+
+	hOldBmp = (HBITMAP)SelectObject(hMemdc, hBmp);
+	SelectObject(hMemdc2, hTemp);
+	SelectObject(hMemdc3, hTemp2);
+
+	//BOOL iRes = PlgBlt(hdc, apt, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
+
+	//GdiTransparentBlt(hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
+	/*TransparentBlt(hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
+	BOOL iRes = PlgBlt(hdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
+	TransparentBlt(hMemdc3, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, RGB(255, 255, 255));*/
+
+	SelectObject(hMemdc2, hOldBmp);
+
+	//BOOL iRes = PlgBlt(hMemdc, apt, hMemdc2, 0, 0, bm.bmWidth, bm.bmHeight, hMaskBmp, ixMask, iyMask);
+	TransparentBlt(hdc, 0, 0, 1600, 800, hMemdc2, 0, 0, 1600, 800, RGB(0, 0, 0));
+	//GdiTransparentBlt(hdc, 0, 0, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
+	//GdiTransparentBlt(hdc, ixDisplay- bm.bmWidth, iyDisplay - bm.bmHeight, bm.bmWidth, bm.bmHeight, hMemdc, 0, 0, bm.bmWidth, bm.bmHeight, RGB(0, 0, 0));
+	//cout << iRes << endl;
+
+	cout << bm.bmWidth << "                    " << bm.bmHeight << endl;
+
+	SelectObject(hMemdc2, hOldBmp);
+	SelectObject(hMemdc, hOldBmp);
+	DeleteDC(hMemdc);
+	DeleteDC(hMemdc2);
+	DeleteDC(hMemdc3);
+	return true;
 
 }
 bool CMainGame::LoadBmp(const wstring& wstrFilePath)

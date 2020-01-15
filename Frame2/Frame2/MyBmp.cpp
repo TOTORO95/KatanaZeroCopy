@@ -37,6 +37,15 @@ bool CMyBmp::LoadBmp(const wstring& wstrFilePath)
 	//(HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
 	return true;
 }
+bool CMyBmp::LoadBmp(const wstring& wstrFilePath, bool isRot)
+{
+	// 비트맵 읽어오기.
+	m_hBitmap = (HBITMAP)LoadImage(nullptr, wstrFilePath.c_str(), IMAGE_BITMAP,
+		0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+	if (m_hBitmap == nullptr)
+		return false;
+
+}
 
 
 

@@ -4,6 +4,7 @@
 #include "BackGround.h"
 #include "Terrain.h"
 #include "Tile.h"
+
 CStage1::CStage1()
 {
 }
@@ -22,11 +23,12 @@ void CStage1::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"bg", L"../Image/BackGround/Stage1BG.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_R", L"../Image/Player/Player_R.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_L", L"../Image/Player/Player_L.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"RSlash", L"../Image/Player/Player_RSlash.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"LSlash", L"../Image/Player/Player_LSlash.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"Slash", L"../Image/Player/Player_AllSlash2.bmp");
-	//CBmpManager::GetInstance()->LoadBmp(L"Tile", L"../Image/Tile/Tile20.bmp");
-
+	CBmpManager::GetInstance()->LoadBmp(L"DSlash", L"../Image/Player/Player_DefaultSlash.bmp");
+	//CBmpManager::GetInstance()->LoadBmp(L"Slash", L"../Image/Player/Player_RSlash.bmp");
+	//CBmpManager::GetInstance()->LoadBmp(L"LSlash", L"../Image/Player/Player_LSlash.bmp");
+	//CBmpManager::GetInstance()->LoadBmp(L"Slash", L"../Image/Player/Player_AllSlash2.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"Slash", L"../Image/Player/Player_AllSlashSheet242.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"Tile", L"../Image/Tile/Tile20.bmp");
 	CObjectManager::GetInstance()->AddObject(BACKGROUND, CObjFactory<CBackGround>::CreateObject());
 	CObjectManager::GetInstance()->AddObject(TERRAIN, CObjFactory<CTerrain>::CreateObject());
 	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject());
@@ -40,10 +42,11 @@ void CStage1::Initialize()
 	else
 		MessageBox(nullptr, L"불러오기 실패!", L"", MB_OK);
 
+
 	for (auto tile : dynamic_cast<CTerrain*>(pTerrain)->GetTiles())
 	{
 		//RECT *temp = new RECT((int)(tile->fX-TILECX*0.5), );
-		if (tile->iDrawID !=0&& tile->iDrawID!=3)
+		if (tile->iDrawID !=0)
 		{
 			
 			CObjectManager::GetInstance()->AddObject(TILE,

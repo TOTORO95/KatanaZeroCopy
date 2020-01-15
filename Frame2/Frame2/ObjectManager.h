@@ -26,8 +26,9 @@ public:
 	void DeleteGroup(OBJ_TYPE eType);
 private:
 	void Release();
-
+	
 private:
+	int m_iCount;
 	OBJECT_LIST		m_ObjectList[OBJ_END];
 };
 

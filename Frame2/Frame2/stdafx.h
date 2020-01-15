@@ -48,6 +48,8 @@ using namespace std;
 #include  "SceneManager.h"
 #include "LineManager.h"
 #include "CollisionManager.h"
+#pragma comment(lib, "msimg32.lib")
+
 
 #ifdef _DEBUG
 // 콘솔창 띄우기

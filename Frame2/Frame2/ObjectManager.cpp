@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ObjectManager.h"
 #include "GameObject.h"
+#include "AfterImage.h"
 CObjectManager* CObjectManager::m_pInstance = nullptr;
 
 CObjectManager * CObjectManager::GetInstance()
@@ -19,7 +20,7 @@ void CObjectManager::DestroyInstance()
 
 CObjectManager::CObjectManager()
 {
-	
+	m_iCount = 0;
 }
 
 
@@ -80,6 +81,7 @@ void CObjectManager::AddObject(OBJ_TYPE eType, CGameObject * pObject)
 int CObjectManager::Update()
 {
 	int iEvent = NO_EVENT;
+	m_iCount++;
 
 	// 이터레이터 패턴(반복자 패턴)
 	// 객체 관리 통일성에 초점을 둔 디자인 패턴
@@ -103,7 +105,21 @@ int CObjectManager::Update()
 				++iter_begin;
 		}
 	}
-	CCollisionManager::CollisionRectTile(m_ObjectList[TILE], m_ObjectList[PLAYER]);
+	
+
+	//CCollisionManager::CollisionRectTile(m_ObjectList[TILE], m_ObjectList[PLAYER]);
+	CCollisionManager::CollisionRectEx(m_ObjectList[TILE], m_ObjectList[PLAYER]);
+	if (!m_ObjectList[AFTERIMAGE].empty())
+	{
+		m_ObjectList[AFTERIMAGE].front()->SetImageKey(m_ObjectList[PLAYER].front()->GetImageKey());
+		if (m_iCount % 3 == 0)
+		{
+			dynamic_cast<CAfterImage*>(m_ObjectList[AFTERIMAGE].front())->SetPlayerInfo(m_ObjectList[PLAYER].front()->GetWorldPos(), m_ObjectList[PLAYER].front()->GetFrame());
+			m_iCount = 0;
+		}
+	
+	}
+
 	//CCollisionMgr::CollisionSphere(m_ObjectList[BULLET], m_ObjectList[MONSTER]);
 	//CCollisionMgr::CollisionSphere(m_ObjectList[SHIELD], m_ObjectList[MONSTER]);
 	//CCollisionMgr::CollisionRectEx(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);

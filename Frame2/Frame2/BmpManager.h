@@ -14,10 +14,12 @@ public:
 	~CBmpManager();
 public:
 	HDC GetMemDC(const wstring& wstrImgKey) const;
-	
+	HBITMAP GetBMP(const wstring& wstrImgKey);
+
 public:
 	void LoadBmp(const wstring& wstrImgKey, const wstring& wstrFilePath);
-	
+	void LoadBmp(const wstring& wstrImgKey, const wstring& wstrFilePath, bool IsRot);
+
 private:
 	void Release();
 

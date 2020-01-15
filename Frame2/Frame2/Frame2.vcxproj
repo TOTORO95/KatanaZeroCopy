@@ -143,6 +143,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AfterImage.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BmpManager.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="LineManager.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="MyBmp.h" />
     <ClInclude Include="MyEdit.h" />
     <ClInclude Include="ObjectManager.h" />
@@ -175,6 +177,7 @@
     <ClInclude Include="Typedef.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AfterImage.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -185,6 +188,7 @@
     <ClCompile Include="LineManager.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MyBmp.cpp" />
     <ClCompile Include="MyEdit.cpp" />
     <ClCompile Include="ObjectManager.cpp" />

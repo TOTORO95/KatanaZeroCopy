@@ -50,9 +50,12 @@ void CCollisionManager::CollisionRect(OBJECT_LIST& dstList, OBJECT_LIST& srcList
 void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcList)
 {
 	float fMoveX = 0.f, fMoveY = 0.f;
-	for (auto pDest : dstList)
+	for (auto pSrc : srcList)
 	{
-		for (auto pSrc : srcList)
+		bool m_flatCOll = false;
+		bool m_wallCOll = false;
+		bool m_OnFlat = false;
+		for (auto pDest : dstList)
 		{
 			if (IntersectRectEx(pDest, pSrc, &fMoveX, &fMoveY))
 			{
@@ -61,21 +64,87 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 
 				if (fMoveX > fMoveY) // Y축으로 밀어냄
 				{
-					if (pDest->GetInfo().fY < fY)
-						pSrc->SetPos(fX, fY + fMoveY);
-					else
-						pSrc->SetPos(fX, fY - fMoveY);
+					if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 1)
+					{
+						//cout << "플랫" << endl;
+						if (pDest->GetInfo().fY < fY)//타일이 플레이어보다위에잇음
+						{
+							pSrc->SetPos(fX, fY + fMoveY+8);
+							
+						}
+						else
+						{
+							m_OnFlat = true;
+							m_flatCOll = true;
+							pSrc->SetPos(fX, fY - fMoveY);
+							pSrc->SetFlat(pDest->GetInfo().fY);
+							
+							//return;
+						}
+					}
+					if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 2 &&
+						!(dynamic_cast<CPlayer*>(pSrc)->GetIsDown()))
+					{
+						//cout << "플랫" << endl;
+						if (pDest->GetInfo().fY < fY)//타일이 플레이어보다위에잇음
+						{
+							//pSrc->SetPos(fX, fY + fMoveY + 8);
+						}
+						else
+						{
+							m_flatCOll = true;
+							pSrc->SetPos(fX, fY - fMoveY);
+							pSrc->SetFlat(pDest->GetInfo().fY);
+							//return;
+						}
+					}
 				}
 				else // X축으로 밀어냄
 				{
-					if (pDest->GetInfo().fX < fX)
-						pSrc->SetPos(fX + fMoveX, fY);
-					else
-						pSrc->SetPos(fX - fMoveX, fY);
+					if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 4)
+					{
+						//cout << "Wall" << endl;
+						pSrc->SetWall(pDest->GetInfo().fX);
+						m_wallCOll = true;
+						dynamic_cast<CPlayer*>(pSrc)->SetIsDbJump(m_wallCOll);
+						//cout << "벽" << endl;
+						if (pDest->GetInfo().fX< fX)
+						{
+							//cout << "player= x"<<fX <<"  "<<fX + fMoveX << endl;
+							pSrc->SetPos(fX + fMoveX + 2, fY);
+							dynamic_cast<CPlayer*>(pSrc)->SetDirection(0);
+						}
+						else
+						{
+							pSrc->SetPos(fX - fMoveX-2, fY);
+							dynamic_cast<CPlayer*>(pSrc)->SetDirection(1);
+
+						}
+					}
+					if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 3)
+					{
+						//cout << "Wall" << endl;
+						pSrc->SetWall(pDest->GetInfo().fX);
+						m_wallCOll = true;
+						//cout << "벽" << endl;
+						if (pDest->GetInfo().fX< fX)
+						{
+							pSrc->SetPos(fX + fMoveX+2, fY);
+						}
+						else
+						{
+							pSrc->SetPos(fX - fMoveX-2, fY);
+						}
+					}
 				}
+				//cout << "충돌" << endl;
 			}
 
 		}
+		pSrc->SetIsColl(m_flatCOll);
+	
+		dynamic_cast<CPlayer*>(pSrc)->SetIsOnFlat(m_OnFlat);
+
 	}
 
 }
@@ -103,6 +172,8 @@ bool CCollisionManager::CollisionRectTile(OBJECT_LIST & dstList, OBJECT_LIST & s
 	{
 		for (auto pDest : dstList)
 		{
+			float fX = pSrc->GetInfo().fX;
+			float fY = pSrc->GetInfo().fY;
 			RECT rc = {};
 			if (IntersectRect(&rc, &pDest->GetRect(), &pSrc->GetRect()))
 			{
@@ -114,18 +185,17 @@ bool CCollisionManager::CollisionRectTile(OBJECT_LIST & dstList, OBJECT_LIST & s
 				}
 				if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 1)
 				{
-					cout << "Flat" << endl;
 					pSrc->SetFlat(pDest->GetInfo().fY);
 					pSrc->SetIsColl(true);
-					cout << pDest->GetInfo().fY << endl;
+					return true;
 				}
 
-
+				
 			}
-		//dynamic_cast<CPlayer*>(pSrc)->SetIsDbJump(false);
-		//pSrc->SetIsColl(false);
-		//return false;
 		}
+		dynamic_cast<CPlayer*>(pSrc)->SetIsDbJump(false);
+		pSrc->SetIsColl(false);
+		return false;
 	}
 	return false;
 }
@@ -154,7 +224,7 @@ bool CCollisionManager::IntersectRectEx(CGameObject* pDest, CGameObject* pSource
 	// x축의 반지름 합과 거리를 구한다.
 	// 이 때 x축의 반지름 합이 x축의 거리보다 크면 x쪽으로 겹쳤다.
 	float fSumX = pDest->GetInfo().fCX * 0.5f + pSource->GetInfo().fCX * 0.5f;
-	float fDistX = fabs(pDest->GetInfo().fX - pSource->GetInfo().fX);
+	float fDistX = fabs(pDest->GetWorldPos().x - pSource->GetWorldPos().x);
 
 	// y축의 반지름 합과 거리를 구한다.
 	// 이 때 y축의 반지름 합이 y축의 거리보다 크면 y쪽으로 겹쳤다.

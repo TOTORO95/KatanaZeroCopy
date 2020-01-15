@@ -27,15 +27,20 @@ void CTile::Initialize()
 
 int CTile::Update()
 {
+	//m_tInfo.fX -= g_fScrollX;
+	UpdateWorldPos2();
 
-	CGameObject::UpdateRect();
+	CGameObject::UpdateRect2();
 	return NO_EVENT;
 }
 
 void CTile::Render(HDC hdc)
 {
-	if(CKeyManager::GetInstance()->KeyPressing(KEY_O))
+	if (CKeyManager::GetInstance()->KeyPressing(KEY_O))
 		Rectangle(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		//GdiTransparentBlt(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom,
+		//	CBmpManager::GetInstance()->GetMemDC(L"Tile"), TILECX*m_iOption, 0, TILECX, TILECY, RGB(0, 0, 0));
+
 }
 
 void CTile::Release()

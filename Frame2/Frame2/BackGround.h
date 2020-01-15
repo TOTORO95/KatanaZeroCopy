@@ -12,5 +12,8 @@ public:
 	virtual int Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
+	
+	
+
 };
 

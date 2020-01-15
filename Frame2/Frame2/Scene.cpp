@@ -12,6 +12,7 @@ CScene::~CScene()
 	Release();
 }
 
+
 void CScene::Release()
 {
 }

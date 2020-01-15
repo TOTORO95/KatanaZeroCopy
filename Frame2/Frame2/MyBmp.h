@@ -6,9 +6,11 @@ public:
 	~CMyBmp();
 public:
 	HDC GetMemDC() const;
+	HBITMAP GetBMP() { return m_hBitmap; }
 
 public:
 	bool LoadBmp(const wstring& wstrFilePath);
+	bool LoadBmp(const wstring& wstrFilePath, bool isRot);
 	
 private:
 	void Release();
