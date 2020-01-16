@@ -88,6 +88,12 @@
     <Filter Include="10.GameObject\03.Player\00.AfterImage">
       <UniqueIdentifier>{d7e116b4-96a7-4413-a52f-bd1796b885e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="90.Manager\03.CollisionManager\00.DetectManager">
+      <UniqueIdentifier>{1d7363d1-32ce-4630-9ba6-7972b527a638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\05.Bullet">
+      <UniqueIdentifier>{962bea00-ea2a-45ff-a090-81a6e6a3d750}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -186,6 +192,8 @@
     <ClInclude Include="Monster.h">
       <Filter>10.GameObject\04.Monster</Filter>
     </ClInclude>
+    <ClInclude Include="DetectManager.h" />
+    <ClInclude Include="Bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -257,6 +265,8 @@
     <ClCompile Include="Monster.cpp">
       <Filter>10.GameObject\04.Monster</Filter>
     </ClCompile>
+    <ClCompile Include="DetectManager.cpp" />
+    <ClCompile Include="Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

@@ -40,7 +40,13 @@ enum SCENE_TYPE
 	SCENE_END
 
 };
-
+enum OBJ_DIRECTION
+{
+	OBJ_LEFT,
+	OBJ_IDLE,
+	OBJ_RIGHT,
+	DIRECTION_END
+};
 
 #define __ENUM_H__
 #endif // !__ENUM_H__

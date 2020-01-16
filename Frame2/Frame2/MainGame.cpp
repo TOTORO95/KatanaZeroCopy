@@ -58,6 +58,7 @@ void CMainGame::Release()
 
 	CSceneManager::GetInstance()->DestroyInstance();
 	CObjectManager::GetInstance()->DestroyInstance();
+	CDetectManager::GetInstance()->DestroyInstance();
 	CKeyManager::GetInstance()->DestroyInstance();
 	CBmpManager::GetInstance()->DestroyInstance();
 }

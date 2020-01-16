@@ -48,6 +48,7 @@ using namespace std;
 #include  "SceneManager.h"
 #include "LineManager.h"
 #include "CollisionManager.h"
+#include "DetectManager.h"
 #pragma comment(lib, "msimg32.lib")
 
 

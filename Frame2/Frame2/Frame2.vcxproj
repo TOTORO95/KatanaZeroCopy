@@ -146,8 +146,10 @@
     <ClInclude Include="AfterImage.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BmpManager.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="DetectManager.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
     <ClInclude Include="Frame2.h" />
@@ -180,7 +182,9 @@
     <ClCompile Include="AfterImage.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BmpManager.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="DetectManager.cpp" />
     <ClCompile Include="Frame2.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="KeyManager.cpp" />

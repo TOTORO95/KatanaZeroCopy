@@ -25,7 +25,7 @@ void CPlayer::Initialize()
 	m_tInfo.fY = 300.f;
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
-	m_fAtkRange = 160.0f;
+	m_fAtkRange = 106.0;
 	m_fSpeed = 5.f;
 	m_fAngle = 90.f;	// Degree	
 	m_iCount = 0;
@@ -85,8 +85,8 @@ int CPlayer::Update()
 	WallJump();
 	if (GetIsAttk())
 	{
+		m_eCurState = STATE_ATTACK;
 		m_iCount++;
-		Attack();
 		//cout << m_iCount<<"Y=힘" << sinf(m_fRadian)*m_fAtkPower << endl;
 		m_tInfo.fX += cosf(m_fRadian)*m_fAtkPower*0.5;
 		m_tInfo.fY -= sinf(m_fRadian)*m_fAtkPower*0.5;
@@ -104,6 +104,7 @@ int CPlayer::Update()
 
 		//cout << "각= " << m_fAngle << endl;
 	}
+	Attack();
 	ScrollOffset();
 	ChangeState();
 	Animate();
@@ -121,32 +122,16 @@ void CPlayer::Render(HDC hdc)
 	NULL_CHECK(hMemDC);
 	//Source DC에 그려진 비트맵을 Dest DC로 복사하는 함수.이 때 지정한 색상을 제거할 수 있다.
 	if (CKeyManager::GetInstance()->KeyPressing(KEY_O))
+	{
 		Rectangle(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-		
-	GdiTransparentBlt(hdc,
-		m_tRect.left- m_tInfo.fCX*0.5,
-		m_tRect.top- m_tInfo.fCY*0.5,
-		(int)m_tInfo.fCX*2,
-		(int)m_tInfo.fCY*2,
-		hMemDC,
-		m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
-		m_tFrame.dwFrameY,
-		m_tInfo.fCX,
-		m_tInfo.fCY,
-		RGB(0, 0, 0));
+		Rectangle(hdc, m_tHitBox.left, m_tHitBox.top, m_tHitBox.right, m_tHitBox.bottom);
+	}
+	GdiTransparentBlt(hdc,m_tRect.left- m_tInfo.fCX*0.5,m_tRect.top- m_tInfo.fCY*0.5,(int)m_tInfo.fCX*2,
+		(int)m_tInfo.fCY*2,	hMemDC,m_tFrame.dwFrameX*m_tFrame.dwFrameStart,m_tFrame.dwFrameY,m_tInfo.fCX,m_tInfo.fCY,RGB(0, 0, 0));
 
 		hMemDC = CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey2);
-		GdiTransparentBlt(hdc,
-			m_WorldPos.x-106,
-			m_WorldPos.y - 106,
-			212,
-			212,
-			hMemDC,
-			m_tAtkFrame.dwFrameX*m_tAtkFrame.dwFrameStart,
-			m_tAtkFrame.dwFrameY,
-			106,
-			106,
-			RGB(0, 0, 0));
+		GdiTransparentBlt(hdc,m_WorldPos.x-106,m_WorldPos.y - 106,212,212,hMemDC,m_tAtkFrame.dwFrameX*m_tAtkFrame.dwFrameStart,
+			m_tAtkFrame.dwFrameY,106,106,RGB(0, 0, 0));
 	
 
 
@@ -154,7 +139,6 @@ void CPlayer::Render(HDC hdc)
 	if (m_bIsAttk)
 	{
 		LineTo(hdc, g_tMouseInfo.ptStart.x, g_tMouseInfo.ptStart.y);
-		//Rectangle(hdc, m_tHitBox.left, m_tHitBox.top, m_tHitBox.right, m_tHitBox.bottom);
 	}
 
 }
@@ -267,25 +251,32 @@ void CPlayer::KeyInput()
 
 void CPlayer::Attack()
 {
-	m_eCurState = STATE_ATTACK;
 
-	float fratio = 0.25f;
-	if (m_fAngle >= -22.5 && m_fAngle < 22.5)
-		m_tHitBox = { (LONG)(m_tInfo.fX),(LONG)(m_tInfo.fY - m_fAtkRange*fratio),(LONG)(m_tInfo.fX + m_fAtkRange), (LONG)(m_tInfo.fY + m_fAtkRange*fratio) };
-	else if (m_fAngle >= 22.5 && m_fAngle < 67.5)
-		m_tHitBox = { (LONG)(m_tInfo.fX),(LONG)(m_tInfo.fY - m_fAtkRange), (LONG)(m_tInfo.fX + m_fAtkRange), (LONG)(m_tInfo.fY) };
-	else if (m_fAngle >= 67.5 && m_fAngle < 112.5)
-		m_tHitBox = { (LONG)(m_tInfo.fX - m_fAtkRange*fratio),(LONG)(m_tInfo.fY - m_fAtkRange), (LONG)(m_tInfo.fX + m_fAtkRange*fratio),(LONG)(m_tInfo.fY) };
-	else if (m_fAngle >= 112.5 && m_fAngle < 157.5)
-		m_tHitBox = { (LONG)(m_tInfo.fX - m_fAtkRange), (LONG)(m_tInfo.fY - m_fAtkRange),(LONG)(m_tInfo.fX), (LONG)m_tInfo.fY };
-	else if (m_fAngle >= 157.5 || m_fAngle < -157.5)
-		m_tHitBox = { (LONG)(m_tInfo.fX - m_fAtkRange), (LONG)(m_tInfo.fY - m_fAtkRange*fratio), (LONG)(m_tInfo.fX), (LONG)(m_tInfo.fY + m_fAtkRange*fratio) };
-	else if (m_fAngle <= -112.5 && m_fAngle > -157.5)
-		m_tHitBox = { (LONG)(m_tInfo.fX - m_fAtkRange), (LONG)(m_tInfo.fY),(LONG)(m_tInfo.fX),(LONG)(m_tInfo.fY + m_fAtkRange) };
-	else if (m_fAngle <= -67.5 && m_fAngle > -112.5)
-		m_tHitBox = { (LONG)(m_tInfo.fX - m_fAtkRange*fratio), (LONG)(m_tInfo.fY), (LONG)(m_tInfo.fX + m_fAtkRange*fratio),(LONG)(m_tInfo.fY + m_fAtkRange) };
-	else if (m_fAngle <= -22.5 && m_fAngle > -67.5)
-		m_tHitBox = { (LONG)(m_tInfo.fX), (LONG)(m_tInfo.fY), (LONG)(m_tInfo.fX + m_fAtkRange), (LONG)(m_tInfo.fY + m_fAtkRange) };
+
+	float fratio = 0.125f;
+	if (GetIsAttk())
+	{
+		if (m_fAngle >= -22.5 && m_fAngle < 22.5)
+			m_tHitBox = { (LONG)(m_WorldPos.x),(LONG)(m_WorldPos.y - m_fAtkRange*fratio),(LONG)(m_WorldPos.x + m_fAtkRange), (LONG)(m_WorldPos.y + m_fAtkRange*fratio) };
+		else if (m_fAngle >= 22.5 && m_fAngle < 67.5)
+			m_tHitBox = { (LONG)(m_WorldPos.x),(LONG)(m_WorldPos.y - m_fAtkRange*0.75), (LONG)(m_WorldPos.x + m_fAtkRange*0.75), (LONG)(m_WorldPos.y) };
+		else if (m_fAngle >= 67.5 && m_fAngle < 112.5)
+			m_tHitBox = { (LONG)(m_WorldPos.x - m_fAtkRange*fratio),(LONG)(m_WorldPos.y - m_fAtkRange), (LONG)(m_WorldPos.x + m_fAtkRange*fratio),(LONG)(m_WorldPos.y) };
+		else if (m_fAngle >= 112.5 && m_fAngle < 157.5)
+			m_tHitBox = { (LONG)(m_WorldPos.x - m_fAtkRange*0.75), (LONG)(m_WorldPos.y - m_fAtkRange*0.75),(LONG)(m_WorldPos.x), (LONG)m_WorldPos.y };
+		else if (m_fAngle >= 157.5 || m_fAngle < -157.5)
+			m_tHitBox = { (LONG)(m_WorldPos.x - m_fAtkRange), (LONG)(m_WorldPos.y - m_fAtkRange*fratio), (LONG)(m_WorldPos.x), (LONG)(m_WorldPos.y + m_fAtkRange*fratio) };
+		else if (m_fAngle <= -112.5 && m_fAngle > -157.5)
+			m_tHitBox = { (LONG)(m_WorldPos.x - m_fAtkRange*0.75), (LONG)(m_tInfo.fY),(LONG)(m_WorldPos.x),(LONG)(m_tInfo.fY + m_fAtkRange*0.75) };
+		else if (m_fAngle <= -67.5 && m_fAngle > -112.5)
+			m_tHitBox = { (LONG)(m_WorldPos.x - m_fAtkRange*fratio), (LONG)(m_WorldPos.y), (LONG)(m_WorldPos.x + m_fAtkRange*fratio),(LONG)(m_WorldPos.y + m_fAtkRange) };
+		else if (m_fAngle <= -22.5 && m_fAngle > -67.5)
+			m_tHitBox = { (LONG)(m_WorldPos.x), (LONG)(m_WorldPos.y), (LONG)(m_WorldPos.x + m_fAtkRange*0.75), (LONG)(m_WorldPos.y + m_fAtkRange*0.75) };
+	}
+	else
+	{
+		m_tHitBox = { 0,0,0,0 };
+	}
 
 }
 
