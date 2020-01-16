@@ -372,7 +372,7 @@ void CPlayer::WallJump()
 }
 void CPlayer::ScrollOffset()
 {
-	 //플레이어가 화면에서 일정 범위를 벗어났을 때 스크롤을 움직인다.
+	//플레이어가 화면에서 일정 범위를 벗어났을 때 스크롤을 움직인다.
 	if (WinCX *0.75 <= m_WorldPos.x)
 	{
 		g_fScrollX += m_fSpeed;
@@ -381,7 +381,17 @@ void CPlayer::ScrollOffset()
 	{
 		g_fScrollX -= m_fSpeed;
 	}
-}	
+	if (CKeyManager::GetInstance()->KeyPressing(KEY_R))
+	{
+		g_fScrollX += sinf(GetTickCount()) * 5;
+		g_fScrollY += sinf(GetTickCount()) * 5;
+
+	}
+	if (CKeyManager::GetInstance()->KeyUp(KEY_R))
+	{
+		g_fScrollY = 0;
+	}
+}
 
 
 void CPlayer::Animate()

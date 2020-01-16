@@ -147,6 +147,7 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BmpManager.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="CameraMgr.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DetectManager.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="CameraMgr.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DetectManager.cpp" />
     <ClCompile Include="Frame2.cpp" />

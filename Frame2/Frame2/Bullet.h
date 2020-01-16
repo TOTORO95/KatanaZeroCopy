@@ -25,3 +25,4 @@ private:
 	FRAME m_frame;
 };
 
+

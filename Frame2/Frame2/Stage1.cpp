@@ -58,6 +58,7 @@ void CStage1::Initialize()
 
 int CStage1::Update()
 {
+	
 	CObjectManager::GetInstance()->Update();
 	//타일 객체생성 완료 이제 충돌 처리 할차례
 	if (0.f > g_fScrollX)

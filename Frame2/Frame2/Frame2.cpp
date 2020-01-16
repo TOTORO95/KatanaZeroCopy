@@ -146,7 +146,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case VK_ESCAPE:
+			
 			DestroyWindow(hWnd);
+			break;
 		}
 		break;
 	case WM_LBUTTONDOWN:

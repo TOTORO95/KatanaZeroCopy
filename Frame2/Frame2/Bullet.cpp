@@ -23,10 +23,10 @@ void CBullet::Initialize()
 	
 	m_tOldPos = { 0,0 };
 	m_fSpeed = 15;
-	SetSize(10, 5);
+	SetSize(15, 15);
 	m_Reverce = false;
 	m_frame.dwFrameCount = 5;
-	m_frame.dwFrameSpeed = 200;
+	m_frame.dwFrameSpeed = 100;
 	m_frame.dwFrameStart = 0;
 	m_frame.dwFrameX = 70;
 	m_frame.dwFrameY = 0;
@@ -99,9 +99,17 @@ void CBullet::Animate()
 		++m_frame.dwFrameStart;
 		m_frame.dwOldTime = dwCurTime;
 	}
+	if (m_frame.dwFrameStart < 2)
+	{
+		g_fScrollX += sinf(GetTickCount()) * 5;
+		g_fScrollY += cosf(GetTickCount()) * 2.5;
+	}
+
 	//cout <<"애니 카운트"<< m_frame.dwFrameCount << endl;
 	if (m_frame.dwFrameStart == m_frame.dwFrameCount)
+	{
+		g_fScrollY = 0;
 		return;
-
+	}
 
 }

@@ -7,6 +7,6 @@ extern MOUSE_INFO g_tMouseInfo;
 extern float g_fScrollX;
 extern float g_fScrollY;
 extern float g_fTime;
-
+//extern POINT g_f
 #define __EXTERN_H__
 #endif // !__EXTERN_H__
