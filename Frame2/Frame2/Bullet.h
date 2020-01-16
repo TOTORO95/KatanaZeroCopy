@@ -16,9 +16,12 @@ private:
 
 public:
 	void SetPosVector(POINT targetPos);
+	void ReflectionBullet();
+	void Animate();
 private:
+	POINT m_tOldPos;
 	POINT m_posVector;
-
-
+	bool m_Reverce;
+	FRAME m_frame;
 };
 

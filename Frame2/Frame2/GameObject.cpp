@@ -50,13 +50,13 @@ void CGameObject::SetSize(float x, float y)
 
 void CGameObject::SetAngle(float degree)
 {
-
+	m_fRadian = degree;
 }
 
 void CGameObject::SetAngle(float _x, float _y)
 {
-	float w = _x - m_WorldPos.x + g_fScrollX;
-	float h = _y - m_WorldPos.y;
+	float w = _x - m_tInfo.fX + g_fScrollX;
+	float h = _y - m_tInfo.fY;
 	float d = sqrtf(w * w + h * h);
 
 	// 라디안 단위.

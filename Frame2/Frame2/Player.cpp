@@ -69,6 +69,7 @@ void CPlayer::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"HUDUI", L"../Image/UI/HUD_UI.bmp");//640x23
 	CBmpManager::GetInstance()->LoadBmp(L"BatteryGage", L"../Image/UI/BatteryRedGage.bmp");//77x19
 	CBmpManager::GetInstance()->LoadBmp(L"Battery", L"../Image/UI/BatteryBlueGage.bmp");//54x10
+	CBmpManager::GetInstance()->LoadBmp(L"BulletReflect", L"../Image/Player/BulletReflect.bmp");
 	m_fGameTimer = 0.f;
 	m_fBulletGage = 100.f;
 }
@@ -236,7 +237,7 @@ void CPlayer::KeyInput()
 		if (m_WorldPos.x <= g_tMouseInfo.ptStart.x)
 			m_wstrImageKey = L"Player_R";
 		
-		SetAngle(g_tMouseInfo.ptStart.x-g_fScrollX, g_tMouseInfo.ptStart.y);
+		SetAngle(g_tMouseInfo.ptStart.x, g_tMouseInfo.ptStart.y);
 		m_bIsAttk = true;
 		g_tMouseInfo.bStart = true;
 
@@ -497,11 +498,11 @@ void CPlayer::AniDirection()
 	m_tAtkFrame.dwFrameX = 106;
 	m_tAtkFrame.dwFrameSpeed = 50;
 	m_tAtkFrame.dwOldTime = GetTickCount();
-
-	if (m_fAngle > 0)
+	//cout << m_fAngle << endl;
+	if (m_fAngle >= 0)
 		m_tAtkFrame.dwFrameY = 106*(int)((m_fAngle+7.5)/15);
 	else if (m_fAngle < 0)
-		m_tAtkFrame.dwFrameY = 106 * (int)(13-(-m_fAngle + 7.5) / 15)+1272;
+		m_tAtkFrame.dwFrameY = 106 * (int)(11-(-m_fAngle + 7.5) / 15)+1272;//10.5   -3      10.5  15  0 12
 
 }
 

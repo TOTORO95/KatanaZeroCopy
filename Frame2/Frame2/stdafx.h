@@ -31,7 +31,6 @@
 
 using namespace std;
 
-// TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
 
 // User Headers
 #include "Define.h"
@@ -60,5 +59,5 @@ using namespace std;
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 #endif
 // VLD (Visual Leak Detector)
-#include "vld.h"
+//#include "vld.h"
 #endif

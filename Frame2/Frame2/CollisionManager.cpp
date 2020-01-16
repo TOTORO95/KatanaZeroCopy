@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Tile.h"
 #include "Player.h"
+#include "Bullet.h"
 CCollisionManager* CCollisionManager::m_pInstance = nullptr;
 CCollisionManager * CCollisionManager::GetInstance()
 {
@@ -27,6 +28,26 @@ CCollisionManager::~CCollisionManager()
 {
 }
 
+void CCollisionManager::CollisionBullet(OBJECT_LIST& dstList, OBJECT_LIST& srcList)
+{
+	for (auto pDest : dstList)
+	{
+		for (auto pSrc : srcList)
+		{
+			RECT rc = {};
+
+			// 두 사각형이 교차되었는지 판별하는 함수. 교차됐으면 TRUE, 아니면 FALSE 반환.
+			// 두 사각형이 교차되었을 때 겹친 영역에 또다른 사각형이 만들어진다. 
+			// 이 겹친 사각형을 첫번째 인자로 반환한다.
+			if (IntersectRect(&rc, &pDest->GetRect(), &pSrc->GetRect()))
+			{
+				cout << "총알 충돌" << endl;
+				pDest->SetIsDead(true);
+				//pSrc->IsDead();
+			}
+		}
+	}
+}
 void CCollisionManager::CollisionRect(OBJECT_LIST& dstList, OBJECT_LIST& srcList)
 {
 	float fMoveX = 0.f, fMoveY = 0.f;
@@ -160,7 +181,20 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 	}
 
 }
-
+//void CCollisionManager::CollisionSphere(RECT& katanaRect, OBJECT_LIST& srcList)
+//{
+//	
+//	for (auto pSrc : srcList)
+//	{
+//		if (IntersectSphere(pDest, pSrc))
+//		{
+//			cout << "총알 충돌" << endl;
+//			//pDest->SetIsDead(true);
+//			pSrc->SetIsDead(true);
+//		}
+//	}
+//	
+//}
 void CCollisionManager::CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcList)
 {
 	for (auto pDest : dstList)
@@ -169,8 +203,9 @@ void CCollisionManager::CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 		{
 			if (IntersectSphere(pDest, pSrc))
 			{
-				//pDest->IsDead();
-				//pSrc->IsDead();
+				cout << "총알 충돌" << endl;
+				//pDest->SetIsDead(true);
+				pSrc->SetIsDead(true);
 			}
 		}
 	}
@@ -212,6 +247,23 @@ bool CCollisionManager::CollisionRectTile(OBJECT_LIST & dstList, OBJECT_LIST & s
 	return false;
 }
 
+bool CCollisionManager::CollisionRectKatana(RECT & katanaRect, OBJECT_LIST & srcList)
+{
+	for (auto pSrc : srcList)
+	{
+		float fX = pSrc->GetInfo().fX;
+		float fY = pSrc->GetInfo().fY;
+		RECT rc = {};
+		if (IntersectRect(&rc, &katanaRect, &pSrc->GetRect()))
+		{
+			dynamic_cast<CBullet*>(pSrc)->ReflectionBullet();
+			cout << "카타나 충돌" << endl;
+		}
+
+	}
+	return false;
+}
+
 bool CCollisionManager::IntersectSphere(CGameObject* pDest, CGameObject* pSource)
 {
 	// 원충돌
@@ -222,14 +274,15 @@ bool CCollisionManager::IntersectSphere(CGameObject* pDest, CGameObject* pSource
 	float r1 = pDest->GetInfo().fCX * 0.5f;
 	float r2 = pSource->GetInfo().fCX * 0.5f;
 
-	float w = pDest->GetInfo().fX - pSource->GetInfo().fX;
-	float h = pDest->GetInfo().fY - pSource->GetInfo().fY;
+	float w = pDest->GetWorldPos().x - pSource->GetWorldPos().x;
+	float h = pDest->GetWorldPos().y - pSource->GetWorldPos().y;
 
 	// sqrtf: 제곱근 구하는 함수. <cmath>에서 제공.
 	float d = sqrtf(w * w + h * h);
 
 	return r1 + r2 >= d;
 }
+
 
 bool CCollisionManager::IntersectRectEx(CGameObject* pDest, CGameObject* pSource, float* pMoveX, float* pMoveY)
 {

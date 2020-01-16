@@ -24,7 +24,7 @@ public:
 	void Pattern();
 public:
 	RECT GetDetectRect() { return  m_tDetectRect; }
-	void SetTarget(INFO targetInfo, bool isTarget);
+	void SetTarget(POINT targetInfo, bool isTarget);
 private:
 	POINT m_tFixPos;
 	int m_iCount;
@@ -33,5 +33,6 @@ private:
 	RECT m_tDetectRect;
 	LONG m_iDetectRange;
 	OBJ_DIRECTION m_eDirection;
+
 };
 

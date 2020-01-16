@@ -17,7 +17,7 @@ public:
 	void SetWorldPos(POINT val) { m_WorldPos = val; }
 	POINT GetWorldPos() { return m_WorldPos; }
 	bool GetIsDead() { return m_bIsDead; }
-	bool SetIsDead(bool _bool) { m_bIsDead = _bool; }
+	void SetIsDead(bool _bool) { m_bIsDead = _bool; }
 	bool GetIsAttk() const { return m_bIsAttk; }
 	void SetIsAttk(bool val) { m_bIsAttk = val; }
 	void SetFlat(float val) { m_flatY = val; }
@@ -25,6 +25,7 @@ public:
 	float Lerp(float src,float dest, float t);
 	void SetState(OBJ_STATE val) { m_state = val; }
 	FRAME GetFrame() { return m_tFrame; }
+	RECT GetHitBox() { return m_tHitBox; }
 
 public:
 	virtual void Initialize()=0;

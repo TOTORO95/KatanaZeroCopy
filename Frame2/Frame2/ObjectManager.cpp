@@ -120,7 +120,9 @@ int CObjectManager::Update()
 	
 	}
 	CDetectManager::GetInstance()->CollisionRect(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
-	//CCollisionMgr::CollisionSphere(m_ObjectList[BULLET], m_ObjectList[MONSTER]);
+	CCollisionManager::CollisionSphere(m_ObjectList[PLAYER], m_ObjectList[BULLET]);
+	if (m_ObjectList[PLAYER].front()->GetIsAttk())
+		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[BULLET]);
 	//CCollisionMgr::CollisionSphere(m_ObjectList[SHIELD], m_ObjectList[MONSTER]);
 	//CCollisionMgr::CollisionRectEx(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
 	return iEvent;

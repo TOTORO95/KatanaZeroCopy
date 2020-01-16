@@ -40,8 +40,8 @@ bool CDetectManager::CollisionRect(OBJECT_LIST & dstList, OBJECT_LIST & srcList)
 			RECT rc = {};
 			if (IntersectRect(&rc, &dynamic_cast<CMonster*>(pDest)->GetDetectRect(), &pSrc->GetRect()))
 			{
-				dynamic_cast<CMonster*>(pDest)->SetTarget(pSrc->GetInfo(), true);
-				cout << "충돌" << endl;
+				dynamic_cast<CMonster*>(pDest)->SetTarget(pSrc->GetWorldPos(), true);
+				//cout << "충돌" << endl;
 			}
 
 		}

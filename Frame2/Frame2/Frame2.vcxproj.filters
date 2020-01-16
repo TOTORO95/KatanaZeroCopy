@@ -193,7 +193,9 @@
       <Filter>10.GameObject\04.Monster</Filter>
     </ClInclude>
     <ClInclude Include="DetectManager.h" />
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Bullet.h">
+      <Filter>10.GameObject\05.Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -266,7 +268,9 @@
       <Filter>10.GameObject\04.Monster</Filter>
     </ClCompile>
     <ClCompile Include="DetectManager.cpp" />
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Bullet.cpp">
+      <Filter>10.GameObject\05.Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">
