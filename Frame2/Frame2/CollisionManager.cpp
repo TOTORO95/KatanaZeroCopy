@@ -29,19 +29,31 @@ CCollisionManager::~CCollisionManager()
 
 void CCollisionManager::CollisionRect(OBJECT_LIST& dstList, OBJECT_LIST& srcList)
 {
+	float fMoveX = 0.f, fMoveY = 0.f;
+
 	for (auto pDest : dstList)
 	{
 		for (auto pSrc : srcList)
 		{
-			RECT rc = {};
-
-			// 두 사각형이 교차되었는지 판별하는 함수. 교차됐으면 TRUE, 아니면 FALSE 반환.
-			// 두 사각형이 교차되었을 때 겹친 영역에 또다른 사각형이 만들어진다. 
-			// 이 겹친 사각형을 첫번째 인자로 반환한다.
-			if (IntersectRect(&rc, &pDest->GetRect(), &pSrc->GetRect()))
+			if (IntersectRectEx(pDest, pSrc, &fMoveX, &fMoveY))
 			{
-				//pDest->IsDead();
-				//pSrc->IsDead();
+				float fX = pSrc->GetInfo().fX;
+				float fY = pSrc->GetInfo().fY;
+
+				if (fMoveX > fMoveY) // Y축으로 밀어냄
+				{
+					if (pDest->GetInfo().fY < fY)
+						pSrc->SetPos(fX, fY + fMoveY);
+					else
+						pSrc->SetPos(fX, fY - fMoveY);
+				}
+				else // X축으로 밀어냄
+				{
+					if (pDest->GetInfo().fX < fX)
+						pSrc->SetPos(fX + fMoveX, fY);
+					else
+						pSrc->SetPos(fX - fMoveX, fY);
+				}
 			}
 		}
 	}

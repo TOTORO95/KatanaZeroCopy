@@ -65,12 +65,19 @@ void CPlayer::Initialize()
 	m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
 	CBmpManager::GetInstance()->LoadBmp(L"BulletTime", L"../Image/BackGround/BulletTime.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"HUDTimer", L"../Image/UI/HUD_Timer.bmp");//112x19
+	CBmpManager::GetInstance()->LoadBmp(L"TimerGage", L"../Image/UI/TimerGage.bmp");//94x11
 	CBmpManager::GetInstance()->LoadBmp(L"HUDUI", L"../Image/UI/HUD_UI.bmp");//640x23
+	CBmpManager::GetInstance()->LoadBmp(L"BatteryGage", L"../Image/UI/BatteryRedGage.bmp");//77x19
+	CBmpManager::GetInstance()->LoadBmp(L"Battery", L"../Image/UI/BatteryBlueGage.bmp");//54x10
+	m_fGameTimer = 0.f;
+	m_fBulletGage = 100.f;
 }
 
 int CPlayer::Update()
 {
+	m_fGameTimer += 2.0f/g_fTime;
 	
+
 	KeyInput();
 	UpdateWorldPos2();
 	Move();
@@ -105,6 +112,7 @@ int CPlayer::Update()
 
 void CPlayer::Render(HDC hdc)
 {
+
 
 	CGameObject::UpdateRect2();
 	BulletTime(hdc);
@@ -183,7 +191,6 @@ void CPlayer::KeyInput()
 	if (CKeyManager::GetInstance()->KeyUp(KEY_SPACE))
 	{
 		m_bIsJump = false;
-		//m_bDJump = false;
 	}
 	else
 		m_eCurState = STATE_IDLE;
@@ -239,6 +246,7 @@ void CPlayer::KeyInput()
 	}
 	if (CKeyManager::GetInstance()->KeyDown(KEY_LBUTTON))//공격
 	{
+		//cout << m_WorldPos.x << endl;
 		if (m_WorldPos.x > g_tMouseInfo.ptStart.x)
 			m_wstrImageKey = L"Player_L";
 		if (m_WorldPos.x <= g_tMouseInfo.ptStart.x)
@@ -373,13 +381,13 @@ void CPlayer::WallJump()
 void CPlayer::ScrollOffset()
 {
 	 //플레이어가 화면에서 일정 범위를 벗어났을 때 스크롤을 움직인다.
-	if (WinCX *0.7 <= m_WorldPos.x)
+	if (WinCX *0.75 <= m_WorldPos.x)
 	{
-		g_fScrollX += m_fSpeed*2;
+		g_fScrollX += m_fSpeed;
 	}
-	if (WinCX *0.3 >= m_WorldPos.x)
+	if (WinCX *0.25 >= m_WorldPos.x)
 	{
-		g_fScrollX -= m_fSpeed*2;
+		g_fScrollX -= m_fSpeed;
 	}
 }	
 
@@ -502,18 +510,20 @@ void CPlayer::AniDirection()
 	if (m_fAngle > 0)
 		m_tAtkFrame.dwFrameY = 106*(int)((m_fAngle+7.5)/15);
 	else if (m_fAngle < 0)
-		m_tAtkFrame.dwFrameY = 106 * (int)(12-(-m_fAngle + 7.5) / 15)+1272;
+		m_tAtkFrame.dwFrameY = 106 * (int)(13-(-m_fAngle + 7.5) / 15)+1272;
 
 }
 
 void CPlayer::BulletTime(HDC hdc)
 {
-	if (CKeyManager::GetInstance()->KeyPressing(KEY_SHIFT))
+
+	if (CKeyManager::GetInstance()->KeyPressing(KEY_SHIFT)&&m_fBulletGage-2>0)
 	{
 		if (m_iAlpha <= 150)
 			m_iAlpha += 10;
 		m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
 		AlphaBlend(hdc, 0, 0, WinCX, WinCY, CBmpManager::GetInstance()->GetMemDC(L"BulletTime"), 0, 0, 1280, 800, m_BlendFuntion);
+		m_fBulletGage -= 2.f;
 	}
 	else
 	{
@@ -527,7 +537,11 @@ void CPlayer::BulletTime(HDC hdc)
 		m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
 		if (m_iAlpha != 0)
 			AlphaBlend(hdc, 0, 0, WinCX, WinCY, CBmpManager::GetInstance()->GetMemDC(L"BulletTime"), 0, 0, 1280, 800, m_BlendFuntion);
-
+		
+		if (m_fBulletGage < 100)
+			m_fBulletGage += 1.0f;
+		else if (m_fBulletGage > 100)
+			m_fBulletGage = 100;
 	}
 }
 
@@ -537,5 +551,17 @@ void CPlayer::RenderUI(HDC hdc)
 	NULL_CHECK(hMemDC);
 	GdiTransparentBlt(hdc, 0, 0, 1280, 46, hMemDC, 0, 0, 640, 23, RGB(0, 0, 0));
 	hMemDC = CBmpManager::GetInstance()->GetMemDC(L"HUDTimer");
-	GdiTransparentBlt(hdc,WinCX*0.45, 0, 224, 38, hMemDC, 0, 0, 112, 19, RGB(0, 0, 0));
+	GdiTransparentBlt(hdc, WinCX*0.435, 0, 224, 38, hMemDC, 0, 0, 112, 19, RGB(0, 0, 0));
+	hMemDC = CBmpManager::GetInstance()->GetMemDC(L"TimerGage");
+	GdiTransparentBlt(hdc, WinCX*0.462, 4, 188.f-(m_fGameTimer/188.f), 22, hMemDC, 0, 0, 94, 11, RGB(0, 0, 0));
+	hMemDC = CBmpManager::GetInstance()->GetMemDC(L"BatteryGage");
+	GdiTransparentBlt(hdc, WinCX*0.025, 0, 154, 38, hMemDC, 0, 0, 77, 19, RGB(0, 0, 0)); 
+	hMemDC = CBmpManager::GetInstance()->GetMemDC(L"Battery");
+	int fGageVal =  (m_fBulletGage+2) / 10;
+
+	GdiTransparentBlt(hdc, WinCX*0.0429, 8, 11*fGageVal, 20, hMemDC, 0, 0, 5*fGageVal, 10, SRCCOPY);
+
+
+
+
 }

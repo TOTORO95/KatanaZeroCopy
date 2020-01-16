@@ -180,8 +180,12 @@
     <ClInclude Include="Tile.h">
       <Filter>10.GameObject\02.Tile</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h" />
-    <ClInclude Include="AfterImage.h" />
+    <ClInclude Include="AfterImage.h">
+      <Filter>10.GameObject\03.Player\00.AfterImage</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>10.GameObject\04.Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -247,8 +251,12 @@
     <ClCompile Include="Tile.cpp">
       <Filter>10.GameObject\02.Tile</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="AfterImage.cpp" />
+    <ClCompile Include="AfterImage.cpp">
+      <Filter>10.GameObject\03.Player\00.AfterImage</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>10.GameObject\04.Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

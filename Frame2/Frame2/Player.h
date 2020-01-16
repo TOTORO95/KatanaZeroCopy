@@ -51,8 +51,14 @@ private:
 	bool		m_bDJump;
 	bool		m_WallJump;
 	int			m_iDirection;
+
+
 	//알파값변수
 	BLENDFUNCTION	m_BlendFuntion;
 	int				m_iAlpha;
+
+	//Timer
+	float m_fGameTimer;
+	float m_fBulletGage;
 };
 

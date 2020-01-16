@@ -97,7 +97,7 @@ void CGameObject::UpdateRect2()
 }
 void CGameObject::UpdateWorldPos2()
 {
-	m_WorldPos = { (LONG)(m_tInfo.fX - g_fScrollX*0.5)
+	m_WorldPos = { (LONG)(m_tInfo.fX - g_fScrollX)
 		,(LONG)(m_tInfo.fY - g_fScrollY) };
 }
 

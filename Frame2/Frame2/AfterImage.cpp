@@ -30,26 +30,34 @@ void CAfterImage::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"RShadow1", L"../Image/Player/AfterImage/RAfterImage1.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"RShadow2", L"../Image/Player/AfterImage/RAfterImage2.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"RShadow3", L"../Image/Player/AfterImage/RAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"RShadow4", L"../Image/Player/AfterImage/RAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"RShadow5", L"../Image/Player/AfterImage/RAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"RShadow6", L"../Image/Player/AfterImage/RAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"RShadow7", L"../Image/Player/AfterImage/RAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"RShadow8", L"../Image/Player/AfterImage/RAfterImage3.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"RShadow4", L"../Image/Player/AfterImage/RAfterImage4.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"RShadow5", L"../Image/Player/AfterImage/RAfterImage5.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"RShadow6", L"../Image/Player/AfterImage/RAfterImage6.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"RShadow7", L"../Image/Player/AfterImage/RAfterImage7.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"RShadow8", L"../Image/Player/AfterImage/RAfterImage8.bmp");
 	
 	CBmpManager::GetInstance()->LoadBmp(L"LShadow1", L"../Image/Player/AfterImage/LAfterImage1.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"LShadow2", L"../Image/Player/AfterImage/LAfterImage2.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"LShadow3", L"../Image/Player/AfterImage/LAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"LShadow4", L"../Image/Player/AfterImage/LAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"LShadow5", L"../Image/Player/AfterImage/LAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"LShadow6", L"../Image/Player/AfterImage/LAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"LShadow7", L"../Image/Player/AfterImage/LAfterImage3.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"LShadow8", L"../Image/Player/AfterImage/LAfterImage3.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"LShadow4", L"../Image/Player/AfterImage/LAfterImage4.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"LShadow5", L"../Image/Player/AfterImage/LAfterImage5.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"LShadow6", L"../Image/Player/AfterImage/LAfterImage6.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"LShadow7", L"../Image/Player/AfterImage/LAfterImage7.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"LShadow8", L"../Image/Player/AfterImage/LAfterImage8.bmp");
 
 	m_OldPos = { (LONG)m_tInfo.fX,(LONG)m_tInfo.fY };
 	m_playerPos = { (LONG)m_tInfo.fX,(LONG)m_tInfo.fY };
 	m_tOldFrame = m_tFrame;
 	m_bFalg = false;
 	m_iCount = 0;
+
+	//알파값
+	//UI부분
+	m_iAlpha = 125;
+	m_BlendFuntion.AlphaFormat = 0;
+	m_BlendFuntion.BlendOp = AC_SRC_OVER;
+	m_BlendFuntion.BlendFlags = 0;
+	m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
 
 }
 
@@ -201,6 +209,7 @@ void CAfterImage::AniDriection(HDC hdc)
 			default:
 				break;
 			}
+
 			GdiTransparentBlt(hdc,
 				m_LerpPos[i].x - m_tInfo.fCX*0.8,
 				m_LerpPos[i].y - m_tInfo.fCY*0.9,
@@ -212,6 +221,12 @@ void CAfterImage::AniDriection(HDC hdc)
 				m_tInfo.fCX,
 				m_tInfo.fCY,
 				RGB(0, 0, 0));
+
+
+
+
+
+
 		}
 	}
 }

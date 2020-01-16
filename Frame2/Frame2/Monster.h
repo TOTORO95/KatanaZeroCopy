@@ -5,6 +5,7 @@ class CMonster :
 {
 public:
 	CMonster();
+	CMonster(float fposX,float fPosY);
 	~CMonster();
 
 
@@ -16,6 +17,10 @@ public:
 	virtual void Render(HDC hdc) override;
 
 	virtual void Release() override;
-
+	void Attack();
+	void BeAttack();
+	void Pattern();
+	POINT m_tFixPos;
+	int m_iCount;
 };
 

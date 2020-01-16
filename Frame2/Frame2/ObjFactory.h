@@ -14,9 +14,9 @@ public:
 	}
 	static CGameObject* CreateObject(float x, float y)
 	{
-		CGameObject* pObject = new T;
+		CGameObject* pObject = new T(x,y);
 		pObject->Initialize();
-		pObject->SetPos(x, y);
+		//pObject->SetPos(x, y);
 
 		return pObject;
 	}

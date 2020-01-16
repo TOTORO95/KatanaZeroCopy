@@ -35,10 +35,12 @@ void CMainGame::Update()
 
 void CMainGame::Render()
 {
+
 	// 더블 버퍼링
 	// 보이지 않는 후면버퍼에 이미지 교체 작업을 진행하고 
 	// 후면버퍼에 그려진 모든 결과물을 전면버퍼에 한번만 뿌려준다.
 	// 화면 깜빡임을 해소할 수 있다!
+	
 	HDC hBackBuffer = CBmpManager::GetInstance()->GetMemDC(L"Backbuffer");
 	NULL_CHECK(hBackBuffer);
 
@@ -46,6 +48,8 @@ void CMainGame::Render()
 
 	// 후면버퍼의 결과물을 전면버퍼로 복사한다.
 	BitBlt(m_hdc, 0, 0, WinCX, WinCY, hBackBuffer, 0, 0, SRCCOPY);
+
+
 }
 
 void CMainGame::Release()

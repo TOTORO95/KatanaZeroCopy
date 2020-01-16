@@ -26,5 +26,26 @@ private:
 	bool		m_bFalg;
 	int			m_iCount;
 	wstring		m_wstrImageKey2;
+
+	//알파값변수
+	BLENDFUNCTION	m_BlendFuntion;
+	int				m_iAlpha;
 };
 
+/*
+GdiTransparentBlt(hdc,
+m_LerpPos[i].x - m_tInfo.fCX*0.8,
+m_LerpPos[i].y - m_tInfo.fCY*0.9,
+(int)m_tInfo.fCX * 1.6,
+(int)m_tInfo.fCY * 1.8,
+hMemDC,
+m_tOldFrame.dwFrameX*i,
+m_tOldFrame.dwFrameY,
+m_tInfo.fCX,
+m_tInfo.fCY,
+RGB(0, 0, 0));
+
+
+
+
+*/

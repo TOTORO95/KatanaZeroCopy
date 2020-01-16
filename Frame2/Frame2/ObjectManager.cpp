@@ -107,8 +107,8 @@ int CObjectManager::Update()
 	}
 	
 
-	//CCollisionManager::CollisionRectTile(m_ObjectList[TILE], m_ObjectList[PLAYER]);
 	CCollisionManager::CollisionRectEx(m_ObjectList[TILE], m_ObjectList[PLAYER]);
+	CCollisionManager::CollisionRect(m_ObjectList[TILE], m_ObjectList[MONSTER]);
 	if (!m_ObjectList[AFTERIMAGE].empty())
 	{
 		m_ObjectList[AFTERIMAGE].front()->SetImageKey(m_ObjectList[PLAYER].front()->GetImageKey());
@@ -128,6 +128,7 @@ int CObjectManager::Update()
 
 void CObjectManager::Render(HDC hdc)
 {
+
 	// 이터레이터 패턴(반복자 패턴)
 	for (int i = 0; i < OBJ_END; ++i)
 	{
