@@ -401,28 +401,51 @@ void CPlayer::ScrollOffset()
 void CPlayer::Animate()
 {
 	DWORD dwCurTime = GetTickCount();
-
-	if (m_tFrame.dwOldTime + m_tFrame.dwFrameSpeed/ g_fTime <= dwCurTime)
+	if (m_eCurState != STATE_DEAD)
 	{
-		++m_tFrame.dwFrameStart;
-		m_tFrame.dwOldTime = dwCurTime;
-	}
+		if (m_tFrame.dwOldTime + m_tFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+		{
+			++m_tFrame.dwFrameStart;
+			m_tFrame.dwOldTime = dwCurTime;
+		}
 
-	if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount)
-		m_tFrame.dwFrameStart = 0;
-	
-	if (m_tAtkFrame.dwOldTime + m_tAtkFrame.dwFrameSpeed/ g_fTime <= dwCurTime)
-	{
-		++m_tAtkFrame.dwFrameStart;
-		m_tAtkFrame.dwOldTime = dwCurTime;
-	}
+		if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount)
+			m_tFrame.dwFrameStart = 0;
 
-	if (m_tAtkFrame.dwFrameStart == m_tAtkFrame.dwFrameCount)
-		m_tFrame.dwFrameStart = 0;
-	if (m_eCurState == STATE_ROLL&&m_tFrame.dwFrameStart < 5)
-		m_bRoll = true;
+		if (m_tAtkFrame.dwOldTime + m_tAtkFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+		{
+			++m_tAtkFrame.dwFrameStart;
+			m_tAtkFrame.dwOldTime = dwCurTime;
+		}
+
+
+		if (m_tAtkFrame.dwFrameStart == m_tAtkFrame.dwFrameCount)
+			m_tFrame.dwFrameStart = 0;
+		if (m_eCurState == STATE_ROLL&&m_tFrame.dwFrameStart < 5)
+			m_bRoll = true;
+		else
+			m_bRoll = false;
+	}
 	else
-		m_bRoll = false;
+	{
+		if (m_tFrame.dwFrameStart < m_tFrame.dwFrameCount - 1)
+		{
+			KnockBack();
+			g_fScrollX += sinf(GetTickCount()) * 10;
+			g_fScrollY += cosf(GetTickCount()) * 10;
+		}
+		else
+		{
+			g_fScrollY = 0;
+			if (m_tFrame.dwOldTime + m_tFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+			{
+				++m_tFrame.dwFrameStart;
+				m_tFrame.dwOldTime = dwCurTime;
+			}
+		}
+	}
+
+	
 
 }
 
@@ -502,6 +525,14 @@ void CPlayer::ChangeState()
 			m_tFrame.dwFrameSpeed = 50; // 0.2초 간격
 			m_tFrame.dwOldTime = GetTickCount();
 			break;
+		case STATE_DEAD:
+			m_tFrame.dwFrameStart = 0;
+			m_tFrame.dwFrameCount = 6;
+			m_tFrame.dwFrameX = 50;
+			m_tFrame.dwFrameY = 450;
+			m_tFrame.dwFrameSpeed = 50; // 0.2초 간격
+			m_tFrame.dwOldTime = GetTickCount();
+			break;
 		}
 
 		m_ePreState = m_eCurState;
@@ -574,4 +605,22 @@ void CPlayer::RenderUI(HDC hdc)
 
 
 
+}
+
+void CPlayer::KnockBack()
+{
+	m_tInfo.fX -= cosf(m_fRadian) * 10;
+	m_tInfo.fY += sinf(m_fRadian) * 15;
+}
+
+void CPlayer::BeAttack(POINT targetInfo)
+{
+	if (m_WorldPos.x < targetInfo.x)
+		m_wstrImageKey = L"Player_R";
+	else
+		m_wstrImageKey = L"Player_L";
+
+	SetAngle(targetInfo.x, targetInfo.y);
+	m_eCurState = STATE_DEAD;
+	//m_bIsDead = true;
 }

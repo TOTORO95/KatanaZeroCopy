@@ -18,9 +18,10 @@ CStage1::~CStage1()
 void CStage1::Initialize()
 {
 	//CLineManager::GetInstance()->Initialize();
-
-
+	m_iMonCount = 3;
+	m_bIsNest = false;
 	CBmpManager::GetInstance()->LoadBmp(L"bg", L"../Image/BackGround/Stage1BG.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"bk", L"../Image/BackGround/BK.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_R", L"../Image/Player/Player_R.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_L", L"../Image/Player/Player_L.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"DSlash", L"../Image/Player/Player_DefaultSlash.bmp");
@@ -32,6 +33,7 @@ void CStage1::Initialize()
 
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(1280, 300, GUNSTER));
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(500, 530, GUNSTER));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(800, 530, GRUNT));
 
 	CGameObject* pTerrain = CObjectManager::GetInstance()->GetTerrain();
 	NULL_CHECK(pTerrain);
@@ -53,13 +55,17 @@ void CStage1::Initialize()
 		}
 	}
 	CObjectManager::GetInstance()->DeleteGroup(TERRAIN);
-	
+
+	m_iAlpha = 0;
+	m_BlendFuntion.AlphaFormat = 0;
+	m_BlendFuntion.BlendOp = AC_SRC_OVER;
+	m_BlendFuntion.BlendFlags = 0;
+	m_BlendFuntion.SourceConstantAlpha = m_iAlpha;//0~255  0투명 255불투명
 
 }
 
 int CStage1::Update()
 {
-	
 	CObjectManager::GetInstance()->Update();
 	//타일 객체생성 완료 이제 충돌 처리 할차례
 	if (0.f > g_fScrollX)
@@ -71,20 +77,46 @@ int CStage1::Update()
 	if (float(TILE_COUNT_Y * TILECY - WinCY) < g_fScrollY)
 		g_fScrollY = float(TILE_COUNT_Y * TILECY - WinCY);
 	
+
+
+ 	OBJECT_LIST tMonList=CObjectManager::GetInstance()->GetObjList(MONSTER);
+	int iMC = 0;
+	for (auto pMon : tMonList)
+	{
+		if (pMon->GetStop())
+			iMC++;
+		if (iMC == m_iMonCount)
+		{
+			m_bIsNest = true;
+		}
+	}
+
 	return NO_EVENT;
 }
 
 void CStage1::Render(HDC hDC)
 {
-
 	//HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(L"Stage1BG");
 	//NULL_CHECK(hMemDC);
 	//GdiTransparentBlt(hDC, 0, 0, 2132, 800, hMemDC, 0, 0, 1600, 600, SRCCOPY);
 	//CLineManager::GetInstance()->Render(hDC);
 
 
-
 	CObjectManager::GetInstance()->Render(hDC);
+
+	m_BlendFuntion.SourceConstantAlpha=m_iAlpha = 200;
+	AlphaBlend(hDC, 278 - g_fScrollX, 258 - g_fScrollY, 40, 60,
+		CBmpManager::GetInstance()->GetMemDC(L"bk"), 0, 0, 1280, 800, m_BlendFuntion);
+
+	m_tDoor= {278 , 258,318 ,318};
+	Rectangle(hDC, m_tDoor.left- g_fScrollX ,
+		m_tDoor.top - g_fScrollY,
+		m_tDoor.right - g_fScrollX,
+		m_tDoor.bottom - g_fScrollY);
+
+	//Rectangle(hDC, 280, 260, 320, 320);
+	//BitBlt(hDC, 278-g_fScrollX, 258-g_fScrollY, 40, 60,
+	//	CBmpManager::GetInstance()->GetMemDC(L"bk"), 0, 0, SRCCOPY);
 
 	////CLineManager::GetInstance()->Render(hDC);
 	//TCHAR strMouse[64] = {};

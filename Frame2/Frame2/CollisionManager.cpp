@@ -201,13 +201,19 @@ void CCollisionManager::CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 		{
 			if (IntersectSphere(pDest, pSrc))
 			{
-				if (dynamic_cast<CBullet*>(pSrc)->GetBulletTag() == MONSTER_BULLET)
+				if (dynamic_cast<CBullet*>(pSrc)->GetBulletTag() == MONSTER_BULLET)// 몬스터 총알일때
 				{
-					if(pDest->GetObjType()==PLAYER)
+					if (pDest->GetObjType() == PLAYER)
+					{
+						dynamic_cast<CPlayer*>(pDest)->BeAttack(pSrc->GetWorldPos());
+						pDest->SetStop(true);
 						pSrc->SetIsDead(true);
-				
+					
+						//TODO: 넉백 차례
+					
+					}
 				}
-				else
+				else// 플레이어총알일때
 				{
 					if (pDest->GetObjType() == MONSTER)
 					{
@@ -215,6 +221,7 @@ void CCollisionManager::CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 						if (pDest->GetObjType() == MONSTER)
 						{
 							dynamic_cast<CMonster*>(pDest)->BeAttack(pSrc->GetWorldPos());
+							
 						}
 					}
 				}
@@ -275,6 +282,7 @@ bool CCollisionManager::CollisionRectKatana(RECT & katanaRect, OBJECT_LIST & src
 			{
 					dynamic_cast<CMonster*>(pSrc)->BeAttack(playerPos);
 			}
+
 			//cout << "카타나 충돌" << endl;
 		}
 

@@ -28,6 +28,8 @@ public:
 	RECT GetHitBox() { return m_tHitBox; }
 	OBJ_TYPE GetObjType() { return m_eObjType; }
 	void SetObjType(OBJ_TYPE val) { m_eObjType=val; }
+	void SetStop(bool val) { m_bisStop = val; }
+	bool GetStop() { return m_bisStop; }
 
 public:
 	virtual void Initialize()=0;
@@ -72,5 +74,6 @@ protected:
 	FRAME		m_tAtkFrame;
 	FRAME		m_tFrame;
 	POINT		m_OldScroll;
+	bool		m_bisStop;
 };
 

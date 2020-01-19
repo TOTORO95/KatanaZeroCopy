@@ -18,6 +18,7 @@ public:
 	bool GetIsRoll() { return m_bRoll; }
 	void SetIsOnFlat(bool val) { m_bOnFlat=val; }
 	void SetDirection(int val) { m_iDirection = val; }
+	void BeAttack(POINT targetInfo);
 	
 private:
 	void KeyInput();
@@ -32,13 +33,12 @@ private:
 	void AniDirection();
 	void BulletTime(HDC hdc);
 	void RenderUI(HDC hdc);
-
+	void KnockBack();
 private:
 	bool		m_bIsJump;
 	
 	float		m_fAtkRange;
 	float		m_fAtkPower;
-
 
 	wstring		m_wstrImageKey2;
 	bool		m_bDown;

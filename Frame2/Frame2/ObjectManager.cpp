@@ -46,6 +46,11 @@ CGameObject* CObjectManager::GetTerrain()
 	return m_ObjectList[TERRAIN].front();
 }
 
+OBJECT_LIST CObjectManager::GetObjList(OBJ_TYPE eType)
+{
+	return m_ObjectList[eType];
+}
+
 
 
 CGameObject * CObjectManager::GetNearTarget(CGameObject * pObject, OBJ_TYPE eType)
@@ -121,12 +126,12 @@ int CObjectManager::Update()
 	
 	}
 	CDetectManager::GetInstance()->CollisionRect(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
-	if (!dynamic_cast<CPlayer*>(m_ObjectList[PLAYER].front())->GetIsRoll())
+	if (!dynamic_cast<CPlayer*>(m_ObjectList[PLAYER].front())->GetIsRoll())// 구를때 무적
 	{
 		CCollisionManager::CollisionSphere(m_ObjectList[PLAYER], m_ObjectList[BULLET]);
 	
 	}CCollisionManager::CollisionSphere(m_ObjectList[MONSTER], m_ObjectList[BULLET]);
-	if (m_ObjectList[PLAYER].front()->GetIsAttk())
+	if (m_ObjectList[PLAYER].front()->GetIsAttk())//공격할때 
 	{
 		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[BULLET]);
 		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[MONSTER], m_ObjectList[PLAYER].front()->GetWorldPos());

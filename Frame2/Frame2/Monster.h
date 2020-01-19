@@ -19,6 +19,7 @@ private:
 
 public:
 	void LoadBmp();
+	void InitMonster();
 	void UpdateDetectRect();
 	void Move();
 	void Attack();
@@ -43,6 +44,7 @@ private:
 	wstring m_wstrLImageKey;
 	wstring m_wstrRImageKey;
 	float m_HitRange;
+
 	
 };
 
