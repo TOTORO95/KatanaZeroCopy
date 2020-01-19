@@ -18,11 +18,13 @@ public:
 	void SetPosVector(POINT targetPos);
 	void ReflectionBullet();
 	void Animate();
+	BULLET_TAG GetBulletTag() { return m_eBulletTag; }
 private:
 	POINT m_tOldPos;
 	POINT m_posVector;
 	bool m_Reverce;
 	FRAME m_frame;
+	BULLET_TAG m_eBulletTag;
 };
 
 

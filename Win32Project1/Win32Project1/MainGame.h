@@ -10,23 +10,23 @@ public:
 	void Update();
 	void Render();
 	void Release();
-	bool RotateSizingImage(HDC& hdc, HBITMAP hBmp,
-		float dblAngle,
-		int ixRotateAxis, int iyRotateAxis,int srcX,int srcY,int srcWidth,int srcHeight,
-		int ixDisplay, int iyDisplay, tagRGBTRIPLE rgb,
-		float dblSizeRatio = 1,
-		HBITMAP hMaskBmp = NULL, int ixMask = 0, int iyMask = 0); 
-	bool LoadBmp(const wstring& wstrFilePath);
+	//bool RotateSizingImage(HDC& hdc, HBITMAP hBmp,
+	//	float dblAngle,
+	//	int ixRotateAxis, int iyRotateAxis,int srcX,int srcY,int srcWidth,int srcHeight,
+	//	int ixDisplay, int iyDisplay, tagRGBTRIPLE rgb,
+	//	float dblSizeRatio = 1,
+	//	HBITMAP hMaskBmp = NULL, int ixMask = 0, int iyMask = 0); 
+	//bool LoadBmp(const wstring& wstrFilePath);
 
 
 private:
 	HDC m_hdc;
 	float m_fAngle;
 
-private:
-	HDC m_hMemDC;
-	HBITMAP m_hBitmap;
-	HBITMAP m_hOldBmp;
+//private:
+//	HDC m_hMemDC;
+//	HBITMAP m_hBitmap;
+//	HBITMAP m_hOldBmp;
 };
 
 //HDC hMemdc, hMemdc2;

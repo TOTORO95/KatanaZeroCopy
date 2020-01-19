@@ -5,7 +5,7 @@ class CMonster :
 {
 public:
 	CMonster();
-	CMonster(float fposX,float fPosY);
+	CMonster(MONSTER_TYPE eMonster_Type,float fposX,float fPosY);
 	~CMonster();
 
 public:
@@ -18,21 +18,31 @@ private:
 
 
 public:
+	void LoadBmp();
 	void UpdateDetectRect();
+	void Move();
 	void Attack();
-	void BeAttack();
+	void BeAttack(POINT targetInfo);
+	void KnockBack();
 	void Pattern();
+	void Animate();
+	void ChangeState();
+
 public:
 	RECT GetDetectRect() { return  m_tDetectRect; }
 	void SetTarget(POINT targetInfo, bool isTarget);
 private:
 	POINT m_tFixPos;
-	int m_iCount;
+	float m_fCount;
 	POINT m_tTargetPos;
 	bool m_bIsTargetSet;
 	RECT m_tDetectRect;
 	LONG m_iDetectRange;
 	OBJ_DIRECTION m_eDirection;
-
+	MONSTER_TYPE m_eMonsterType;
+	wstring m_wstrLImageKey;
+	wstring m_wstrRImageKey;
+	float m_HitRange;
+	
 };
 

@@ -1,3 +1,3 @@
 #pragma once
 
-extern HWND g_hwnd;
+extern HWND g_hWnd;

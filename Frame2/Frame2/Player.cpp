@@ -4,14 +4,14 @@
 #include "AfterImage.h"
 
 CPlayer::CPlayer()
-	: m_bIsJump(false),
-	m_bDJump(false),
-	m_fJumpForce(0.f),
-	m_fJumpAcc(0.f),
-	m_ePreState(STATE_END),
-	m_eCurState(STATE_END)
+	: m_bIsJump(false),m_bDJump(false)
 {
+	m_fJumpForce=0.f;
+	m_fJumpAcc=0.f;
 	ZeroMemory(&m_tFrame, sizeof(FRAME));
+	m_ePreState=STATE_END;
+	m_eCurState=STATE_END;
+
 }
 
 
@@ -21,6 +21,7 @@ CPlayer::~CPlayer()
 //TODO: 라인 따라서 움직이는거 ,아래로점프  구르기 구현해야함
 void CPlayer::Initialize()
 {
+	m_eObjType = PLAYER;
 	m_tInfo.fX = 400.f;
 	m_tInfo.fY = 300.f;
 	m_tInfo.fCX = 50.f;
@@ -62,7 +63,7 @@ void CPlayer::Initialize()
 	m_BlendFuntion.AlphaFormat = 0;
 	m_BlendFuntion.BlendOp = AC_SRC_OVER;
 	m_BlendFuntion.BlendFlags = 0;
-	m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
+	m_BlendFuntion.SourceConstantAlpha = m_iAlpha;//0~255  0투명 255불투명
 	CBmpManager::GetInstance()->LoadBmp(L"BulletTime", L"../Image/BackGround/BulletTime.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"HUDTimer", L"../Image/UI/HUD_Timer.bmp");//112x19
 	CBmpManager::GetInstance()->LoadBmp(L"TimerGage", L"../Image/UI/TimerGage.bmp");//94x11
@@ -128,7 +129,10 @@ void CPlayer::Render(HDC hdc)
 		Rectangle(hdc, m_tHitBox.left, m_tHitBox.top, m_tHitBox.right, m_tHitBox.bottom);
 	}
 	GdiTransparentBlt(hdc,m_tRect.left- m_tInfo.fCX*0.5,m_tRect.top- m_tInfo.fCY*0.5,(int)m_tInfo.fCX*2,
-		(int)m_tInfo.fCY*2,	hMemDC,m_tFrame.dwFrameX*m_tFrame.dwFrameStart,m_tFrame.dwFrameY,m_tInfo.fCX,m_tInfo.fCY,RGB(0, 0, 0));
+		(int)m_tInfo.fCY*2,	hMemDC,
+		m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
+		m_tFrame.dwFrameY,
+		m_tInfo.fCX,m_tInfo.fCY,RGB(0, 0, 0));
 
 		hMemDC = CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey2);
 		GdiTransparentBlt(hdc,m_WorldPos.x-106,m_WorldPos.y - 106,212,212,hMemDC,m_tAtkFrame.dwFrameX*m_tAtkFrame.dwFrameStart,
@@ -415,6 +419,10 @@ void CPlayer::Animate()
 
 	if (m_tAtkFrame.dwFrameStart == m_tAtkFrame.dwFrameCount)
 		m_tFrame.dwFrameStart = 0;
+	if (m_eCurState == STATE_ROLL&&m_tFrame.dwFrameStart < 5)
+		m_bRoll = true;
+	else
+		m_bRoll = false;
 
 }
 
@@ -512,7 +520,7 @@ void CPlayer::AniDirection()
 	if (m_fAngle >= 0)
 		m_tAtkFrame.dwFrameY = 106*(int)((m_fAngle+7.5)/15);
 	else if (m_fAngle < 0)
-		m_tAtkFrame.dwFrameY = 106 * (int)(11-(-m_fAngle + 7.5) / 15)+1272;//10.5   -3      10.5  15  0 12
+		m_tAtkFrame.dwFrameY = 106 * (int)(11-(-m_fAngle + 7.5) / 15)+1378;//106 10.5   -3      10.5  15  0 12
 
 }
 
@@ -548,7 +556,7 @@ void CPlayer::BulletTime(HDC hdc)
 }
 
 void CPlayer::RenderUI(HDC hdc)
-{//TODO:현재 UI 추가중 배터리, 시간게이지 추가중...
+{
 	HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(L"HUDUI");
 	NULL_CHECK(hMemDC);
 	GdiTransparentBlt(hdc, 0, 0, 1280, 46, hMemDC, 0, 0, 640, 23, RGB(0, 0, 0));

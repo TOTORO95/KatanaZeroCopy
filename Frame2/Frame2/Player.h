@@ -35,15 +35,11 @@ private:
 
 private:
 	bool		m_bIsJump;
-	float		m_fJumpForce;	// Èû
-	float		m_fJumpAcc;		// °¡¼Óµµ
-	float		m_fRightVal;
-	float		m_fLeftVal;
+	
 	float		m_fAtkRange;
 	float		m_fAtkPower;
 
-	OBJ_STATE	m_ePreState;
-	OBJ_STATE	m_eCurState;
+
 	wstring		m_wstrImageKey2;
 	bool		m_bDown;
 	bool		m_bRoll;

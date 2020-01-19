@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Monster.h"
 CCollisionManager* CCollisionManager::m_pInstance = nullptr;
 CCollisionManager * CCollisionManager::GetInstance()
 {
@@ -41,8 +42,10 @@ void CCollisionManager::CollisionBullet(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 			// 이 겹친 사각형을 첫번째 인자로 반환한다.
 			if (IntersectRect(&rc, &pDest->GetRect(), &pSrc->GetRect()))
 			{
-				cout << "총알 충돌" << endl;
+				//if (dynamic_cast<CBullet*>(pSrc)->GetBulletTag == MONSTER_BULLET)
 				pDest->SetIsDead(true);
+				
+
 				//pSrc->IsDead();
 			}
 		}
@@ -54,29 +57,32 @@ void CCollisionManager::CollisionRect(OBJECT_LIST& dstList, OBJECT_LIST& srcList
 
 	for (auto pDest : dstList)
 	{
+		bool bIsColl = false;
 		for (auto pSrc : srcList)
 		{
 			if (IntersectRectEx(pDest, pSrc, &fMoveX, &fMoveY))
 			{
-				float fX = pSrc->GetInfo().fX;
-				float fY = pSrc->GetInfo().fY;
+				bIsColl = true;
+				float fX = pDest->GetInfo().fX;
+				float fY = pDest->GetInfo().fY;
 
 				if (fMoveX > fMoveY) // Y축으로 밀어냄
 				{
-					if (pDest->GetInfo().fY < fY)
-						pSrc->SetPos(fX, fY + fMoveY);
+					if (pSrc->GetInfo().fY < fY)
+						pDest->SetPos(fX, fY + fMoveY);
 					else
-						pSrc->SetPos(fX, fY - fMoveY);
+						pDest->SetPos(fX, fY - fMoveY);
 				}
 				else // X축으로 밀어냄
 				{
-					if (pDest->GetInfo().fX < fX)
-						pSrc->SetPos(fX + fMoveX, fY);
+					if (pSrc->GetInfo().fX < fX)
+						pDest->SetPos(fX + fMoveX, fY);
 					else
-						pSrc->SetPos(fX - fMoveX, fY);
+						pDest->SetPos(fX - fMoveX, fY);
 				}
 			}
 		}
+		pDest->SetIsColl(bIsColl);
 	}
 }
 
@@ -99,7 +105,6 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 				{
 					if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 1)
 					{
-						//cout << "플랫" << endl;
 						if (pDest->GetInfo().fY < fY)//타일이 플레이어보다위에잇음
 						{
 							pSrc->SetPos(fX, fY + fMoveY+8);
@@ -118,7 +123,6 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 					if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 2 &&
 						!(dynamic_cast<CPlayer*>(pSrc)->GetIsDown()))
 					{
-						//cout << "플랫" << endl;
 						if (pDest->GetInfo().fY < fY)//타일이 플레이어보다위에잇음
 						{
 							//pSrc->SetPos(fX, fY + fMoveY + 8);
@@ -136,14 +140,11 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 				{
 					if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 4)
 					{
-						//cout << "Wall" << endl;
 						pSrc->SetWall(pDest->GetInfo().fX);
 						m_wallCOll = true;
 						dynamic_cast<CPlayer*>(pSrc)->SetIsDbJump(m_wallCOll);
-						//cout << "벽" << endl;
 						if (pDest->GetInfo().fX< fX)
 						{
-							//cout << "player= x"<<fX <<"  "<<fX + fMoveX << endl;
 							pSrc->SetPos(fX + fMoveX + 2, fY);
 							dynamic_cast<CPlayer*>(pSrc)->SetDirection(0);
 						}
@@ -156,10 +157,8 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 					}
 					if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 3)
 					{
-						//cout << "Wall" << endl;
 						pSrc->SetWall(pDest->GetInfo().fX);
 						m_wallCOll = true;
-						//cout << "벽" << endl;
 						if (pDest->GetInfo().fX< fX)
 						{
 							pSrc->SetPos(fX + fMoveX+2, fY);
@@ -170,7 +169,6 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 						}
 					}
 				}
-				//cout << "충돌" << endl;
 			}
 
 		}
@@ -203,9 +201,24 @@ void CCollisionManager::CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 		{
 			if (IntersectSphere(pDest, pSrc))
 			{
-				cout << "총알 충돌" << endl;
+				if (dynamic_cast<CBullet*>(pSrc)->GetBulletTag() == MONSTER_BULLET)
+				{
+					if(pDest->GetObjType()==PLAYER)
+						pSrc->SetIsDead(true);
+				
+				}
+				else
+				{
+					if (pDest->GetObjType() == MONSTER)
+					{
+						pSrc->SetIsDead(true);
+						if (pDest->GetObjType() == MONSTER)
+						{
+							dynamic_cast<CMonster*>(pDest)->BeAttack(pSrc->GetWorldPos());
+						}
+					}
+				}
 				//pDest->SetIsDead(true);
-				pSrc->SetIsDead(true);
 			}
 		}
 	}
@@ -226,7 +239,6 @@ bool CCollisionManager::CollisionRectTile(OBJECT_LIST & dstList, OBJECT_LIST & s
 			{
 				if (dynamic_cast<CTile*>(pDest)->GetTileOpt() == 4)
 				{
-					//cout << "Wall" << endl;
 					pSrc->SetWall(pDest->GetInfo().fX);
 					dynamic_cast<CPlayer*>(pSrc)->SetIsDbJump(true);
 				}
@@ -247,7 +259,7 @@ bool CCollisionManager::CollisionRectTile(OBJECT_LIST & dstList, OBJECT_LIST & s
 	return false;
 }
 
-bool CCollisionManager::CollisionRectKatana(RECT & katanaRect, OBJECT_LIST & srcList)
+bool CCollisionManager::CollisionRectKatana(RECT & katanaRect, OBJECT_LIST & srcList, POINT playerPos)
 {
 	for (auto pSrc : srcList)
 	{
@@ -256,8 +268,14 @@ bool CCollisionManager::CollisionRectKatana(RECT & katanaRect, OBJECT_LIST & src
 		RECT rc = {};
 		if (IntersectRect(&rc, &katanaRect, &pSrc->GetRect()))
 		{
-			dynamic_cast<CBullet*>(pSrc)->ReflectionBullet();
-			cout << "카타나 충돌" << endl;
+			POINT pos;
+			if(pSrc->GetObjType()==BULLET)
+				dynamic_cast<CBullet*>(pSrc)->ReflectionBullet();
+			if (pSrc->GetObjType() == MONSTER)
+			{
+					dynamic_cast<CMonster*>(pSrc)->BeAttack(playerPos);
+			}
+			//cout << "카타나 충돌" << endl;
 		}
 
 	}

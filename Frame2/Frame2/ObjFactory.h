@@ -20,6 +20,14 @@ public:
 
 		return pObject;
 	}
+	static CGameObject* CreateObject(float x, float y, MONSTER_TYPE eMonster_Type)
+	{
+		CGameObject* pObject = new T(eMonster_Type,x, y);
+		pObject->Initialize();
+		//pObject->SetPos(x, y);
+
+		return pObject;
+	}
 	static CGameObject* CreateObject(float x, float y, int option)
 	{
 		CGameObject* pObject = new T(x,y,option);

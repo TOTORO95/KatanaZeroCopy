@@ -2,6 +2,7 @@
 #include "ObjectManager.h"
 #include "GameObject.h"
 #include "AfterImage.h"
+#include "Player.h"
 CObjectManager* CObjectManager::m_pInstance = nullptr;
 
 CObjectManager * CObjectManager::GetInstance()
@@ -108,7 +109,7 @@ int CObjectManager::Update()
 	
 
 	CCollisionManager::CollisionRectEx(m_ObjectList[TILE], m_ObjectList[PLAYER]);
-	CCollisionManager::CollisionRect(m_ObjectList[TILE], m_ObjectList[MONSTER]);
+	CCollisionManager::CollisionRect(m_ObjectList[MONSTER],m_ObjectList[TILE]);
 	if (!m_ObjectList[AFTERIMAGE].empty())
 	{
 		m_ObjectList[AFTERIMAGE].front()->SetImageKey(m_ObjectList[PLAYER].front()->GetImageKey());
@@ -120,9 +121,16 @@ int CObjectManager::Update()
 	
 	}
 	CDetectManager::GetInstance()->CollisionRect(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
-	CCollisionManager::CollisionSphere(m_ObjectList[PLAYER], m_ObjectList[BULLET]);
+	if (!dynamic_cast<CPlayer*>(m_ObjectList[PLAYER].front())->GetIsRoll())
+	{
+		CCollisionManager::CollisionSphere(m_ObjectList[PLAYER], m_ObjectList[BULLET]);
+	
+	}CCollisionManager::CollisionSphere(m_ObjectList[MONSTER], m_ObjectList[BULLET]);
 	if (m_ObjectList[PLAYER].front()->GetIsAttk())
+	{
 		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[BULLET]);
+		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[MONSTER], m_ObjectList[PLAYER].front()->GetWorldPos());
+	}
 	//CCollisionMgr::CollisionSphere(m_ObjectList[SHIELD], m_ObjectList[MONSTER]);
 	//CCollisionMgr::CollisionRectEx(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
 	return iEvent;

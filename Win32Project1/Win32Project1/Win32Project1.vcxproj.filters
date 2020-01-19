@@ -22,6 +22,9 @@
     <Filter Include="90.ImageManager\00.Image">
       <UniqueIdentifier>{6b3b0220-209a-4b30-8e33-201d27e6541c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="80.NewManager">
+      <UniqueIdentifier>{caf06303-f87b-4f68-bbce-fe7e435205ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -42,17 +45,18 @@
     <ClInclude Include="Extern.h">
       <Filter>98.Headers</Filter>
     </ClInclude>
-    <ClInclude Include="BmpManager.h">
-      <Filter>90.ImageManager</Filter>
-    </ClInclude>
-    <ClInclude Include="MyBmp.h">
-      <Filter>90.ImageManager\00.Image</Filter>
-    </ClInclude>
     <ClInclude Include="Function.h">
       <Filter>98.Headers</Filter>
     </ClInclude>
     <ClInclude Include="Define.h">
       <Filter>98.Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h" />
+    <ClInclude Include="BitmapManager.h">
+      <Filter>90.ImageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBitmap.h">
+      <Filter>90.ImageManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,11 +69,11 @@
     <ClCompile Include="MainGame.cpp">
       <Filter>01.MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="BmpManager.cpp">
+    <ClCompile Include="MyBitmap.cpp">
       <Filter>90.ImageManager</Filter>
     </ClCompile>
-    <ClCompile Include="MyBmp.cpp">
-      <Filter>90.ImageManager\00.Image</Filter>
+    <ClCompile Include="BitmapManager.cpp">
+      <Filter>90.ImageManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

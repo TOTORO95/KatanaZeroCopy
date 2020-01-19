@@ -26,6 +26,8 @@ public:
 	void SetState(OBJ_STATE val) { m_state = val; }
 	FRAME GetFrame() { return m_tFrame; }
 	RECT GetHitBox() { return m_tHitBox; }
+	OBJ_TYPE GetObjType() { return m_eObjType; }
+	void SetObjType(OBJ_TYPE val) { m_eObjType=val; }
 
 public:
 	virtual void Initialize()=0;
@@ -44,24 +46,31 @@ protected:
 		float dblSizeRatio = 1,
 		HBITMAP hMaskBmp = NULL, int ixMask = 0, int iyMask = 0);
 protected:
+
 	INFO		m_tInfo;
 	POINT		m_WorldPos;
-
+	OBJ_STATE	m_ePreState;
+	OBJ_STATE	m_eCurState;
 	RECT		m_tRect;
 	RECT		m_tHitBox;
 	bool		m_bIsDead;
 	float		m_fSpeed;
 	float		m_fAngle;
 	float		m_fRadian;
+	float		m_fJumpForce;	// Èû
+	float		m_fJumpAcc;		// °¡¼Óµµ
+	float		m_fRightVal;
+	float		m_fLeftVal;
 	wstring		m_wstrImageKey;
 	bool		m_bIsAttk;
 	bool		m_bIsColl;
 	int			m_iCount;
 	float		m_flatY;
 	float		m_WallX;
+	OBJ_TYPE	m_eObjType;
 	OBJ_STATE	m_state;
 	FRAME		m_tAtkFrame;
 	FRAME		m_tFrame;
-
+	POINT		m_OldScroll;
 };
 

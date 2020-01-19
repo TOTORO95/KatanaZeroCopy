@@ -39,9 +39,8 @@ void CBackGround::Render(HDC hdc)
 	BitBlt(hdc, 0, 0, 2400, 1500, hMemDC,0,0, SRCCOPY);
 
 	hMemDC= CBmpManager::GetInstance()->GetMemDC(L"bg");
-	//HDC hBackDC= 
 	NULL_CHECK(hMemDC);
-	BitBlt(hdc, 0, 0, WinCX, WinCY, hMemDC, WinCX*0.5 - m_WorldPos.x, 0, SRCCOPY);
+	BitBlt(hdc, 0, 0, WinCX, WinCY, hMemDC, WinCX*0.5 - m_WorldPos.x, 0-m_WorldPos.y+400, SRCCOPY);
 
 
 }

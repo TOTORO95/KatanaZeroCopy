@@ -41,7 +41,8 @@ bool CDetectManager::CollisionRect(OBJECT_LIST & dstList, OBJECT_LIST & srcList)
 			if (IntersectRect(&rc, &dynamic_cast<CMonster*>(pDest)->GetDetectRect(), &pSrc->GetRect()))
 			{
 				dynamic_cast<CMonster*>(pDest)->SetTarget(pSrc->GetWorldPos(), true);
-				//cout << "충돌" << endl;
+
+				//cout << "발견" << endl;
 			}
 
 		}

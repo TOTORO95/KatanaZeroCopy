@@ -30,8 +30,9 @@ void CStage1::Initialize()
 	CObjectManager::GetInstance()->AddObject(TERRAIN, CObjFactory<CTerrain>::CreateObject());
 	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject());
 
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(1280,300));
-	
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(1280, 300, GUNSTER));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(500, 530, GUNSTER));
+
 	CGameObject* pTerrain = CObjectManager::GetInstance()->GetTerrain();
 	NULL_CHECK(pTerrain);
 
