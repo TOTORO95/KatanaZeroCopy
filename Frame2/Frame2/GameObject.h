@@ -14,6 +14,7 @@ public:
 	void SetAngle(float degree);
 	void SetAngle(float _x, float _y);
 	void SetIsColl(bool val) { m_bIsColl = val; }
+	bool GetisCOll() { return m_bIsColl; }
 	void SetWorldPos(POINT val) { m_WorldPos = val; }
 	POINT GetWorldPos() { return m_WorldPos; }
 	bool GetIsDead() { return m_bIsDead; }

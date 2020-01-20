@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Door.h"
 #include "Monster.h"
 CCollisionManager* CCollisionManager::m_pInstance = nullptr;
 CCollisionManager * CCollisionManager::GetInstance()
@@ -29,7 +30,7 @@ CCollisionManager::~CCollisionManager()
 {
 }
 
-void CCollisionManager::CollisionBullet(OBJECT_LIST& dstList, OBJECT_LIST& srcList)
+void CCollisionManager::CollisionDoor(OBJECT_LIST& dstList, OBJECT_LIST& srcList)
 {
 	for (auto pDest : dstList)
 	{
@@ -43,8 +44,10 @@ void CCollisionManager::CollisionBullet(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 			if (IntersectRect(&rc, &pDest->GetRect(), &pSrc->GetRect()))
 			{
 				//if (dynamic_cast<CBullet*>(pSrc)->GetBulletTag == MONSTER_BULLET)
-				pDest->SetIsDead(true);
-				
+				if (dynamic_cast<CDoor*>(pDest)->GetNext())
+				{
+					pDest->SetIsColl(true);
+				}
 
 				//pSrc->IsDead();
 			}
@@ -60,26 +63,71 @@ void CCollisionManager::CollisionRect(OBJECT_LIST& dstList, OBJECT_LIST& srcList
 		bool bIsColl = false;
 		for (auto pSrc : srcList)
 		{
+			float fDist = fabsf(pDest->GetWorldPos().x - pSrc->GetWorldPos().x);
+			if (fDist >= 300)
+				continue;
+
 			if (IntersectRectEx(pDest, pSrc, &fMoveX, &fMoveY))
 			{
-				bIsColl = true;
 				float fX = pDest->GetInfo().fX;
 				float fY = pDest->GetInfo().fY;
+				if (dynamic_cast<CTile*>(pSrc)->GetTileOpt()== 1)
+				{
+					bIsColl = true;
+					if (fMoveX > fMoveY) // Y축으로 밀어냄
+					{
+						if (pSrc->GetInfo().fY < fY)
+							pDest->SetPos(fX, fY + fMoveY);
+						else
+							pDest->SetPos(fX, fY - fMoveY);
+					}
+					else // X축으로 밀어냄
+					{
+						if (pSrc->GetInfo().fX < fX)
+							pDest->SetPos(fX + fMoveX, fY);
+						else
+							pDest->SetPos(fX - fMoveX, fY-1.5);
+					}
 
-				if (fMoveX > fMoveY) // Y축으로 밀어냄
-				{
-					if (pSrc->GetInfo().fY < fY)
-						pDest->SetPos(fX, fY + fMoveY);
-					else
-						pDest->SetPos(fX, fY - fMoveY);
 				}
-				else // X축으로 밀어냄
+				if (dynamic_cast<CTile*>(pSrc)->GetTileOpt() !=2&&
+					dynamic_cast<CTile*>(pSrc)->GetTileOpt() != 1)
 				{
-					if (pSrc->GetInfo().fX < fX)
-						pDest->SetPos(fX + fMoveX, fY);
-					else
-						pDest->SetPos(fX - fMoveX, fY);
+					bIsColl = true;
+					if (fMoveX > fMoveY) // Y축으로 밀어냄
+					{
+						if (pSrc->GetInfo().fY < fY)
+							pDest->SetPos(fX, fY + fMoveY);
+						else
+							pDest->SetPos(fX, fY - fMoveY);
+					}
+					else // X축으로 밀어냄
+					{
+						if (pSrc->GetInfo().fX < fX)
+							pDest->SetPos(fX + fMoveX, fY);
+						else
+							pDest->SetPos(fX - fMoveX, fY);
+					}
+
 				}
+				if (dynamic_cast<CTile*>(pSrc)->GetTileOpt() == 2)
+				{
+					bIsColl = true;
+					if (fMoveX > fMoveY) // Y축으로 밀어냄
+					{
+						if (pSrc->GetInfo().fY > fY)
+							pDest->SetPos(fX, fY - fMoveY);
+					}
+					//else // X축으로 밀어냄
+					//{
+					//	if (pSrc->GetInfo().fX < fX)
+					//		pDest->SetPos(fX + fMoveX, fY);
+					//	else
+					//		pDest->SetPos(fX - fMoveX, fY - 2.5);
+					//}
+
+				}
+
 			}
 		}
 		pDest->SetIsColl(bIsColl);
@@ -96,6 +144,9 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 		bool m_OnFlat = false;
 		for (auto pDest : dstList)
 		{
+			float fDist = fabsf( pDest->GetWorldPos().x - pSrc->GetWorldPos().x);
+			if (fDist >= 300)
+				continue;
 			if (IntersectRectEx(pDest, pSrc, &fMoveX, &fMoveY))
 			{
 				float fX = pSrc->GetInfo().fX;
@@ -208,16 +259,17 @@ void CCollisionManager::CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 						dynamic_cast<CPlayer*>(pDest)->BeAttack(pSrc->GetWorldPos());
 						pDest->SetStop(true);
 						pSrc->SetIsDead(true);
-					
+						
 						//TODO: 넉백 차례
 					
 					}
 				}
 				else// 플레이어총알일때
 				{
-					if (pDest->GetObjType() == MONSTER)
+					if (pDest->GetObjType() == MONSTER&& !pDest->GetIsDead())
 					{
 						pSrc->SetIsDead(true);
+						
 						if (pDest->GetObjType() == MONSTER)
 						{
 							dynamic_cast<CMonster*>(pDest)->BeAttack(pSrc->GetWorldPos());

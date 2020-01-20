@@ -14,6 +14,17 @@ CPlayer::CPlayer()
 
 }
 
+CPlayer::CPlayer(float fX, float fY)
+	: m_bIsJump(false), m_bDJump(false)
+{
+	m_fJumpForce = 0.f;
+	m_fJumpAcc = 0.f;
+	ZeroMemory(&m_tFrame, sizeof(FRAME));
+	m_ePreState = STATE_END;
+	m_eCurState = STATE_END;
+	SetPos(fX, fY);
+}
+
 
 CPlayer::~CPlayer()
 {
@@ -22,8 +33,6 @@ CPlayer::~CPlayer()
 void CPlayer::Initialize()
 {
 	m_eObjType = PLAYER;
-	m_tInfo.fX = 400.f;
-	m_tInfo.fY = 300.f;
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
 	m_fAtkRange = 106.0;
@@ -58,27 +67,29 @@ void CPlayer::Initialize()
 	m_tAtkFrame.dwOldTime = GetTickCount();
 	CObjectManager::GetInstance()->AddObject(AFTERIMAGE, CObjFactory<CAfterImage>::CreateObject(m_WorldPos.x,m_WorldPos.y));
 
-	//UI부분
-	m_iAlpha = 0;
-	m_BlendFuntion.AlphaFormat = 0;
-	m_BlendFuntion.BlendOp = AC_SRC_OVER;
-	m_BlendFuntion.BlendFlags = 0;
-	m_BlendFuntion.SourceConstantAlpha = m_iAlpha;//0~255  0투명 255불투명
-	CBmpManager::GetInstance()->LoadBmp(L"BulletTime", L"../Image/BackGround/BulletTime.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"HUDTimer", L"../Image/UI/HUD_Timer.bmp");//112x19
-	CBmpManager::GetInstance()->LoadBmp(L"TimerGage", L"../Image/UI/TimerGage.bmp");//94x11
-	CBmpManager::GetInstance()->LoadBmp(L"HUDUI", L"../Image/UI/HUD_UI.bmp");//640x23
-	CBmpManager::GetInstance()->LoadBmp(L"BatteryGage", L"../Image/UI/BatteryRedGage.bmp");//77x19
-	CBmpManager::GetInstance()->LoadBmp(L"Battery", L"../Image/UI/BatteryBlueGage.bmp");//54x10
-	CBmpManager::GetInstance()->LoadBmp(L"BulletReflect", L"../Image/Player/BulletReflect.bmp");
-	m_fGameTimer = 0.f;
-	m_fBulletGage = 100.f;
+	////UI부분
+	//m_iAlpha = 0;
+	//m_BlendFuntion.AlphaFormat = 0;
+	//m_BlendFuntion.BlendOp = AC_SRC_OVER;
+	//m_BlendFuntion.BlendFlags = 0;
+	//m_BlendFuntion.SourceConstantAlpha = m_iAlpha;//0~255  0투명 255불투명
+	//CBmpManager::GetInstance()->LoadBmp(L"BulletTime", L"../Image/BackGround/BulletTime.bmp");
+	//CBmpManager::GetInstance()->LoadBmp(L"HUDTimer", L"../Image/UI/HUD_Timer.bmp");//112x19
+	//CBmpManager::GetInstance()->LoadBmp(L"TimerGage", L"../Image/UI/TimerGage.bmp");//94x11
+	//CBmpManager::GetInstance()->LoadBmp(L"HUDUI", L"../Image/UI/HUD_UI.bmp");//640x23
+	//CBmpManager::GetInstance()->LoadBmp(L"BatteryGage", L"../Image/UI/BatteryRedGage.bmp");//77x19
+	//CBmpManager::GetInstance()->LoadBmp(L"Battery", L"../Image/UI/BatteryBlueGage.bmp");//54x10
+	//CBmpManager::GetInstance()->LoadBmp(L"BulletReflect", L"../Image/Player/BulletReflect.bmp");
+	//m_fGameTimer = 0.f;
+	//m_fBulletGage = 100.f;
 }
 
 int CPlayer::Update()
 {
 	m_fGameTimer += 2.0f/g_fTime;
-	
+	//cout <<"Player g_scrollY= "<< g_fScrollY << endl;
+	//cout << "Player World X=" << m_WorldPos.x << "   y= " << m_WorldPos.y << endl;
+	//cout << "Player Local X=" << m_tInfo.fX << "   y= " << m_tInfo.fY << endl;
 
 	KeyInput();
 	UpdateWorldPos2();
@@ -118,8 +129,8 @@ void CPlayer::Render(HDC hdc)
 
 
 	CGameObject::UpdateRect2();
-	BulletTime(hdc);
-	RenderUI(hdc);
+	//BulletTime(hdc);
+	//RenderUI(hdc);
 	HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey);
 	NULL_CHECK(hMemDC);
 	//Source DC에 그려진 비트맵을 Dest DC로 복사하는 함수.이 때 지정한 색상을 제거할 수 있다.
@@ -137,14 +148,14 @@ void CPlayer::Render(HDC hdc)
 		hMemDC = CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey2);
 		GdiTransparentBlt(hdc,m_WorldPos.x-106,m_WorldPos.y - 106,212,212,hMemDC,m_tAtkFrame.dwFrameX*m_tAtkFrame.dwFrameStart,
 			m_tAtkFrame.dwFrameY,106,106,RGB(0, 0, 0));
-	
 
-
-	MoveToEx(hdc, m_WorldPos.x, m_WorldPos.y	, nullptr);
+	MoveToEx(hdc, m_WorldPos.x, m_WorldPos.y, nullptr);
 	if (m_bIsAttk)
 	{
 		LineTo(hdc, g_tMouseInfo.ptStart.x, g_tMouseInfo.ptStart.y);
 	}
+	//Rectangle(hdc, 50, 50, 300, 200);
+
 
 }
 
@@ -156,11 +167,6 @@ void CPlayer::KeyInput()
 {
 	if (CKeyManager::GetInstance()->KeyPressing(KEY_SHIFT))
 	{
-		//if (g_fTime > 0.2)
-		//{
-		//	g_fTime -=0.05;
-		//	cout << g_fTime << endl;
-		//}
 		g_fTime = 0.2;
 	}
 	else
@@ -379,11 +385,19 @@ void CPlayer::ScrollOffset()
 	//플레이어가 화면에서 일정 범위를 벗어났을 때 스크롤을 움직인다.
 	if (WinCX *0.75 <= m_WorldPos.x)
 	{
-		g_fScrollX += m_fSpeed;
+		g_fScrollX += m_fSpeed*2;
 	}
 	if (WinCX *0.25 >= m_WorldPos.x)
 	{
-		g_fScrollX -= m_fSpeed;
+		g_fScrollX -= m_fSpeed*2;
+	}
+	if (WinCY *0.75 <= m_WorldPos.y)
+	{
+		g_fScrollY += m_fSpeed * 2;
+	}
+	if (WinCY *0.2 >= m_WorldPos.y)
+	{
+		g_fScrollY -= m_fSpeed * 2;
 	}
 	if (CKeyManager::GetInstance()->KeyPressing(KEY_R))
 	{

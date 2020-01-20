@@ -20,10 +20,11 @@ public:
 	void Animate();
 	BULLET_TAG GetBulletTag() { return m_eBulletTag; }
 private:
-	POINT m_tOldPos;
+	POINT m_tEffectPos;
 	POINT m_posVector;
 	bool m_Reverce;
 	FRAME m_frame;
+	POINT m_tOldPos;
 	BULLET_TAG m_eBulletTag;
 };
 

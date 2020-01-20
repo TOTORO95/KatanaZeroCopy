@@ -4,6 +4,7 @@
 #include "Logo.h"
 #include "Title.h"
 #include "Stage1.h"
+#include "Stage2.h"
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 CSceneManager * CSceneManager::GetInstance()
 {
@@ -38,18 +39,28 @@ void CSceneManager::SceneChange(SCENE_TYPE eCurType)
 	// 상속과 다형성을 이용해서 FSM을 더욱 더 유연하게 만들어주는 디자인 패턴.
 	if (m_ePreSceneType != eCurType)
 	{
-		SafeDelete(m_pCurScene);
+		
 
 		switch (eCurType)
 		{
 		case SCENE_LOGO:
+			SafeDelete(m_pCurScene);
 			m_pCurScene = new CLogo;
 			break;
 		case SCENE_TITLE:
+			SafeDelete(m_pCurScene);
 			m_pCurScene = new CTitle;
 			break;
 		case SCENE_STAGE1:
-			m_pCurScene = new CStage1;
+			SafeDelete(m_pCurScene);
+			//m_pCurScene = new CStage1;
+			m_pCurScene = new CStage2;
+
+			break;
+		case SCENE_STAGE2:
+			m_pCurScene->Release();
+			SafeDelete(m_pCurScene);
+			m_pCurScene = new CStage2;
 			break;
 		case SCENE_EDIT:
 			m_pCurScene = new CMyEdit;
@@ -64,6 +75,15 @@ void CSceneManager::SceneChange(SCENE_TYPE eCurType)
 void CSceneManager::Update()
 {
 	m_iEvent = m_pCurScene->Update();
+	if (CKeyManager::GetInstance()->KeyDown(KEY_1))
+	{
+		m_pCurScene->Release();
+		SafeDelete(m_pCurScene);
+		m_pCurScene = new CStage1;
+		m_pCurScene->Initialize();
+		m_ePreSceneType = SCENE_STAGE1;
+		m_iEvent = CHANGE_SCENE;
+	}
 }
 
 void CSceneManager::Render(HDC hDC)

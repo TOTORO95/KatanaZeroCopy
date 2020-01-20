@@ -94,8 +94,29 @@
     <Filter Include="10.GameObject\05.Bullet">
       <UniqueIdentifier>{962bea00-ea2a-45ff-a090-81a6e6a3d750}</UniqueIdentifier>
     </Filter>
-    <Filter Include="10.GameObject\06.Camera">
+    <Filter Include="10.GameObject\04.Monster\Pomp">
+      <UniqueIdentifier>{a0e8e9e8-ea94-4cfc-be43-14239412761c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\04.Monster\Grunt">
+      <UniqueIdentifier>{1d654ab6-5895-4db6-96e4-50848d7f45fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\04.Monster\Gunster">
+      <UniqueIdentifier>{7434871c-7378-4220-8daf-13c453392599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\08.Door">
+      <UniqueIdentifier>{916b1148-08cc-45fb-8d92-db4ddad32d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\07.Trap">
+      <UniqueIdentifier>{056c5dc4-025d-4023-b4b9-53ce7d59bf13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\07.Trap\00.Fan">
+      <UniqueIdentifier>{25e78b6d-97b2-4b20-96b8-051e7631bbd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\06.UI">
       <UniqueIdentifier>{327e3aa2-93b7-4d1d-89a4-ec8108906cb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\07.Trap\01.Laser">
+      <UniqueIdentifier>{dfe0824e-f64b-4ed7-b7d7-586cf32f081d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,13 +216,37 @@
     <ClInclude Include="Monster.h">
       <Filter>10.GameObject\04.Monster</Filter>
     </ClInclude>
-    <ClInclude Include="DetectManager.h" />
     <ClInclude Include="Bullet.h">
       <Filter>10.GameObject\05.Bullet</Filter>
     </ClInclude>
     <ClInclude Include="CameraMgr.h">
-      <Filter>10.GameObject\06.Camera</Filter>
+      <Filter>10.GameObject\06.UI</Filter>
     </ClInclude>
+    <ClInclude Include="Grunt.h">
+      <Filter>10.GameObject\04.Monster\Grunt</Filter>
+    </ClInclude>
+    <ClInclude Include="Gunster.h">
+      <Filter>10.GameObject\04.Monster\Gunster</Filter>
+    </ClInclude>
+    <ClInclude Include="Pomp.h">
+      <Filter>10.GameObject\04.Monster\Pomp</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>10.GameObject\08.Door</Filter>
+    </ClInclude>
+    <ClInclude Include="DetectManager.h">
+      <Filter>90.Manager\03.CollisionManager\00.DetectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage2.h">
+      <Filter>90.Manager\06.SceneManager\04.Stage2</Filter>
+    </ClInclude>
+    <ClInclude Include="Fan.h">
+      <Filter>10.GameObject\07.Trap\00.Fan</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>10.GameObject\06.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LaserTrap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -273,13 +318,37 @@
     <ClCompile Include="Monster.cpp">
       <Filter>10.GameObject\04.Monster</Filter>
     </ClCompile>
-    <ClCompile Include="DetectManager.cpp" />
     <ClCompile Include="Bullet.cpp">
       <Filter>10.GameObject\05.Bullet</Filter>
     </ClCompile>
     <ClCompile Include="CameraMgr.cpp">
-      <Filter>10.GameObject\06.Camera</Filter>
+      <Filter>10.GameObject\06.UI</Filter>
     </ClCompile>
+    <ClCompile Include="Grunt.cpp">
+      <Filter>10.GameObject\04.Monster\Grunt</Filter>
+    </ClCompile>
+    <ClCompile Include="Pomp.cpp">
+      <Filter>10.GameObject\04.Monster\Grunt</Filter>
+    </ClCompile>
+    <ClCompile Include="Gunster.cpp">
+      <Filter>10.GameObject\04.Monster\Gunster</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>10.GameObject\08.Door</Filter>
+    </ClCompile>
+    <ClCompile Include="DetectManager.cpp">
+      <Filter>90.Manager\03.CollisionManager\00.DetectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage2.cpp">
+      <Filter>90.Manager\06.SceneManager\04.Stage2</Filter>
+    </ClCompile>
+    <ClCompile Include="Fan.cpp">
+      <Filter>10.GameObject\07.Trap\00.Fan</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>10.GameObject\06.UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LaserTrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

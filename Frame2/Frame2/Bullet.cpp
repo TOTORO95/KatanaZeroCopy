@@ -20,11 +20,11 @@ CBullet::~CBullet()
 
 void CBullet::Initialize()
 {
-	CBmpManager::GetInstance()->LoadBmp(L"Bullet", L"../Image/Monster/Bullet2.bmp");
 	m_eObjType = BULLET;
 	m_eBulletTag = MONSTER_BULLET;
+	m_tEffectPos = { 0,0 };
 	m_tOldPos = { 0,0 };
-	m_fSpeed = 15;
+	m_fSpeed = 1;
 	SetSize(10, 10);
 	m_Reverce = false;
 	m_frame.dwFrameCount = 5;
@@ -38,39 +38,48 @@ void CBullet::Initialize()
 
 int CBullet::Update()
 {
+
 	UpdateWorldPos();
 	UpdateRect2();
-
 	if (m_bIsDead)
 		return DEAD_OBJ;
-
 	if (-1000 > m_WorldPos.x || -1000 > m_WorldPos.y ||
 		(float)2000 <m_WorldPos.x || (float)1500 <m_WorldPos.y)
 		return DEAD_OBJ;
+	m_tOldPos = { (LONG)m_WorldPos.x,(LONG)m_WorldPos.y };
 	if (!m_Reverce)
 	{
-		m_tInfo.fX += cosf(m_fRadian) * m_fSpeed;
+		if (m_fSpeed < 50)
+			m_fSpeed+=2;
+		//m_tOldPos.x += cosf(m_fRadian) * m_fSpeed;
+		//m_tOldPos.x -= sinf(m_fRadian) * m_fSpeed;
+		m_tInfo.fX+= cosf(m_fRadian) * m_fSpeed;
 		m_tInfo.fY -= sinf(m_fRadian) * m_fSpeed;
 	}
 	else
 	{
+		if (m_fSpeed < 50)
+			m_fSpeed += 4;
 		m_tInfo.fX -= cosf(m_fRadian) * m_fSpeed;
 		m_tInfo.fY += sinf(m_fRadian) * m_fSpeed;
 	}
+
 	return NO_EVENT;
 }
 
 void CBullet::Render(HDC hdc)
 {
-	//Rectangle(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-	GdiTransparentBlt(hdc, m_tRect.left,m_tRect.top, 10, 10,
-		CBmpManager::GetInstance()->GetMemDC(L"Bullet"),
-		0, 0, 10, 10, RGB(0, 0, 0));
+	HPEN pen = (HPEN)CreatePen(PS_SOLID, 2, RGB(255, 255, 0));
+	HPEN open = (HPEN)SelectObject(hdc, pen);
+	MoveToEx(hdc, m_tOldPos.x, m_tOldPos.y, NULL);
+	LineTo(hdc, m_tInfo.fX- g_fScrollX, m_tInfo.fY+ g_fScrollY);
+	SelectObject(hdc, open);
+	DeleteObject(pen);
 
 	if (m_Reverce)
 	{
 		Animate();
-		GdiTransparentBlt(hdc, m_tOldPos.x-64, m_tOldPos.y-64, 128, 128,
+		GdiTransparentBlt(hdc, m_tEffectPos.x-64, m_tEffectPos.y-64, 128, 128,
 			CBmpManager::GetInstance()->GetMemDC(L"BulletReflect"),m_frame.dwFrameX*m_frame.dwFrameStart ,m_frame.dwFrameY , 70, 64, RGB(0, 0, 0));
 	}
 }
@@ -90,7 +99,7 @@ void CBullet::SetPosVector(POINT targetPos)
 void CBullet::ReflectionBullet()
 {
 	if (!m_Reverce)
-		m_tOldPos = m_WorldPos;
+		m_tEffectPos = m_WorldPos;
 	m_eBulletTag = PLAYER_BULLET;
 	m_Reverce = true;
 }

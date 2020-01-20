@@ -40,6 +40,8 @@ bool CDetectManager::CollisionRect(OBJECT_LIST & dstList, OBJECT_LIST & srcList)
 			RECT rc = {};
 			if (IntersectRect(&rc, &dynamic_cast<CMonster*>(pDest)->GetDetectRect(), &pSrc->GetRect()))
 			{
+				//POINT pos = { pSrc->GetWorldPos().x+g_fScrollX,pSrc->GetWorldPos().y+g_fScrollY};
+				//dynamic_cast<CMonster*>(pDest)->SetTarget(pos, true);
 				dynamic_cast<CMonster*>(pDest)->SetTarget(pSrc->GetWorldPos(), true);
 
 				//cout << "¹ß°ß" << endl;

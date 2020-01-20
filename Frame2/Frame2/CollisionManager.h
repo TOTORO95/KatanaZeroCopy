@@ -13,7 +13,7 @@ public:
 
 
 public:
-	static void	CollisionBullet(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
+	static void	CollisionDoor(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
 	static void CollisionRect(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
 	static void CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
 	static void CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcList);

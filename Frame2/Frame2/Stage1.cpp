@@ -5,6 +5,11 @@
 #include "Terrain.h"
 #include "Tile.h"
 #include "Monster.h"
+#include "Grunt.h"
+#include "Gunster.h"
+#include "Door.h"
+#include "Fan.h"
+#include "UserInterface.h"
 CStage1::CStage1()
 {
 }
@@ -18,8 +23,8 @@ CStage1::~CStage1()
 void CStage1::Initialize()
 {
 	//CLineManager::GetInstance()->Initialize();
-	m_iMonCount = 3;
-	m_bIsNest = false;
+	m_iMonCount = 4;
+	m_bIsNext = false;
 	CBmpManager::GetInstance()->LoadBmp(L"bg", L"../Image/BackGround/Stage1BG.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"bk", L"../Image/BackGround/BK.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_R", L"../Image/Player/Player_R.bmp");
@@ -27,45 +32,52 @@ void CStage1::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"DSlash", L"../Image/Player/Player_DefaultSlash.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Slash", L"../Image/Player/Player_AllSlashSheet242.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Tile", L"../Image/Tile/Tile20.bmp");
-	CObjectManager::GetInstance()->AddObject(BACKGROUND, CObjFactory<CBackGround>::CreateObject());
+	CObjectManager::GetInstance()->AddObject(BACKGROUND, CObjFactory<CBackGround>::CreateObject(L"bg"));
 	CObjectManager::GetInstance()->AddObject(TERRAIN, CObjFactory<CTerrain>::CreateObject());
-	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject());
+	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject(100, 500));
+	CObjectManager::GetInstance()->AddObject(UI, CObjFactory<CUserInterface>::CreateObject());
+	//CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<CFan>::CreateObject(300,300));
 
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(1280, 300, GUNSTER));
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(500, 530, GUNSTER));
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(800, 530, GRUNT));
+	CObjectManager::GetInstance()->AddObject(DOOR, CObjFactory<CDoor>::CreateObject(298, 288, 40, 57));
+	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(1280, 300, GUNSTER));
+	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(500, 530, GUNSTER));
+	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(800, 530, GRUNT));
+
+
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(300, 300));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1280, 300));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(800, 520));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGrunt>::CreateObject(580, 530));
 
 	CGameObject* pTerrain = CObjectManager::GetInstance()->GetTerrain();
 	NULL_CHECK(pTerrain);
+	
 
-	if (dynamic_cast<CTerrain*>(pTerrain)->LoadData(L"../Data/Stage1.dat"))
-		MessageBox(nullptr, L"불러오기 성공!", L"", MB_OK);
-	else
-		MessageBox(nullptr, L"불러오기 실패!", L"", MB_OK);
+	//if (dynamic_cast<CTerrain*>(pTerrain)->LoadData(L"../Data/Stage1.dat"))
+	//	MessageBox(nullptr, L"불러오기 성공!", L"", MB_OK);
+	//else
+	//	MessageBox(nullptr, L"불러오기 실패!", L"", MB_OK);
 
+	dynamic_cast<CTerrain*>(pTerrain)->LoadData(L"../Data/Stage1.dat");
 
 	for (auto tile : dynamic_cast<CTerrain*>(pTerrain)->GetTiles())
 	{
-		//RECT *temp = new RECT((int)(tile->fX-TILECX*0.5), );
 		if (tile->iDrawID !=0)
 		{
-			
 			CObjectManager::GetInstance()->AddObject(TILE,
 				CObjFactory<CTile>::CreateObject(tile->fX, tile->fY, tile->iDrawID));
 		}
 	}
 	CObjectManager::GetInstance()->DeleteGroup(TERRAIN);
+	m_pMonList	= CObjectManager::GetInstance()->GetObjList(MONSTER);
+	m_pDoor	= CObjectManager::GetInstance()->GetObjList(DOOR);
 
-	m_iAlpha = 0;
-	m_BlendFuntion.AlphaFormat = 0;
-	m_BlendFuntion.BlendOp = AC_SRC_OVER;
-	m_BlendFuntion.BlendFlags = 0;
-	m_BlendFuntion.SourceConstantAlpha = m_iAlpha;//0~255  0투명 255불투명
 
 }
 
 int CStage1::Update()
 {
+	
 	CObjectManager::GetInstance()->Update();
 	//타일 객체생성 완료 이제 충돌 처리 할차례
 	if (0.f > g_fScrollX)
@@ -78,19 +90,25 @@ int CStage1::Update()
 		g_fScrollY = float(TILE_COUNT_Y * TILECY - WinCY);
 	
 
-
- 	OBJECT_LIST tMonList=CObjectManager::GetInstance()->GetObjList(MONSTER);
 	int iMC = 0;
-	for (auto pMon : tMonList)
+	for (auto pMon : m_pMonList)
 	{
 		if (pMon->GetStop())
 			iMC++;
 		if (iMC == m_iMonCount)
 		{
-			m_bIsNest = true;
+			dynamic_cast<CDoor*>(m_pDoor.front())->SetNext(true);
+			if (dynamic_cast<CDoor*>(m_pDoor.front())->GetisCOll())
+			{
+				cout << "씬전환" << endl;
+				CSceneManager::GetInstance()->SceneChange(SCENE_STAGE2);
+				return CHANGE_SCENE;
+
+			}
+
 		}
 	}
-
+	
 	return NO_EVENT;
 }
 
@@ -104,15 +122,6 @@ void CStage1::Render(HDC hDC)
 
 	CObjectManager::GetInstance()->Render(hDC);
 
-	m_BlendFuntion.SourceConstantAlpha=m_iAlpha = 200;
-	AlphaBlend(hDC, 278 - g_fScrollX, 258 - g_fScrollY, 40, 60,
-		CBmpManager::GetInstance()->GetMemDC(L"bk"), 0, 0, 1280, 800, m_BlendFuntion);
-
-	m_tDoor= {278 , 258,318 ,318};
-	Rectangle(hDC, m_tDoor.left- g_fScrollX ,
-		m_tDoor.top - g_fScrollY,
-		m_tDoor.right - g_fScrollX,
-		m_tDoor.bottom - g_fScrollY);
 
 	//Rectangle(hDC, 280, 260, 320, 320);
 	//BitBlt(hDC, 278-g_fScrollX, 258-g_fScrollY, 40, 60,
@@ -129,4 +138,5 @@ void CStage1::Render(HDC hDC)
 
 void CStage1::Release()
 {
+	CObjectManager::GetInstance()->Release();
 }

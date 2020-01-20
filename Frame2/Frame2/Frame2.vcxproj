@@ -147,15 +147,21 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BmpManager.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="LaserTrap.h" />
+    <ClInclude Include="UserInterface.h" />
     <ClInclude Include="CameraMgr.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DetectManager.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
+    <ClInclude Include="Fan.h" />
     <ClInclude Include="Frame2.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Grunt.h" />
+    <ClInclude Include="Gunster.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineManager.h" />
@@ -167,10 +173,12 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="ObjFactory.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Pomp.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Stage1.h" />
+    <ClInclude Include="Stage2.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
@@ -184,11 +192,17 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="LaserTrap.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="CameraMgr.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="DetectManager.cpp" />
+    <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Fan.cpp" />
     <ClCompile Include="Frame2.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Grunt.cpp" />
+    <ClCompile Include="Gunster.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineManager.cpp" />
@@ -199,9 +213,11 @@
     <ClCompile Include="MyEdit.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Pomp.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Stage1.cpp" />
+    <ClCompile Include="Stage2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

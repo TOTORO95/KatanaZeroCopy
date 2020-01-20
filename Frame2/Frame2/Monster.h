@@ -22,17 +22,17 @@ public:
 	void InitMonster();
 	void UpdateDetectRect();
 	void Move();
-	void Attack();
 	void BeAttack(POINT targetInfo);
 	void KnockBack();
-	void Pattern();
-	void Animate();
-	void ChangeState();
-
+	virtual	void Animate();
+	virtual void Attack();
+	virtual void Patroll();
+	virtual	void Pattern();
+	virtual void ChangeState();
 public:
 	RECT GetDetectRect() { return  m_tDetectRect; }
 	void SetTarget(POINT targetInfo, bool isTarget);
-private:
+protected:
 	POINT m_tFixPos;
 	float m_fCount;
 	POINT m_tTargetPos;
@@ -44,7 +44,7 @@ private:
 	wstring m_wstrLImageKey;
 	wstring m_wstrRImageKey;
 	float m_HitRange;
-
+	int m_iAttackRate;
 	
 };
 

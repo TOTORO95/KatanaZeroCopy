@@ -10,20 +10,17 @@ public:
 	virtual void Render(HDC hDC) = 0;
 	void SetMonCount(int val) { m_iMonCount = val; }
 	int GetMonCount() { return m_iMonCount; }
-	RECT GetDoor() { return m_tDoor; }
-
-protected:
+	RECT GetDoorRect() { return m_tDoor; }
+	bool GetisNext() { return m_bIsNext; }
 	virtual void Release();
+//protected:
 
 protected:
 	int m_iMonCount;
-	bool m_bIsNest;
+	bool m_bIsNext;
 	RECT m_tDoor;
-
-	//알파값변수
-	BLENDFUNCTION	m_BlendFuntion;
-	int				m_iAlpha;
-
+	OBJECT_LIST m_pMonList;
+	OBJECT_LIST m_pDoor;
 };
 
 

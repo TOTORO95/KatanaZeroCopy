@@ -4,6 +4,7 @@ class CPlayer :	public CGameObject
 {
 public:
 	CPlayer();
+	CPlayer(float fX,float fY);
 	~CPlayer();
 
 	// CGameObject을(를) 통해 상속됨

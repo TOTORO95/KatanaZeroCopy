@@ -58,6 +58,12 @@ void CKeyManager::Update()
 		m_dwCurKey |= KEY_RETURN;
 	if (GetAsyncKeyState('O') & 0x8000)
 		m_dwCurKey |= KEY_O;
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_dwCurKey |= KEY_1;
+	if (GetAsyncKeyState('2') & 0x8000)
+		m_dwCurKey |= KEY_2;
+	if (GetAsyncKeyState('3') & 0x8000)
+		m_dwCurKey |= KEY_3;
 
 }
 

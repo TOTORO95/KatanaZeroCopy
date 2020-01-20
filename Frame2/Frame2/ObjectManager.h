@@ -25,7 +25,6 @@ public:
 	int Update();
 	void Render(HDC hdc);
 	void DeleteGroup(OBJ_TYPE eType);
-private:
 	void Release();
 	
 private:

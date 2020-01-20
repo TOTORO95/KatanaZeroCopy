@@ -18,15 +18,18 @@ void CMyEdit::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"Tile", L"../Image/Tile/Tile20.bmp");
 
 	// BackGround Image
-	CBmpManager::GetInstance()->LoadBmp(L"bg", L"../Image/BackGround/Stage1BG.bmp");
-	CObjectManager::GetInstance()->AddObject(BACKGROUND, CObjFactory<CBackGround>::CreateObject());
+	CBmpManager::GetInstance()->LoadBmp(L"edit", L"../Image/BackGround/Stage2bg.bmp");
+	CObjectManager::GetInstance()->AddObject(BACKGROUND, CObjFactory<CBackGround>::CreateObject(L"edit"));
 
 	// Terrain
 	CObjectManager::GetInstance()->AddObject(TERRAIN, CObjFactory<CTerrain>::CreateObject());
+
+
 }
 
 int CMyEdit::Update()
 {
+	//cout << "dfdf" << endl;
 	CObjectManager::GetInstance()->Update();
 	KeyInput();		
 
@@ -43,12 +46,12 @@ int CMyEdit::Update()
 	return NO_EVENT;
 }
 
-void CMyEdit::Render(HDC hDC)
+void CMyEdit::Render(HDC hDC)//1900x1450
 {
-	//HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(L"bg");
+	//HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(L"edit");
 	//NULL_CHECK(hMemDC);
 	//BitBlt(hDC, 0, 0, WinCX, WinCY, hMemDC, 0, 0, SRCCOPY);
-
+	//GdiTransparentBlt(hDC, 0, 0, WinCX, WinCY, hMemDC, 0, 800, 1950, 1450, SRCCOPY);
 	CObjectManager::GetInstance()->Render(hDC);
 }
 
