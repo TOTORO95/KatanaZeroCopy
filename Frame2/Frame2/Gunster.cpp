@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Gunster.h"
 #include "Bullet.h"
-
+#include "Blood.h"
 CGunster::CGunster()
 {
 }
@@ -33,6 +33,7 @@ void CGunster::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"RGunster", L"../Image/Monster/GunsterSheet.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"LGunster", L"../Image/Monster/LGunsterSheet.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Gun", L"../Image/Monster/Gun36.bmp");//999x27
+	
 
 	m_wstrRImageKey = L"RGunster";
 	m_wstrLImageKey = L"LGunster";
@@ -52,13 +53,14 @@ void CGunster::Initialize()
 	m_fCount = 0;
 	m_fRadian = 0;
 	m_bisStop = false;
-
 }
 
 int CGunster::Update()
 {
 	if (m_bIsDead)
 	{
+		
+
 		//cout << m_fCount << endl;
 		UpdateWorldPos2();
 		UpdateRect2();
@@ -66,6 +68,7 @@ int CGunster::Update()
 		Move();
 		ChangeState();
 		Animate();
+		//BloodAni();
 		return NO_EVENT;
 	}
 	UpdateWorldPos2();
@@ -83,15 +86,46 @@ int CGunster::Update()
 
 void CGunster::Render(HDC hdc)
 {
-	if (m_bIsDead)
+	if (m_bIsDead)//Á×À½
 	{
 		GdiTransparentBlt(hdc, m_tRect.left - m_tInfo.fCX*0.5, m_tRect.top - m_tInfo.fCY, m_tInfo.fCX * 2, m_tInfo.fCY * 2,
 			CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey),
 			m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
 			m_tFrame.dwFrameY,
 			50, 50, RGB(0, 0, 0));
+		
+		if (fabsf(m_fBloodAngle) >= 90)//¹Ù´Ú¿¡ Èê¸®´ÂÇÇ
+		{
+			//cout << (350 - fabsf(m_tRect.left - (m_tOldPos.x - g_fScrollX)) * 3) << endl;
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 120, m_tRect.bottom - 30, fabsf(m_tRect.left - (m_tOldPos.x - g_fScrollX))*3 /*+ 100*/, 32,
+				CBmpManager::GetInstance()->GetMemDC(L"LFB"),
+				0, 0, 294, 32, RGB(0, 0, 0));
+			//cout << m_tOldPos.x -g_fScrollX <<"   "<< m_tRect.left << endl;
+		}
+		else
+		{
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 30, fabsf(m_tRect.right - (m_tOldPos.x - g_fScrollX))*3 /*+ 110*/, 32,
+				CBmpManager::GetInstance()->GetMemDC(L"RFB"),
+				0, 0, 294, 32, RGB(0, 0, 0));
+		}
+		
+	
+		//ÇÇ
+		
+		//GdiTransparentBlt(hdc, m_tRect.left, m_tRect.top, 48, 48,
+		//	CBmpManager::GetInstance()->GetMemDC(L"Blood")
+		//	, 32 * m_iBlood, m_tBloodFrame.dwFrameY*m_tBloodFrame.dwFrameStart, 32, 32, RGB(0, 0, 0));
+		//GdiTransparentBlt(hdc, m_tRect.left, m_tRect.top, 48, 48,
+		//	CBmpManager::GetInstance()->GetMemDC(L"Blood")
+		//	, 32 * m_iBlood-1, m_tBloodFrame.dwFrameY*m_tBloodFrame.dwFrameStart+1, 32, 32, RGB(0, 0, 0));
+		//GdiTransparentBlt(hdc, m_tRect.left-5, m_tRect.top, 48, 48,
+		//	CBmpManager::GetInstance()->GetMemDC(L"Blood")
+		//	, 32 * m_iBlood+1, m_tBloodFrame.dwFrameY*m_tBloodFrame.dwFrameStart+2, 32, 32, RGB(0, 0, 0));
+		//cout << "ÇÇ X" << m_WorldPos.x+g_fScrollX << "Y= " << m_WorldPos.y-g_fScrollY << endl;
+		//
 		if (!m_bIsBettackEnd)
 		{
+		
 			if (m_wstrImageKey == L"RGunster")
 			{
 				GdiTransparentBlt(hdc, m_tRect.left - 25, m_tRect.top - 25,
@@ -114,11 +148,13 @@ void CGunster::Render(HDC hdc)
 
 		return;
 	}
+
 	GdiTransparentBlt(hdc, m_tRect.left - m_tInfo.fCX*0.5, m_tRect.top - m_tInfo.fCY, m_tInfo.fCX * 2, m_tInfo.fCY * 2,
 		CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey),
 		m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
 		m_tFrame.dwFrameY,
 		50, 50, RGB(0, 0, 0));
+	
 	if (m_eCurState == STATE_AIMING)
 	{
 		if (m_fAngle >= 0)
@@ -231,17 +267,25 @@ void CGunster::Attack()
 
 		if (m_iCount >= m_iAttackRate)
 		{
-			g_fScrollX += sinf(GetTickCount()) * 7.5;
-			g_fScrollY += cosf(GetTickCount()) * 3.75;
-			if (m_iCount >= m_iAttackRate+5)
+			if (m_iCount & 1)
+			{
+				g_fScrollX += sinf(GetTickCount()) * 7.5;
+				g_fScrollY += cosf(GetTickCount()) * 3.75;
+			}
+			else
 			{
 				g_fScrollX = m_OldScroll.x;
 				g_fScrollY = m_OldScroll.y;
-
-				m_iCount = 0;
-				m_bIsTargetSet = false;
-
 			}
+		}
+		if (m_iCount >= m_iAttackRate+5)
+		{
+			g_fScrollX = m_OldScroll.x;
+			g_fScrollY = m_OldScroll.y;
+
+			m_iCount = 0;
+			m_bIsTargetSet = false;
+
 		}
 
 	}

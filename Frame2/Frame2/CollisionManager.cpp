@@ -277,7 +277,7 @@ void CCollisionManager::CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 						pDest->SetStop(true);
 						pSrc->SetIsDead(true);
 						
-						//TODO: ³Ë¹é Â÷·Ê
+					
 					
 					}
 				}

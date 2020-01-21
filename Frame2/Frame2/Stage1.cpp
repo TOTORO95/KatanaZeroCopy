@@ -44,8 +44,8 @@ void CStage1::Initialize()
 	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(800, 530, GRUNT));
 
 
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(300, 300));
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1280, 300));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1100, 300));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(500, 300));
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(800, 520));
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGrunt>::CreateObject(580, 530));
 

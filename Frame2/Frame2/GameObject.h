@@ -74,6 +74,7 @@ protected:
 	OBJ_STATE	m_state;
 	FRAME		m_tAtkFrame;
 	FRAME		m_tFrame;
+	FRAME		m_tBloodFrame;
 	POINT		m_OldScroll;
 	bool		m_bisStop;
 };

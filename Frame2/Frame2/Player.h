@@ -33,7 +33,7 @@ private:
 	void ChangeState();
 	void AniDirection();
 	void BulletTime(HDC hdc);
-	void RenderUI(HDC hdc);
+
 	void KnockBack();
 private:
 	bool		m_bIsJump;
@@ -55,8 +55,6 @@ private:
 	BLENDFUNCTION	m_BlendFuntion;
 	int				m_iAlpha;
 
-	//Timer
-	float m_fGameTimer;
 	float m_fBulletGage;
 };
 

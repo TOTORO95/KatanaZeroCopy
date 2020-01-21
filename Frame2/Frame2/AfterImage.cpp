@@ -64,24 +64,6 @@ void CAfterImage::Initialize()
 int CAfterImage::Update()
 {
 	UpdateWorldPos2();
-	//switch (m_tFrame.dwFrameCount)
-	//{
-	//case 11:
-	//	cout << "IDLE상태" << endl;
-	//	break;
-	//case 10:
-	//	cout << "RUN상태" << endl;
-	//	break;
-	//case 7:
-	//	cout << "ATTACK상태" << endl;
-	//	break;
-
-	//default:
-	//	break;
-	//}
-
-	//cout << m_playerPos.x << "  " << m_playerPos.y << endl;
-	//cout << m_OldPos.x << "  " << m_OldPos.y << endl;
 
 
 	for (int i = 0; i < m_tFrame.dwFrameCount; i++)
@@ -106,7 +88,7 @@ void CAfterImage::Render(HDC hdc)
 		AniDriection(hdc);
 	
 		m_tOldFrame = m_tFrame;
-		if (m_iCount % 30 == 0)
+		if (m_iCount % 60 == 0)
 		{
 			m_bFalg = false;
 			m_iCount = 0;
@@ -221,11 +203,6 @@ void CAfterImage::AniDriection(HDC hdc)
 				m_tInfo.fCX,
 				m_tInfo.fCY,
 				RGB(0, 0, 0));
-
-
-
-
-
 
 		}
 	}

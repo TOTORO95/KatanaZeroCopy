@@ -69,7 +69,13 @@ public:
 
 		return pObject;
 	}
+	static CGameObject* CreateObject(POINT pos, float radian)
+	{
+		CGameObject* pObject = new T(pos,radian);
+		pObject->Initialize();
 
+		return pObject;
+	}
 	static CGameObject* CreateObject(float x, float y, const wstring& wstrImageKey)
 	{
 		CGameObject* pObject = new T;

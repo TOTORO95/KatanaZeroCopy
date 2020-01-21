@@ -5,7 +5,7 @@
 #include "Frame2.h"
 #include "MainGame.h"
 #define MAX_LOADSTRING 100
-
+#include "Fan.h"
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -27,7 +27,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: 여기에 코드를 입력합니다.
+    
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -56,8 +56,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
 		dwCurTime = GetTickCount();
-		if(dwCurTime-dwOldTime>=10/g_fTime)
+		if(dwCurTime-dwOldTime>=5/g_fTime)
 		{
 			mainGame.Update();
 			mainGame.Render();

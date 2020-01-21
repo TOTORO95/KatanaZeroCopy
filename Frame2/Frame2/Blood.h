@@ -5,6 +5,7 @@ class CBlood :
 {
 public:
 	CBlood();
+	CBlood(POINT pos,float fdgree);
 	~CBlood();
 
 	// CGameObject을(를) 통해 상속됨
@@ -12,5 +13,12 @@ public:
 	virtual int Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
+	
+private:
+	void Animate();
+	void DirectionAni();
+private:
+	int m_iBlood;
+	HDC m_bloodHDC;
 };
 

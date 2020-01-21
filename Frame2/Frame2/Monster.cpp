@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "Monster.h"
 #include "Bullet.h"
-
+#include "Blood.h"
 CMonster::CMonster()
 {
+	CBmpManager::GetInstance()->LoadBmp(L"RFB", L"../Image/Monster/RFlatBlood.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"LFB", L"../Image/Monster/LFlatBlood.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"LImpact", L"../Image/Monster/LImpact2.bmp");
-	CBmpManager::GetInstance()->LoadBmp(L"RImpact", L"../Image/Monster/RImpact2.bmp");//TODO: bmp 적용안됨 적용후 애니메이션 확인 !collisionrect katana에 충돌처리있음
+	CBmpManager::GetInstance()->LoadBmp(L"RImpact", L"../Image/Monster/RImpact2.bmp");
 	m_tBeattackFrame.dwFrameCount = 5;
 	m_tBeattackFrame.dwFrameSpeed = 100;
 	m_tBeattackFrame.dwFrameStart = 0;
@@ -13,6 +15,14 @@ CMonster::CMonster()
 	m_tBeattackFrame.dwFrameY = 0;
 	m_tBeattackFrame.dwOldTime = GetTickCount();
 	m_bIsBettackEnd = false;
+
+	CBmpManager::GetInstance()->LoadBmp(L"Blood", L"../Image/Monster/Blood.bmp");
+	m_tBloodFrame.dwFrameCount = 3;
+	m_tBloodFrame.dwFrameSpeed = 100;
+	m_tBloodFrame.dwFrameStart = 0;
+	m_tBloodFrame.dwFrameX = 32;
+	m_tBloodFrame.dwFrameY = 32;
+	m_tBloodFrame.dwOldTime = GetTickCount();
 }
 
 CMonster::CMonster(MONSTER_TYPE eMonster_Type,float fposX, float fPosY)
@@ -75,6 +85,7 @@ int CMonster::Update()
 
 void CMonster::Render(HDC hdc)
 {
+
 	switch (m_eMonsterType)
 	{
 	case GRUNT:
@@ -264,68 +275,7 @@ void CMonster::Move()
 
 void CMonster::Attack()
 {
-	switch (m_eMonsterType)
-	{
-	//case GRUNT:
-	//	if (m_bIsTargetSet)
-	//	{
-	//		m_iCount++;
-	//		if (m_iCount % 49 == 0)
-	//			m_OldScroll = { (LONG)g_fScrollX,(LONG)g_fScrollY };
-	//		if (m_iCount >= 50)
-	//		{
-	//			g_fScrollX += sinf(GetTickCount()) * 5;
-	//			g_fScrollY += cosf(GetTickCount()) * 2.5;
-	//			if (m_iCount >= 52)
-	//			{
-	//				g_fScrollX = m_OldScroll.x;
-	//				g_fScrollY = m_OldScroll.y;
-
-	//				m_iCount = 0;
-	//				m_bIsTargetSet = false;
-
-	//			}
-	//		}
-	//	}
-	//	break;
-	//case GUNSTER:
-	//	if (m_bIsTargetSet)
-	//	{
-	//		m_iCount++;
-	//		if (m_iCount==49)aaaaa
-	//			m_OldScroll = { (LONG)g_fScrollX,(LONG)g_fScrollY };
-
-
-	//		if ((int)m_iCount == 50)
-	//			CObjectManager::GetInstance()->AddObject(BULLET, CObjFactory<CBullet>::CreateObject(m_tInfo.fX + cos(m_fRadian) * 30, m_tInfo.fY - sinf(m_fRadian) * 30, m_fRadian));
-
-	//		if (m_iCount >= 50)
-	//		{
-	//			g_fScrollX += sinf(GetTickCount()) * 5;
-	//			g_fScrollY += cosf(GetTickCount()) * 2.5;
-	//			if (m_iCount >= 55)
-	//			{
-	//				g_fScrollX = m_OldScroll.x;
-	//				g_fScrollY = m_OldScroll.y;
-
-	//				m_iCount = 0;
-	//				m_bIsTargetSet = false;
-
-	//			}
-	//		}
-
-	//	}
-	//	break;
-	case POMP:
-		break;
-	case HEADHUNTER:
-		break;
-	case MONSTER_END:
-		break;
-	default:
-		break;
-	}
-
+	
 }
 
 void CMonster::BeAttack(POINT targetInfo)
@@ -338,18 +288,18 @@ void CMonster::BeAttack(POINT targetInfo)
 			m_wstrImageKey = m_wstrLImageKey;
 
 		SetAngle(targetInfo.x, targetInfo.y);
-
-
-
+		m_fBloodAngle = m_fAngle;
+		m_tOldPos = { (LONG)m_tInfo.fX, (LONG)m_tInfo.fY};
 		m_eCurState = STATE_DEAD;
 		m_bIsDead = true;
 		//m_bisStop = true;
 		m_fCount = 0;
+		//cout <<" OldPos="<< m_tOldPos.x << endl;
 	}
 }
 void CMonster::KnockBack()
 {
-	m_tInfo.fX -= cosf(m_fRadian)*10;
+	m_tInfo.fX -= cosf(m_fRadian)*30;
 	m_tInfo.fY += sinf(m_fRadian)*15;
 }
 
@@ -447,6 +397,7 @@ void CMonster::Animate()
 	DWORD dwCurTime = GetTickCount();
 	if (m_eCurState != STATE_DEAD)
 	{
+
 		if (m_tFrame.dwOldTime + m_tFrame.dwFrameSpeed / g_fTime <= dwCurTime)
 		{
 			++m_tFrame.dwFrameStart;
@@ -459,8 +410,25 @@ void CMonster::Animate()
 	}
 	else//죽엇을때
 	{
+		//피
+		//if (m_tBloodFrame.dwOldTime + m_tBloodFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+		//{
+		//	++m_tBloodFrame.dwFrameStart;
+		//	m_tBloodFrame.dwOldTime = dwCurTime;
+		//}
+
+		//if (m_tBloodFrame.dwFrameStart == m_tBloodFrame.dwFrameCount)
+		//	m_tBloodFrame.dwFrameStart = 0;
+		//
+
 		if (m_tFrame.dwFrameStart < m_tFrame.dwFrameCount - 1 && !m_bisStop)
 		{
+			if((int)m_fCount% 2 ==0&&m_fCount<20 )
+			{
+			CObjectManager::GetInstance()->AddObject(BLOOD, 
+				CObjFactory<CBlood>::CreateObject(m_WorldPos, m_fBloodAngle));
+
+			}
 			if (m_fCount == 0)
 			{
 				m_OldScroll = { (LONG)g_fScrollX,(LONG)g_fScrollY };
@@ -468,12 +436,20 @@ void CMonster::Animate()
 			}m_fCount++;
 			if (m_fCount==4)
 				g_fTime = 1;
-			//cout<<m_fCount<<endl;
-			if (m_fCount >= 1 && m_fCount<6)
+			if (m_fCount < 6)
 			{
-				g_fScrollX += sinf(GetTickCount()) * 4;
-				g_fScrollY += cosf(GetTickCount()) * 4;
-				KnockBack();
+				if ((int)m_fCount&1)
+				{
+					g_fScrollX += sinf(GetTickCount()) * 15;
+					g_fScrollY += cosf(GetTickCount()) * 15;
+					KnockBack();
+				}
+				else
+				{
+					g_fScrollX = m_OldScroll.x;
+					g_fScrollY = m_OldScroll.y;
+				}
+
 			}
 			else if (m_fCount == 6)
 			{
@@ -485,8 +461,10 @@ void CMonster::Animate()
 				++m_tFrame.dwFrameStart;
 				m_tFrame.dwOldTime = dwCurTime;
 				if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount - 1)
+				{
 					m_bisStop = true;
-			
+					
+				}
 			}
 			//이펙트
 			if (m_tBeattackFrame.dwOldTime + m_tBeattackFrame.dwFrameSpeed / g_fTime <= dwCurTime)
@@ -497,7 +475,6 @@ void CMonster::Animate()
 
 			if (m_tBeattackFrame.dwFrameStart == m_tBeattackFrame.dwFrameCount&&!m_bIsBettackEnd)
 			{
-				cout << "11" << endl;
 				m_tBeattackFrame.dwFrameStart = 0;
 				m_bIsBettackEnd = true;
 			}
@@ -511,6 +488,15 @@ void CMonster::ChangeState()
 	
 	
 }
+
+//void CMonster::BloodAni()
+//{
+//	if (m_fBloodAngle >-10)//0~10사이는 0  10~30은 1  30~50 2 
+//		m_iBlood = ((int)m_fBloodAngle + 10) / 20;
+//	else//-10~-30               -170~-150 10(-160)   -150~-130(-140) 11
+//		m_iBlood = 9 + (9 + (m_fBloodAngle - 10) / 20);
+//
+//}
 
 
 void CMonster::SetTarget(POINT targetInfo,bool isTarget)

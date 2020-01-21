@@ -29,7 +29,7 @@ CPlayer::CPlayer(float fX, float fY)
 CPlayer::~CPlayer()
 {
 }
-//TODO: 라인 따라서 움직이는거 ,아래로점프  구르기 구현해야함
+
 void CPlayer::Initialize()
 {
 	m_eObjType = PLAYER;
@@ -70,8 +70,8 @@ void CPlayer::Initialize()
 
 int CPlayer::Update()
 {
-	m_fGameTimer += 2.0f/g_fTime;
-	//cout <<"Player g_scrollY= "<< g_fScrollY << endl;
+
+
 	//cout << "Player World X=" << m_WorldPos.x << "   y= " << m_WorldPos.y << endl;
 	//cout << "Player Local X=" << m_tInfo.fX << "   y= " << m_tInfo.fY << endl;
 
@@ -325,7 +325,7 @@ void CPlayer::Jump()
 				if(m_fRightVal<65)
 					m_fRightVal = m_fJumpForce*m_fJumpAcc*m_fJumpAcc*0.5;
 				m_fJumpAcc += 0.15f;
-				cout << m_fRightVal << endl;
+				//cout << m_fRightVal << endl;
 			}
 
 			m_tInfo.fY -= m_fLeftVal- m_fRightVal;
@@ -580,26 +580,6 @@ void CPlayer::BulletTime(HDC hdc)
 	}
 }
 
-void CPlayer::RenderUI(HDC hdc)
-{
-	HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(L"HUDUI");
-	NULL_CHECK(hMemDC);
-	GdiTransparentBlt(hdc, 0, 0, 1280, 46, hMemDC, 0, 0, 640, 23, RGB(0, 0, 0));
-	hMemDC = CBmpManager::GetInstance()->GetMemDC(L"HUDTimer");
-	GdiTransparentBlt(hdc, WinCX*0.435, 0, 224, 38, hMemDC, 0, 0, 112, 19, RGB(0, 0, 0));
-	hMemDC = CBmpManager::GetInstance()->GetMemDC(L"TimerGage");
-	GdiTransparentBlt(hdc, WinCX*0.462, 4, 188.f-(m_fGameTimer/188.f), 22, hMemDC, 0, 0, 94, 11, RGB(0, 0, 0));
-	hMemDC = CBmpManager::GetInstance()->GetMemDC(L"BatteryGage");
-	GdiTransparentBlt(hdc, WinCX*0.025, 0, 154, 38, hMemDC, 0, 0, 77, 19, RGB(0, 0, 0)); 
-	hMemDC = CBmpManager::GetInstance()->GetMemDC(L"Battery");
-	int fGageVal =  (m_fBulletGage+2) / 10;
-
-	GdiTransparentBlt(hdc, WinCX*0.0429, 8, 11*fGageVal, 20, hMemDC, 0, 0, 5*fGageVal, 10, SRCCOPY);
-
-
-
-
-}
 
 void CPlayer::KnockBack()
 {

@@ -32,6 +32,7 @@ void CUserInterface::Initialize()
 
 int CUserInterface::Update()
 {
+	m_fGameTimer += 2.0f / g_fTime;
 	return NO_EVENT;
 }
 
@@ -53,7 +54,7 @@ void CUserInterface::BulletTime(HDC hdc)
 			m_iAlpha += 10;
 		m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
 		AlphaBlend(hdc, 0, 0, WinCX, WinCY, CBmpManager::GetInstance()->GetMemDC(L"BulletTime"), 0, 0, 1280, 800, m_BlendFuntion);
-		m_fBulletGage -= 2.f;
+		m_fBulletGage -= 0.7f;
 	}
 	else
 	{

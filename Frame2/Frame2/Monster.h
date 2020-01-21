@@ -29,6 +29,8 @@ public:
 	virtual void Patroll();
 	virtual	void Pattern();
 	virtual void ChangeState();
+	//void BloodAni();
+
 public:
 	RECT GetDetectRect() { return  m_tDetectRect; }
 	void SetTarget(POINT targetInfo, bool isTarget);
@@ -46,8 +48,11 @@ protected:
 	float m_HitRange;
 	int m_iAttackRate;
 	
+	float m_fBloodAngle;
 	bool m_bIsBettackEnd;
 	FRAME m_tBeattackFrame;
-
+	int m_iBlood;
+	POINT m_tOldPos;
+	//HDC m_bloodHDC;
 };
 

@@ -10,7 +10,6 @@ CBullet::CBullet(float x, float y,POINT targetpos)
 {
 	SetPos(x, y);
 	SetPosVector(targetpos);
-
 }
 
 
@@ -33,7 +32,7 @@ void CBullet::Initialize()
 	m_frame.dwFrameX = 70;
 	m_frame.dwFrameY = 0;
 	m_frame.dwOldTime = GetTickCount();
-
+	m_iCount = 0;
 }
 
 int CBullet::Update()
@@ -107,7 +106,7 @@ void CBullet::ReflectionBullet()
 void CBullet::Animate()
 {
 	DWORD dwCurTime = GetTickCount();
-
+	m_iCount++;
 	if (m_frame.dwOldTime + m_frame.dwFrameSpeed / g_fTime <= dwCurTime)
 	{
 		++m_frame.dwFrameStart;
@@ -117,16 +116,28 @@ void CBullet::Animate()
 	{
 		m_OldScroll = { (LONG)g_fScrollX,(LONG)g_fScrollY };
 	}
-	if (m_frame.dwFrameStart < 2)
+	if (m_iCount <= 3)
 	{
-		g_fScrollX += sinf(GetTickCount()) * 5;
-		g_fScrollY += cosf(GetTickCount()) * 2.5;
+		if (m_iCount &1)
+		{
+			g_fScrollX += sinf(GetTickCount()) * 10;
+			g_fScrollY += cosf(GetTickCount()) * 10;
+		}
+		else
+		{
+			g_fScrollX = m_OldScroll.x;
+			g_fScrollY = m_OldScroll.y;
+		}
+
+	}
+	if (m_iCount == 4)
+	{
+		g_fScrollX = m_OldScroll.x;
+		g_fScrollY = m_OldScroll.y;
 	}
 
 	if (m_frame.dwFrameStart == m_frame.dwFrameCount)
 	{
-		g_fScrollX = m_OldScroll.x;
-		g_fScrollY = m_OldScroll.y;
 		return;
 	}
 

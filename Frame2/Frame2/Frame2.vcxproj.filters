@@ -254,7 +254,9 @@
     </ClInclude>
     <ClInclude Include="LaserTrap.h" />
     <ClInclude Include="BossScene1.h" />
-    <ClInclude Include="Blood.h" />
+    <ClInclude Include="Blood.h">
+      <Filter>10.GameObject\09.Blood</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -358,7 +360,9 @@
     </ClCompile>
     <ClCompile Include="LaserTrap.cpp" />
     <ClCompile Include="BossScene1.cpp" />
-    <ClCompile Include="Blood.cpp" />
+    <ClCompile Include="Blood.cpp">
+      <Filter>10.GameObject\09.Blood</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">
