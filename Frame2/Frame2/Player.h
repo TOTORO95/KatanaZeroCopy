@@ -48,6 +48,7 @@ private:
 	bool		m_bDJump;
 	bool		m_WallJump;
 	int			m_iDirection;
+	bool		m_bIsHit;
 
 
 	//알파값변수

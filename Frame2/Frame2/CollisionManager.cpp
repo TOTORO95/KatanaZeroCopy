@@ -30,6 +30,23 @@ CCollisionManager::~CCollisionManager()
 {
 }
 
+void CCollisionManager::CollisionLaserTrap(OBJECT_LIST & dstList, OBJECT_LIST & srcList)
+{
+	for (auto pDest : dstList)
+	{
+		bool bIsColl = false;
+		for (auto pSrc : srcList)
+		{
+			if (fabsf(pDest->GetWorldPos().x - (pSrc->GetWorldPos().x)) <= 10)
+			{
+				bIsColl = true;
+				
+				pDest->SetIsColl(bIsColl);
+			}
+		}
+	}
+}
+
 void CCollisionManager::CollisionDoor(OBJECT_LIST& dstList, OBJECT_LIST& srcList)
 {
 	for (auto pDest : dstList)
@@ -196,7 +213,7 @@ void CCollisionManager::CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcLi
 						dynamic_cast<CPlayer*>(pSrc)->SetIsDbJump(m_wallCOll);
 						if (pDest->GetInfo().fX< fX)
 						{
-							pSrc->SetPos(fX + fMoveX + 2, fY);
+							pSrc->SetPos(fX + fMoveX , fY);
 							dynamic_cast<CPlayer*>(pSrc)->SetDirection(0);
 						}
 						else
@@ -333,6 +350,7 @@ bool CCollisionManager::CollisionRectKatana(RECT & katanaRect, OBJECT_LIST & src
 			if (pSrc->GetObjType() == MONSTER)
 			{
 					dynamic_cast<CMonster*>(pSrc)->BeAttack(playerPos);
+
 			}
 
 			//cout << "카타나 충돌" << endl;
@@ -341,6 +359,7 @@ bool CCollisionManager::CollisionRectKatana(RECT & katanaRect, OBJECT_LIST & src
 	}
 	return false;
 }
+
 
 bool CCollisionManager::IntersectSphere(CGameObject* pDest, CGameObject* pSource)
 {

@@ -116,6 +116,8 @@ int CObjectManager::Update()
 	CCollisionManager::CollisionRectEx(m_ObjectList[TILE], m_ObjectList[PLAYER]);
 	CCollisionManager::CollisionRect(m_ObjectList[MONSTER], m_ObjectList[TILE]);
 	CCollisionManager::CollisionDoor(m_ObjectList[DOOR], m_ObjectList[PLAYER]);
+	CCollisionManager::CollisionLaserTrap(m_ObjectList[TRAP], m_ObjectList[PLAYER]);
+
 	if (!m_ObjectList[AFTERIMAGE].empty())
 	{
 		m_ObjectList[AFTERIMAGE].front()->SetImageKey(m_ObjectList[PLAYER].front()->GetImageKey());
@@ -137,6 +139,7 @@ int CObjectManager::Update()
 	{
 		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[BULLET]);
 		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[MONSTER], m_ObjectList[PLAYER].front()->GetWorldPos());
+		//CCollisionManager::CollisionRectKatanaEfx(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
 	}
 	return iEvent;
 }

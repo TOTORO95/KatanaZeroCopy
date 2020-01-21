@@ -20,6 +20,7 @@ CGunster::CGunster(float fPosX, float fPosY, int iAtkRate)
 	m_eMonsterType = GUNSTER;
 	m_bIsTargetSet = false;
 	m_iAttackRate = iAtkRate;
+	m_bIsBettackEnd = false;
 }
 
 
@@ -89,6 +90,27 @@ void CGunster::Render(HDC hdc)
 			m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
 			m_tFrame.dwFrameY,
 			50, 50, RGB(0, 0, 0));
+		if (!m_bIsBettackEnd)
+		{
+			if (m_wstrImageKey == L"RGunster")
+			{
+				GdiTransparentBlt(hdc, m_tRect.left - 25, m_tRect.top - 25,
+					75, 75,
+					CBmpManager::GetInstance()->GetMemDC(L"LImpact"),
+					m_tBeattackFrame.dwFrameX*m_tBeattackFrame.dwFrameStart,
+					m_tBeattackFrame.dwFrameY,
+					50, 50, RGB(0, 0, 0));
+			}
+			else
+			{
+				GdiTransparentBlt(hdc, m_tRect.left - 25, m_tRect.top - 25,
+					75, 75,
+					CBmpManager::GetInstance()->GetMemDC(L"RImpact"),
+					m_tBeattackFrame.dwFrameX*m_tBeattackFrame.dwFrameStart,
+					m_tBeattackFrame.dwFrameY,
+					50, 50, RGB(0, 0, 0));
+			}
+		}
 
 		return;
 	}
@@ -286,4 +308,5 @@ void CGunster::ChangeState()
 	}
 
 }
+
 

@@ -20,7 +20,6 @@ private:
 	void Attack() override;
 	void ChangeState() override;
 
-
 	
 };
 

@@ -2,6 +2,7 @@
 #include "Stage2.h"
 #include "Player.h"
 #include "BackGround.h"
+#include "UserInterface.h"
 #include "Terrain.h"
 #include "Tile.h"
 #include "Monster.h"
@@ -9,7 +10,7 @@
 #include "Gunster.h"
 #include "Door.h"
 #include "Fan.h"
-#include "UserInterface.h"
+#include "LaserTrap.h"
 CStage2::CStage2()
 {
 }
@@ -32,31 +33,30 @@ void CStage2::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"DSlash", L"../Image/Player/Player_DefaultSlash.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Slash", L"../Image/Player/Player_AllSlashSheet242.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Tile", L"../Image/Tile/Tile20.bmp");
+	
+	//Player,BackGround,UI(Essential)
 	CObjectManager::GetInstance()->AddObject(BACKGROUND, CObjFactory<CBackGround>::CreateObject(L"bg2"));
 	CObjectManager::GetInstance()->AddObject(TERRAIN, CObjFactory<CTerrain>::CreateObject());
-	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject(100, 800));
 	CObjectManager::GetInstance()->AddObject(UI, CObjFactory<CUserInterface>::CreateObject());
-	CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<CFan>::CreateObject(1578, 100));
-
 	CObjectManager::GetInstance()->AddObject(DOOR, CObjFactory<CDoor>::CreateObject(298, 288, 40, 57));
-	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(1280, 300, GUNSTER));
-	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(500, 530, GUNSTER));
-	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(800, 530, GRUNT));
+	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject(200, 800));
+
+	//Trap
+	CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<CFan>::CreateObject(1578, 100));
+	CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<LaserTrap>::CreateObject(TRAP,500, 380,515));
+	CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<LaserTrap>::CreateObject(TRAP,1120, 80,445));
 
 
+
+	//Monster
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGrunt>::CreateObject(580, 530));
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(800, 520,3));
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1578,150,5));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(800, 520,30));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1578,150,10));
 
 	CGameObject* pTerrain = CObjectManager::GetInstance()->GetTerrain();
 	NULL_CHECK(pTerrain);
 
-
-	//if (dynamic_cast<CTerrain*>(pTerrain)->LoadData(L"../Data/Stage1.dat"))
-	//	MessageBox(nullptr, L"불러오기 성공!", L"", MB_OK);
-	//else
-	//	MessageBox(nullptr, L"불러오기 실패!", L"", MB_OK);
-
+	//Load Tile
 	dynamic_cast<CTerrain*>(pTerrain)->LoadData(L"../Data/Stage2.dat");
 
 	for (auto tile : dynamic_cast<CTerrain*>(pTerrain)->GetTiles())
@@ -79,10 +79,10 @@ int CStage2::Update()
 {
 	CObjectManager::GetInstance()->Update();
 	//타일 객체생성 완료 이제 충돌 처리 할차례
-	if (0.f > g_fScrollX)
-		g_fScrollX = 0.f;
-	if (0.f > g_fScrollY)
-		g_fScrollY = 0.f;
+	if (-200.f > g_fScrollX)
+		g_fScrollX = -200.f;
+	if (-200.f > g_fScrollY)
+		g_fScrollY = -200.f;
 	if (float(TILE_COUNT_X * TILECX - WinCX) < g_fScrollX)
 		g_fScrollX = float(TILE_COUNT_X * TILECX - WinCX);
 	if (float(TILE_COUNT_Y * TILECY - WinCY) < g_fScrollY)

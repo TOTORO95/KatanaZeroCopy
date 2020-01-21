@@ -28,6 +28,14 @@ public:
 		return pObject;
 	}
 
+	static CGameObject* CreateObject(OBJ_TYPE obj_Type,float x, float y, float fLaserRange)
+	{
+		CGameObject* pObject = new T(x,y, fLaserRange);
+		pObject->Initialize();
+
+		return pObject;
+	}
+
 	static CGameObject* CreateObject(float x, float y, float cx, float cy)
 	{
 		CGameObject* pObject = new T(x, y, cx,cy);

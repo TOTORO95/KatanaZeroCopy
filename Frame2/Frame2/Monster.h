@@ -46,5 +46,8 @@ protected:
 	float m_HitRange;
 	int m_iAttackRate;
 	
+	bool m_bIsBettackEnd;
+	FRAME m_tBeattackFrame;
+
 };
 

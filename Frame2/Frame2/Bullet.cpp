@@ -50,7 +50,7 @@ int CBullet::Update()
 	if (!m_Reverce)
 	{
 		if (m_fSpeed < 50)
-			m_fSpeed+=2;
+			m_fSpeed+=5;
 		//m_tOldPos.x += cosf(m_fRadian) * m_fSpeed;
 		//m_tOldPos.x -= sinf(m_fRadian) * m_fSpeed;
 		m_tInfo.fX+= cosf(m_fRadian) * m_fSpeed;
@@ -59,7 +59,7 @@ int CBullet::Update()
 	else
 	{
 		if (m_fSpeed < 50)
-			m_fSpeed += 4;
+			m_fSpeed += 5;
 		m_tInfo.fX -= cosf(m_fRadian) * m_fSpeed;
 		m_tInfo.fY += sinf(m_fRadian) * m_fSpeed;
 	}

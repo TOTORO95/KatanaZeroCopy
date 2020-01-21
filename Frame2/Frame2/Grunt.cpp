@@ -34,6 +34,8 @@ void CGrunt::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"LGrunt", L"../Image/Monster/LGrunt.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"LSlash", L"../Image/Monster/LGruntSlash.bmp");//256x64
 	CBmpManager::GetInstance()->LoadBmp(L"RSlash", L"../Image/Monster/RGruntSlash.bmp");//256x64
+
+
 	m_wstrRImageKey = L"RGrunt";
 	m_wstrLImageKey = L"LGrunt";
 
@@ -86,6 +88,27 @@ void CGrunt::Render(HDC hdc)
 			m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
 			m_tFrame.dwFrameY,
 			50, 50, RGB(0, 0, 0));
+		if (!m_bIsBettackEnd)
+		{
+			if (m_wstrImageKey == L"RGrunt")
+			{
+				GdiTransparentBlt(hdc, m_tRect.left - 25, m_tRect.top - 25,
+					75, 75,
+					CBmpManager::GetInstance()->GetMemDC(L"LImpact"),
+					m_tBeattackFrame.dwFrameX*m_tBeattackFrame.dwFrameStart,
+					m_tBeattackFrame.dwFrameY,
+					50, 50, RGB(0, 0, 0));
+			}
+			else
+			{
+				GdiTransparentBlt(hdc, m_tRect.left - 25, m_tRect.top - 25,
+					75, 75,
+					CBmpManager::GetInstance()->GetMemDC(L"RImpact"),
+					m_tBeattackFrame.dwFrameX*m_tBeattackFrame.dwFrameStart,
+					m_tBeattackFrame.dwFrameY,
+					50, 50, RGB(0, 0, 0));
+			}
+		}
 		return;
 	}
 	GdiTransparentBlt(hdc, m_tRect.left - m_tInfo.fCX*0.5, m_tRect.top - m_tInfo.fCY*0.5, m_tInfo.fCX * 2, m_tInfo.fCY * 2,

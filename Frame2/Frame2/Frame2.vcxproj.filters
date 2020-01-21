@@ -52,9 +52,6 @@
     <Filter Include="90.Manager\06.SceneManager\04.Stage2">
       <UniqueIdentifier>{cd68f7cf-4848-477d-a088-5b1648855e33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="90.Manager\06.SceneManager\05.BossStage">
-      <UniqueIdentifier>{2f3d9f72-8131-4a7a-9e81-1dc84e2f4577}</UniqueIdentifier>
-    </Filter>
     <Filter Include="90.Manager\06.SceneManager\01.Logo">
       <UniqueIdentifier>{dca6aa6e-ccad-44e1-bf0d-f1cbc2dc5a8f}</UniqueIdentifier>
     </Filter>
@@ -117,6 +114,15 @@
     </Filter>
     <Filter Include="10.GameObject\07.Trap\01.Laser">
       <UniqueIdentifier>{dfe0824e-f64b-4ed7-b7d7-586cf32f081d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager\05.BossStage1">
+      <UniqueIdentifier>{2f3d9f72-8131-4a7a-9e81-1dc84e2f4577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="90.Manager\06.SceneManager\06.BossStage2">
+      <UniqueIdentifier>{4d166fba-e2d5-4903-bec0-ac0769b179e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\09.Blood">
+      <UniqueIdentifier>{e58c4bc7-913b-4253-8e65-93fd6d5bb6eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +253,8 @@
       <Filter>10.GameObject\06.UI</Filter>
     </ClInclude>
     <ClInclude Include="LaserTrap.h" />
+    <ClInclude Include="BossScene1.h" />
+    <ClInclude Include="Blood.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -349,6 +357,8 @@
       <Filter>10.GameObject\06.UI</Filter>
     </ClCompile>
     <ClCompile Include="LaserTrap.cpp" />
+    <ClCompile Include="BossScene1.cpp" />
+    <ClCompile Include="Blood.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

@@ -65,23 +65,7 @@ void CPlayer::Initialize()
 	m_tAtkFrame.dwFrameY = 0;
 	m_tAtkFrame.dwFrameSpeed = 50;
 	m_tAtkFrame.dwOldTime = GetTickCount();
-	CObjectManager::GetInstance()->AddObject(AFTERIMAGE, CObjFactory<CAfterImage>::CreateObject(m_WorldPos.x,m_WorldPos.y));
-
-	////UI부분
-	//m_iAlpha = 0;
-	//m_BlendFuntion.AlphaFormat = 0;
-	//m_BlendFuntion.BlendOp = AC_SRC_OVER;
-	//m_BlendFuntion.BlendFlags = 0;
-	//m_BlendFuntion.SourceConstantAlpha = m_iAlpha;//0~255  0투명 255불투명
-	//CBmpManager::GetInstance()->LoadBmp(L"BulletTime", L"../Image/BackGround/BulletTime.bmp");
-	//CBmpManager::GetInstance()->LoadBmp(L"HUDTimer", L"../Image/UI/HUD_Timer.bmp");//112x19
-	//CBmpManager::GetInstance()->LoadBmp(L"TimerGage", L"../Image/UI/TimerGage.bmp");//94x11
-	//CBmpManager::GetInstance()->LoadBmp(L"HUDUI", L"../Image/UI/HUD_UI.bmp");//640x23
-	//CBmpManager::GetInstance()->LoadBmp(L"BatteryGage", L"../Image/UI/BatteryRedGage.bmp");//77x19
-	//CBmpManager::GetInstance()->LoadBmp(L"Battery", L"../Image/UI/BatteryBlueGage.bmp");//54x10
-	//CBmpManager::GetInstance()->LoadBmp(L"BulletReflect", L"../Image/Player/BulletReflect.bmp");
-	//m_fGameTimer = 0.f;
-	//m_fBulletGage = 100.f;
+	CObjectManager::GetInstance()->AddObject(AFTERIMAGE, CObjFactory<CAfterImage>::CreateObject(m_WorldPos.x, m_WorldPos.y));
 }
 
 int CPlayer::Update()
@@ -100,11 +84,8 @@ int CPlayer::Update()
 	{
 		m_eCurState = STATE_ATTACK;
 		m_iCount++;
-		//cout << m_iCount<<"Y=힘" << sinf(m_fRadian)*m_fAtkPower << endl;
 		m_tInfo.fX += cosf(m_fRadian)*m_fAtkPower*0.5;
 		m_tInfo.fY -= sinf(m_fRadian)*m_fAtkPower*0.5;
-		//m_WorldPos.x += cosf(m_fRadian)*m_fAtkPower*0.5;
-		//m_WorldPos.y -= sinf(m_fRadian)*m_fAtkPower;
 		m_bDJump = false;
 		m_WallJump = false;
 		if (m_iCount % 10==0)
@@ -126,11 +107,8 @@ int CPlayer::Update()
 
 void CPlayer::Render(HDC hdc)
 {
-
-
 	CGameObject::UpdateRect2();
-	//BulletTime(hdc);
-	//RenderUI(hdc);
+	
 	HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey);
 	NULL_CHECK(hMemDC);
 	//Source DC에 그려진 비트맵을 Dest DC로 복사하는 함수.이 때 지정한 색상을 제거할 수 있다.
@@ -154,8 +132,6 @@ void CPlayer::Render(HDC hdc)
 	{
 		LineTo(hdc, g_tMouseInfo.ptStart.x, g_tMouseInfo.ptStart.y);
 	}
-	//Rectangle(hdc, 50, 50, 300, 200);
-
 
 }
 
@@ -346,8 +322,10 @@ void CPlayer::Jump()
 			if (m_fLeftVal < 60)
 			{
 				m_fLeftVal = (m_fJumpForce)*m_fJumpAcc;
-				m_fRightVal = m_fJumpForce*m_fJumpAcc*m_fJumpAcc*0.5;
+				if(m_fRightVal<65)
+					m_fRightVal = m_fJumpForce*m_fJumpAcc*m_fJumpAcc*0.5;
 				m_fJumpAcc += 0.15f;
+				cout << m_fRightVal << endl;
 			}
 
 			m_tInfo.fY -= m_fLeftVal- m_fRightVal;
@@ -383,11 +361,11 @@ void CPlayer::WallJump()
 void CPlayer::ScrollOffset()
 {
 	//플레이어가 화면에서 일정 범위를 벗어났을 때 스크롤을 움직인다.
-	if (WinCX *0.75 <= m_WorldPos.x)
+	if (WinCX *0.80 <= m_WorldPos.x)
 	{
 		g_fScrollX += m_fSpeed*2;
 	}
-	if (WinCX *0.25 >= m_WorldPos.x)
+	if (WinCX *0.15 >= m_WorldPos.x)
 	{
 		g_fScrollX -= m_fSpeed*2;
 	}
@@ -439,6 +417,8 @@ void CPlayer::Animate()
 			m_bRoll = true;
 		else
 			m_bRoll = false;
+
+
 	}
 	else
 	{

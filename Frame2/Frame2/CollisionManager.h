@@ -13,12 +13,14 @@ public:
 
 
 public:
+	static void	CollisionLaserTrap(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
+
 	static void	CollisionDoor(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
 	static void CollisionRect(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
 	static void CollisionRectEx(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
 	static void CollisionSphere(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
 	static bool CollisionRectTile(OBJECT_LIST& dstList, OBJECT_LIST& srcList);
-	static bool CollisionRectKatana(RECT& katanaRect, OBJECT_LIST& srcList, POINT playerPos = {0, 0});
+	static bool CollisionRectKatana(RECT& katanaRect, OBJECT_LIST& srcList, POINT playerPos = { 0, 0 });
 
 private:
 	static bool IntersectSphere(CGameObject* pDest, CGameObject* pSource);

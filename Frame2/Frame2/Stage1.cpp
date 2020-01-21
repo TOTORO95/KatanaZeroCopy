@@ -36,7 +36,7 @@ void CStage1::Initialize()
 	CObjectManager::GetInstance()->AddObject(TERRAIN, CObjFactory<CTerrain>::CreateObject());
 	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject(100, 500));
 	CObjectManager::GetInstance()->AddObject(UI, CObjFactory<CUserInterface>::CreateObject());
-	//CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<CFan>::CreateObject(300,300));
+	//CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<CFan>::CreateofObject(300,300));
 
 	CObjectManager::GetInstance()->AddObject(DOOR, CObjFactory<CDoor>::CreateObject(298, 288, 40, 57));
 	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(1280, 300, GUNSTER));
@@ -80,8 +80,8 @@ int CStage1::Update()
 	
 	CObjectManager::GetInstance()->Update();
 	//타일 객체생성 완료 이제 충돌 처리 할차례
-	if (0.f > g_fScrollX)
-		g_fScrollX = 0.f;
+	if (-200.f > g_fScrollX)
+		g_fScrollX = -200.f;
 	if (0.f > g_fScrollY)
 		g_fScrollY = 0.f;
 	if (float(TILE_COUNT_X * TILECX - WinCX) < g_fScrollX)

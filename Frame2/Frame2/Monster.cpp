@@ -4,6 +4,15 @@
 
 CMonster::CMonster()
 {
+	CBmpManager::GetInstance()->LoadBmp(L"LImpact", L"../Image/Monster/LImpact2.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"RImpact", L"../Image/Monster/RImpact2.bmp");//TODO: bmp 적용안됨 적용후 애니메이션 확인 !collisionrect katana에 충돌처리있음
+	m_tBeattackFrame.dwFrameCount = 5;
+	m_tBeattackFrame.dwFrameSpeed = 100;
+	m_tBeattackFrame.dwFrameStart = 0;
+	m_tBeattackFrame.dwFrameX = 50;
+	m_tBeattackFrame.dwFrameY = 0;
+	m_tBeattackFrame.dwOldTime = GetTickCount();
+	m_bIsBettackEnd = false;
 }
 
 CMonster::CMonster(MONSTER_TYPE eMonster_Type,float fposX, float fPosY)
@@ -19,7 +28,7 @@ CMonster::CMonster(MONSTER_TYPE eMonster_Type,float fposX, float fPosY)
 
 	m_eMonsterType = eMonster_Type;
 	m_bIsTargetSet = false;
-
+	
 	
 	
 }
@@ -31,6 +40,7 @@ CMonster::~CMonster()
 
 void CMonster::Initialize()
 {
+
 	LoadBmp();
 	InitMonster();
 	m_iCount = 0;
@@ -329,6 +339,8 @@ void CMonster::BeAttack(POINT targetInfo)
 
 		SetAngle(targetInfo.x, targetInfo.y);
 
+
+
 		m_eCurState = STATE_DEAD;
 		m_bIsDead = true;
 		//m_bisStop = true;
@@ -474,134 +486,29 @@ void CMonster::Animate()
 				m_tFrame.dwOldTime = dwCurTime;
 				if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount - 1)
 					m_bisStop = true;
+			
+			}
+			//이펙트
+			if (m_tBeattackFrame.dwOldTime + m_tBeattackFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+			{
+				++m_tBeattackFrame.dwFrameStart;
+				m_tBeattackFrame.dwOldTime = dwCurTime;
+			}
+
+			if (m_tBeattackFrame.dwFrameStart == m_tBeattackFrame.dwFrameCount&&!m_bIsBettackEnd)
+			{
+				cout << "11" << endl;
+				m_tBeattackFrame.dwFrameStart = 0;
+				m_bIsBettackEnd = true;
 			}
 		}
+
 	}
 }
 
 void CMonster::ChangeState()
 {
-	switch (m_eMonsterType)
-	{
-	//case GRUNT:
-	//	if (m_ePreState != m_eCurState)
-	//	{
-	//		switch (m_eCurState)
-	//		{
-	//		case STATE_IDLE:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 8;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 0;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_RUN:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 10;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 50;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_WALK:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 10;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 100;
-	//			m_tFrame.dwFrameSpeed = 200; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_AIMING:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 8;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 150;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_DEAD:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 16;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 200;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		default:
-	//			break;
-	//		}
-	//		m_ePreState = m_eCurState;
-	//	}
-	//	break;
-	//case GUNSTER:
-	//	if (m_ePreState != m_eCurState)
-	//	{
-	//		switch (m_eCurState)
-	//		{
-	//		case STATE_IDLE:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 8;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 0;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_RUN:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 10;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 50;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_WALK:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 8;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 100;
-	//			m_tFrame.dwFrameSpeed = 200; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_MELEE:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 4;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 150;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_DEAD:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 14;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 200;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		case STATE_AIMING:
-	//			m_tFrame.dwFrameStart = 0;
-	//			m_tFrame.dwFrameCount = 1;
-	//			m_tFrame.dwFrameX = 50;
-	//			m_tFrame.dwFrameY = 250;
-	//			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
-	//			m_tFrame.dwOldTime = GetTickCount();
-	//			break;
-	//		default:
-	//			break;
-	//		}
-	//		m_ePreState = m_eCurState;
-	//	}
-	//	break;
-	case POMP:
-		break;
-	case HEADHUNTER:
-		break;
-	case MONSTER_END:
-		break;
-	default:
-		break;
-	}
+	
 	
 }
 

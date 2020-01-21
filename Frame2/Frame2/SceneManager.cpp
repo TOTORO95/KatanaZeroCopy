@@ -53,15 +53,25 @@ void CSceneManager::SceneChange(SCENE_TYPE eCurType)
 			break;
 		case SCENE_STAGE1:
 			SafeDelete(m_pCurScene);
-			//m_pCurScene = new CStage1;
-			m_pCurScene = new CStage2;
-
+			m_pCurScene = new CStage1;
+			//m_pCurScene = new CStage2;
 			break;
 		case SCENE_STAGE2:
 			m_pCurScene->Release();
 			SafeDelete(m_pCurScene);
 			m_pCurScene = new CStage2;
 			break;
+		case SCENE_BOSS1:
+			m_pCurScene->Release();
+			SafeDelete(m_pCurScene);
+			m_pCurScene = new CStage2;
+			break;
+		case SCENE_BOSS2:
+			m_pCurScene->Release();
+			SafeDelete(m_pCurScene);
+			m_pCurScene = new CStage2;
+			break;
+
 		case SCENE_EDIT:
 			m_pCurScene = new CMyEdit;
 			break;
@@ -84,6 +94,34 @@ void CSceneManager::Update()
 		m_ePreSceneType = SCENE_STAGE1;
 		m_iEvent = CHANGE_SCENE;
 	}
+	if (CKeyManager::GetInstance()->KeyDown(KEY_2))
+	{
+		m_pCurScene->Release();
+		SafeDelete(m_pCurScene);
+		m_pCurScene = new CStage2;
+		m_pCurScene->Initialize();
+		m_ePreSceneType = SCENE_STAGE2;
+		m_iEvent = CHANGE_SCENE;
+	}
+	//if (CKeyManager::GetInstance()->KeyDown(KEY_3))
+	//{
+	//	m_pCurScene->Release();
+	//	SafeDelete(m_pCurScene);
+	//	m_pCurScene = new CBossScene1;
+	//	m_pCurScene->Initialize();
+	//	m_ePreSceneType = SCENE_BOSS1;
+	//	m_iEvent = CHANGE_SCENE;
+	//}
+	//if (CKeyManager::GetInstance()->KeyDown(KEY_4))
+	//{
+	//	m_pCurScene->Release();
+	//	SafeDelete(m_pCurScene);
+	//	m_pCurScene = new CBossScene2;
+	//	m_pCurScene->Initialize();
+	//	m_ePreSceneType = SCENE_BOSS2;
+	//	m_iEvent = CHANGE_SCENE;
+	//}
+
 }
 
 void CSceneManager::Render(HDC hDC)
