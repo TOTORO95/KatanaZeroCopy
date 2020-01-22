@@ -14,11 +14,11 @@ CUserInterface::~CUserInterface()
 void CUserInterface::Initialize()
 {
 	//UI부분
-	m_iAlpha = 0;
-	m_BlendFuntion.AlphaFormat = 0;
-	m_BlendFuntion.BlendOp = AC_SRC_OVER;
-	m_BlendFuntion.BlendFlags = 0;
-	m_BlendFuntion.SourceConstantAlpha = m_iAlpha;//0~255  0투명 255불투명
+	//m_iAlpha = 0;
+	//m_BlendFuntion.AlphaFormat = 0;
+	//m_BlendFuntion.BlendOp = AC_SRC_OVER;
+	//m_BlendFuntion.BlendFlags = 0;
+	//m_BlendFuntion.SourceConstantAlpha = m_iAlpha;//0~255  0투명 255불투명
 	CBmpManager::GetInstance()->LoadBmp(L"BulletTime", L"../Image/BackGround/BulletTime.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"HUDTimer", L"../Image/UI/HUD_Timer.bmp");//112x19
 	CBmpManager::GetInstance()->LoadBmp(L"TimerGage", L"../Image/UI/TimerGage.bmp");//94x11
@@ -38,43 +38,43 @@ int CUserInterface::Update()
 
 void CUserInterface::Render(HDC hdc)
 {
-	BulletTime(hdc);
+	//BulletTime(hdc);
 	RenderUI(hdc);
 }
 
 void CUserInterface::Release()
 {
 }
-
-void CUserInterface::BulletTime(HDC hdc)
-{
-	if (CKeyManager::GetInstance()->KeyPressing(KEY_SHIFT) && m_fBulletGage - 2>0)
-	{
-		if (m_iAlpha <= 150)
-			m_iAlpha += 10;
-		m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
-		AlphaBlend(hdc, 0, 0, WinCX, WinCY, CBmpManager::GetInstance()->GetMemDC(L"BulletTime"), 0, 0, 1280, 800, m_BlendFuntion);
-		m_fBulletGage -= 0.7f;
-	}
-	else
-	{
-		if (m_iAlpha>0)
-			m_iAlpha -= 10;
-		//cout << "bullettime" << endl;
-
-		if (m_iAlpha < 0)
-			m_iAlpha = 0;
-
-		m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
-		if (m_iAlpha != 0)
-			AlphaBlend(hdc, 0, 0, WinCX, WinCY, CBmpManager::GetInstance()->GetMemDC(L"BulletTime"), 0, 0, 1280, 800, m_BlendFuntion);
-
-		if (m_fBulletGage < 100)
-			m_fBulletGage += 1.0f;
-		else if (m_fBulletGage > 100)
-			m_fBulletGage = 100;
-	}
-}
+//
+//void CUserInterface::BulletTime(HDC hdc)
+//{
+//	if (CKeyManager::GetInstance()->KeyPressing(KEY_SHIFT) && m_fBulletGage - 2>0)
+//	{
+//		if (m_iAlpha <= 150)
+//			m_iAlpha += 10;
+//		m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
+//		AlphaBlend(hdc, 0, 0, WinCX, WinCY, CBmpManager::GetInstance()->GetMemDC(L"BulletTime"), 0, 0, 1280, 800, m_BlendFuntion);
+//		m_fBulletGage -= 0.7f;
+//	}
+//	else
+//	{
+//		if (m_iAlpha>0)
+//			m_iAlpha -= 10;
+//		//cout << "bullettime" << endl;
+//
+//		if (m_iAlpha < 0)
+//			m_iAlpha = 0;
+//
+//		m_BlendFuntion.SourceConstantAlpha = m_iAlpha;
+//		if (m_iAlpha != 0)
+//			AlphaBlend(hdc, 0, 0, WinCX, WinCY, CBmpManager::GetInstance()->GetMemDC(L"BulletTime"), 0, 0, 1280, 800, m_BlendFuntion);
+//
+//		if (m_fBulletGage < 100)
+//			m_fBulletGage += 1.0f;
+//		else if (m_fBulletGage > 100)
+//			m_fBulletGage = 100;
+//	}
+//}
 
 void CUserInterface::RenderUI(HDC hdc)
 {

@@ -76,9 +76,9 @@ void CTerrain::Render(HDC hDC)
 			GdiTransparentBlt(hDC, iLeft, iTop, TILECX, TILECY, hMemDC, m_vecTile[iIndex]->iDrawID * TILECX, 0,
 				TILECX, TILECY, RGB(0, 0, 0));
 
-				//BitBlt(hDC, iLeft, iTop, TILECX, TILECY,
-				//	hMemDC, m_vecTile[iIndex]->iDrawID * TILECX, 0, SRCCOPY);
-
+				/*BitBlt(hDC, iLeft, iTop, TILECX, TILECY,
+					hMemDC, m_vecTile[iIndex]->iDrawID * TILECX, 0, SRCCOPY);
+*/
 			iRenderCount++;
 		}
 	}

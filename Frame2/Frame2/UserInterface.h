@@ -12,12 +12,12 @@ public:
 	virtual int Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
-	void BulletTime(HDC hdc);
+	//void BulletTime(HDC hdc);
 	void RenderUI(HDC hdc);
 
-	//알파값변수
-	BLENDFUNCTION	m_BlendFuntion;
-	int				m_iAlpha;
+	////알파값변수
+	//BLENDFUNCTION	m_BlendFuntion;
+	//int				m_iAlpha;
 
 	//Timer
 	float m_fGameTimer;

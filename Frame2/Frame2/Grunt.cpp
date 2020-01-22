@@ -12,7 +12,7 @@ CGrunt::CGrunt(float fposX, float fPosY)
 	m_tFixPos = { (LONG)fposX,(LONG)fPosY };
 	SetPos(fposX, fPosY);
 	SetSize(50, 50);
-	m_fSpeed = 2.5;
+	m_fSpeed = 5;
 	m_eDirection = OBJ_IDLE;
 	ZeroMemory(&m_tDetectRect, sizeof(m_tDetectRect));
 	m_wstrImageKey = L"Right";
@@ -81,8 +81,41 @@ int CGrunt::Update()
 
 void CGrunt::Render(HDC hdc)
 {
+	//cout << m_fBloodAngle << endl;
 	if (m_bIsDead)
 	{
+		if (fabsf(m_fBloodAngle) >= 90)//¹Ù´Ú¿¡ Èê¸®´ÂÇÇ
+		{
+			//cout << (350 - fabsf(m_tRect.left - (m_tOldPos.x - g_fScrollX)) * 3) << endl;
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 120, m_tRect.bottom - 30, fabsf(m_tRect.left - (m_tOldPos.x - g_fScrollX)) * 3 /*+ 100*/, 32,
+				CBmpManager::GetInstance()->GetMemDC(L"LFB"),
+				0, 0, 294, 32, RGB(0, 0, 0));
+			//cout << m_tOldPos.x -g_fScrollX <<"   "<< m_tRect.left << endl;
+		}
+		else 
+		{
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 30, fabsf(m_tRect.right - (m_tOldPos.x - g_fScrollX)) * 3 /*+ 110*/, 32,
+				CBmpManager::GetInstance()->GetMemDC(L"RFB"),
+				0, 0, 294, 32, RGB(0, 0, 0));
+		}
+		if (fabsf(m_fBloodAngle) >= 108)
+		{
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX-50 , m_tRect.bottom - 113, 118/*+ 110*/, 113,
+				CBmpManager::GetInstance()->GetMemDC(L"ULFB"),
+				0, 0, 118, 113, RGB(0, 0, 0));
+		}
+		else if (fabsf(m_fBloodAngle) <= 72)
+		{
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 113, 118/*+ 110*/, 113,
+				CBmpManager::GetInstance()->GetMemDC(L"URFB"),
+				0, 0, 118, 113, RGB(0, 0, 0));
+		}
+		else if (fabsf(m_fBloodAngle) > 72 && fabsf(m_fBloodAngle) < 108)
+		{
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 113, 82/*+ 110*/, 114,
+				CBmpManager::GetInstance()->GetMemDC(L"BFB"),
+				0, 0, 41, 57, RGB(0, 0, 0));
+		}
 		GdiTransparentBlt(hdc, m_tRect.left - m_tInfo.fCX*0.5, m_tRect.top - m_tInfo.fCY*0.5, m_tInfo.fCX * 2, m_tInfo.fCY * 2,
 			CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey),
 			m_tFrame.dwFrameX*m_tFrame.dwFrameStart,

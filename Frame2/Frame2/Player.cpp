@@ -71,8 +71,7 @@ void CPlayer::Initialize()
 int CPlayer::Update()
 {
 
-
-	//cout << "Player World X=" << m_WorldPos.x << "   y= " << m_WorldPos.y << endl;
+	//cout << "g_Y" << g_fScrollY << endl;
 	//cout << "Player Local X=" << m_tInfo.fX << "   y= " << m_tInfo.fY << endl;
 
 	KeyInput();
@@ -361,11 +360,11 @@ void CPlayer::WallJump()
 void CPlayer::ScrollOffset()
 {
 	//플레이어가 화면에서 일정 범위를 벗어났을 때 스크롤을 움직인다.
-	if (WinCX *0.80 <= m_WorldPos.x)
+	if (WinCX *0.9 <= m_WorldPos.x)
 	{
 		g_fScrollX += m_fSpeed*2;
 	}
-	if (WinCX *0.15 >= m_WorldPos.x)
+	if (WinCX *0.1 >= m_WorldPos.x)
 	{
 		g_fScrollX -= m_fSpeed*2;
 	}

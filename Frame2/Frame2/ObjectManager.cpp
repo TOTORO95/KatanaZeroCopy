@@ -134,7 +134,8 @@ int CObjectManager::Update()
 	{
 		CCollisionManager::CollisionSphere(m_ObjectList[PLAYER], m_ObjectList[BULLET]);
 	
-	}CCollisionManager::CollisionSphere(m_ObjectList[MONSTER], m_ObjectList[BULLET]);
+	}
+	CCollisionManager::CollisionSphere(m_ObjectList[MONSTER], m_ObjectList[BULLET]);
 	if (m_ObjectList[PLAYER].front()->GetIsAttk())//공격할때 
 	{
 		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[BULLET]);

@@ -6,6 +6,9 @@ CMonster::CMonster()
 {
 	CBmpManager::GetInstance()->LoadBmp(L"RFB", L"../Image/Monster/RFlatBlood.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"LFB", L"../Image/Monster/LFlatBlood.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"BFB", L"../Image/Monster/FlatBlood90.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"URFB", L"../Image/Monster/FlatBlood45.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"ULFB", L"../Image/Monster/FlatBlood135.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"LImpact", L"../Image/Monster/LImpact2.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"RImpact", L"../Image/Monster/RImpact2.bmp");
 	m_tBeattackFrame.dwFrameCount = 5;
@@ -237,19 +240,30 @@ void CMonster::InitMonster()
 
 void CMonster::UpdateDetectRect()
 {
-	if (m_eDirection == OBJ_LEFT)
+	if (m_eMonsterType != HEADHUNTER)
 	{
-		m_tDetectRect = { (LONG)(m_WorldPos.x - m_iDetectRange),
-		(LONG)(m_WorldPos.y - m_iDetectRange*0.5),
-		(LONG)(m_WorldPos.x+ (m_iDetectRange*0.5)),
-		(LONG)m_tRect.bottom };
+		if (m_eDirection == OBJ_LEFT)
+		{
+			m_tDetectRect = { (LONG)(m_WorldPos.x - m_iDetectRange),
+			(LONG)(m_WorldPos.y - m_iDetectRange*0.5),
+			(LONG)(m_WorldPos.x+ (m_iDetectRange*0.5)),
+			(LONG)m_tRect.bottom };
+		}
+		else if (m_eDirection == OBJ_RIGHT)
+		{
+			m_tDetectRect = { (LONG)(m_WorldPos.x- (m_iDetectRange*0.5)) ,
+				(LONG)(m_WorldPos.y - m_iDetectRange*0.5),
+				(LONG)(m_WorldPos.x + m_iDetectRange),
+				(LONG)m_tRect.bottom };
+		}
 	}
-	else if (m_eDirection == OBJ_RIGHT)
+	else
 	{
-		m_tDetectRect = { (LONG)(m_WorldPos.x- (m_iDetectRange*0.5)) ,
+		//cout << "headhunterrect" << endl;
+		m_tDetectRect = { (LONG)(m_WorldPos.x - m_iDetectRange),
 			(LONG)(m_WorldPos.y - m_iDetectRange*0.5),
 			(LONG)(m_WorldPos.x + m_iDetectRange),
-			(LONG)m_tRect.bottom };
+			(LONG)(m_tRect.bottom +m_iDetectRange*0.5)};
 	}
 
 }
@@ -333,22 +347,45 @@ void CMonster::Patroll()
 
 	if (!m_bIsTargetSet)
 	{
-		if (sinf(m_fCount / 180 * PI) >= 0)
+		if (m_tOldPos.x > WinCX*0.5)
 		{
-			m_eDirection = OBJ_RIGHT;
-			m_wstrImageKey = m_wstrRImageKey;
-		}
-		else
-		{
-			m_eDirection = OBJ_LEFT;
-			m_wstrImageKey = m_wstrLImageKey;
-		}
-		m_eCurState = STATE_WALK;
-		if (m_eDirection == OBJ_RIGHT)
-			m_tInfo.fX += m_fSpeed / 2;
-		else
-			m_tInfo.fX -= m_fSpeed / 2;
+			if (sinf(m_fCount / 180 * PI) >= 0)
+			{
+				m_eDirection = OBJ_RIGHT;
+				m_wstrImageKey = m_wstrRImageKey;
+			}
+			else
+			{
+				m_eDirection = OBJ_LEFT;
+				m_wstrImageKey = m_wstrLImageKey;
+			}
+			m_eCurState = STATE_WALK;
+			if (m_eDirection == OBJ_RIGHT)
+				m_tInfo.fX += m_fSpeed / 2;
+			else
+				m_tInfo.fX -= m_fSpeed / 2;
 
+		}
+		else
+		{
+			if (sinf(-m_fCount / 180 * PI) >= 0)
+			{
+				m_eDirection = OBJ_RIGHT;
+				m_wstrImageKey = m_wstrRImageKey;
+			}
+			else
+			{
+				m_eDirection = OBJ_LEFT;
+				m_wstrImageKey = m_wstrLImageKey;
+			}
+			m_eCurState = STATE_WALK;
+			if (m_eDirection == OBJ_RIGHT)
+				m_tInfo.fX += m_fSpeed / 2;
+			else
+				m_tInfo.fX -= m_fSpeed / 2;
+
+
+		}
 	}
 	else//Àû¹ß°ß
 	{

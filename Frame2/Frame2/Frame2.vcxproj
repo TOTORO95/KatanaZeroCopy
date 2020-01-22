@@ -149,6 +149,9 @@
     <ClInclude Include="BmpManager.h" />
     <ClInclude Include="BossScene1.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletTime.h" />
+    <ClInclude Include="FrontGround.h" />
+    <ClInclude Include="HeadHunter.h" />
     <ClInclude Include="LaserTrap.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="CameraMgr.h" />
@@ -196,6 +199,9 @@
     <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="BossScene1.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletTime.cpp" />
+    <ClCompile Include="FrontGround.cpp" />
+    <ClCompile Include="HeadHunter.cpp" />
     <ClCompile Include="LaserTrap.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="CameraMgr.cpp" />

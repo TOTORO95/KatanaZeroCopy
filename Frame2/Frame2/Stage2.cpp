@@ -11,6 +11,7 @@
 #include "Door.h"
 #include "Fan.h"
 #include "LaserTrap.h"
+#include "BulletTime.h"
 CStage2::CStage2()
 {
 }

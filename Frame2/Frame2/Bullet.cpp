@@ -48,8 +48,8 @@ int CBullet::Update()
 	m_tOldPos = { (LONG)m_WorldPos.x,(LONG)m_WorldPos.y };
 	if (!m_Reverce)
 	{
-		if (m_fSpeed < 50)
-			m_fSpeed+=5;
+		if (m_fSpeed < 40)
+			m_fSpeed+=3;
 		//m_tOldPos.x += cosf(m_fRadian) * m_fSpeed;
 		//m_tOldPos.x -= sinf(m_fRadian) * m_fSpeed;
 		m_tInfo.fX+= cosf(m_fRadian) * m_fSpeed;
@@ -57,8 +57,8 @@ int CBullet::Update()
 	}
 	else
 	{
-		if (m_fSpeed < 50)
-			m_fSpeed += 5;
+		if (m_fSpeed < 40)
+			m_fSpeed += 3;
 		m_tInfo.fX -= cosf(m_fRadian) * m_fSpeed;
 		m_tInfo.fY += sinf(m_fRadian) * m_fSpeed;
 	}
@@ -112,11 +112,11 @@ void CBullet::Animate()
 		++m_frame.dwFrameStart;
 		m_frame.dwOldTime = dwCurTime;
 	}
-	if (m_frame.dwFrameStart == 0)
+	if (m_iCount == 1)
 	{
 		m_OldScroll = { (LONG)g_fScrollX,(LONG)g_fScrollY };
 	}
-	if (m_iCount <= 3)
+	if (m_iCount <= 5)
 	{
 		if (m_iCount &1)
 		{
@@ -130,7 +130,7 @@ void CBullet::Animate()
 		}
 
 	}
-	if (m_iCount == 4)
+	if (m_iCount == 5)
 	{
 		g_fScrollX = m_OldScroll.x;
 		g_fScrollY = m_OldScroll.y;

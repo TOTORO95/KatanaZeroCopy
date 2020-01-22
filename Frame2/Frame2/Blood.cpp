@@ -26,7 +26,7 @@ void CBlood::Initialize()
 	
 
 	m_tBloodFrame.dwFrameCount = 3;
-	m_tBloodFrame.dwFrameSpeed = 100;
+	m_tBloodFrame.dwFrameSpeed = 200;
 	m_tBloodFrame.dwFrameStart = 0;
 	m_tBloodFrame.dwFrameX = 32;
 	m_tBloodFrame.dwFrameY = 32;
@@ -49,23 +49,26 @@ int CBlood::Update()
 
 void CBlood::Render(HDC hdc)
 {
-	//if(m_bisStop)
 	//cout <<"X="<< m_tRect.left<<"  Y="<< m_tRect.top << endl;
-	// 
+	 
 	
-	GdiTransparentBlt(hdc, m_tRect.left+g_fScrollX-40, m_tRect.top+g_fScrollY-20, 48, 48,
-		CBmpManager::GetInstance()->GetMemDC(L"Blood")
-		, 32 * m_iBlood, m_tBloodFrame.dwFrameY*m_tBloodFrame.dwFrameStart, 32, 32, RGB(0, 0, 0));
+	if (!m_bisStop)
+	{
+		GdiTransparentBlt(hdc, m_tRect.left+g_fScrollX-40, m_tRect.top+g_fScrollY-20, 60, 60,//¿ø·¡48
+			CBmpManager::GetInstance()->GetMemDC(L"Blood")
+			, 32 * m_iBlood, m_tBloodFrame.dwFrameY*m_tBloodFrame.dwFrameStart, 32, 32, RGB(0, 0, 0));
+
+	}
 }
 
 void CBlood::Release()
 {
 }
 
-void CBlood::Animate()
+void CBlood::Animate()//1 0.2
 {
 	DWORD dwCurTime = GetTickCount();
-	if (m_tBloodFrame.dwOldTime + m_tBloodFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+	if (m_tBloodFrame.dwOldTime + m_tBloodFrame.dwFrameSpeed / (g_fTime+0.3) <= dwCurTime)
 	{
 		++m_tBloodFrame.dwFrameStart;
 		m_tBloodFrame.dwOldTime = dwCurTime;

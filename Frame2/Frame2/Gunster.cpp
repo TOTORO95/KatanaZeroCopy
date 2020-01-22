@@ -21,6 +21,8 @@ CGunster::CGunster(float fPosX, float fPosY, int iAtkRate)
 	m_bIsTargetSet = false;
 	m_iAttackRate = iAtkRate;
 	m_bIsBettackEnd = false;
+	m_tOldPos = { (LONG)fPosX,(LONG)fPosY };
+
 }
 
 
@@ -38,7 +40,7 @@ void CGunster::Initialize()
 	m_wstrRImageKey = L"RGunster";
 	m_wstrLImageKey = L"LGunster";
 
-	m_iDetectRange = 400;
+	m_iDetectRange = 500;
 	m_fJumpAcc = 0;
 	m_tFrame.dwFrameStart = 0;
 	m_tFrame.dwFrameCount = 8;
@@ -46,7 +48,7 @@ void CGunster::Initialize()
 	m_tFrame.dwFrameY = 0;
 	m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
 	m_tFrame.dwOldTime = GetTickCount();
-	m_HitRange = 350;
+	m_HitRange = 370;
 
 
 	m_iCount = 0;
@@ -88,26 +90,43 @@ void CGunster::Render(HDC hdc)
 {
 	if (m_bIsDead)//죽음
 	{
-		GdiTransparentBlt(hdc, m_tRect.left - m_tInfo.fCX*0.5, m_tRect.top - m_tInfo.fCY, m_tInfo.fCX * 2, m_tInfo.fCY * 2,
-			CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey),
-			m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
-			m_tFrame.dwFrameY,
-			50, 50, RGB(0, 0, 0));
-		
 		if (fabsf(m_fBloodAngle) >= 90)//바닥에 흘리는피
 		{
 			//cout << (350 - fabsf(m_tRect.left - (m_tOldPos.x - g_fScrollX)) * 3) << endl;
-			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 120, m_tRect.bottom - 30, fabsf(m_tRect.left - (m_tOldPos.x - g_fScrollX))*3 /*+ 100*/, 32,
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 120, m_tRect.bottom - 30, fabsf(m_tRect.left - (m_tOldPos.x - g_fScrollX)) * 3 /*+ 100*/, 32,
 				CBmpManager::GetInstance()->GetMemDC(L"LFB"),
 				0, 0, 294, 32, RGB(0, 0, 0));
 			//cout << m_tOldPos.x -g_fScrollX <<"   "<< m_tRect.left << endl;
 		}
 		else
 		{
-			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 30, fabsf(m_tRect.right - (m_tOldPos.x - g_fScrollX))*3 /*+ 110*/, 32,
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 30, fabsf(m_tRect.right - (m_tOldPos.x - g_fScrollX)) * 3 /*+ 110*/, 32,
 				CBmpManager::GetInstance()->GetMemDC(L"RFB"),
 				0, 0, 294, 32, RGB(0, 0, 0));
 		}
+		if (fabsf(m_fBloodAngle) >= 108)
+		{
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 113, 118/*+ 110*/, 113,
+				CBmpManager::GetInstance()->GetMemDC(L"ULFB"),
+				0, 0, 118, 113, RGB(0, 0, 0));
+		}
+		else if (fabsf(m_fBloodAngle) <= 72)
+		{
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 113, 118/*+ 110*/, 113,
+				CBmpManager::GetInstance()->GetMemDC(L"URFB"),
+				0, 0, 118, 113, RGB(0, 0, 0));
+		}
+		else if (fabsf(m_fBloodAngle) > 72 && fabsf(m_fBloodAngle) < 108)
+		{
+			GdiTransparentBlt(hdc, m_tOldPos.x - g_fScrollX - 50, m_tRect.bottom - 113, 82/*+ 110*/, 114,
+				CBmpManager::GetInstance()->GetMemDC(L"BFB"),
+				0, 0, 41, 57, RGB(0, 0, 0));
+		}
+		GdiTransparentBlt(hdc, m_tRect.left - m_tInfo.fCX*0.5, m_tRect.top - m_tInfo.fCY, m_tInfo.fCX * 2, m_tInfo.fCY * 2,
+			CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey),
+			m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
+			m_tFrame.dwFrameY,
+			50, 50, RGB(0, 0, 0));
 		
 	
 		//피
@@ -189,21 +208,46 @@ void CGunster::Patroll()
 
 	if (!m_bIsTargetSet)
 	{
-		if (sinf(m_fCount / 180 * PI) >= 0)
+		//cout <<"Oldx="<< m_tOldPos.x << endl;
+		if (m_tOldPos.x > WinCX*0.5)
 		{
-			m_eDirection = OBJ_RIGHT;
-			m_wstrImageKey = m_wstrRImageKey;
+			if (sinf(-m_fCount / 180 * PI) >= 0)
+			{
+				m_eDirection = OBJ_RIGHT;
+				m_wstrImageKey = m_wstrRImageKey;
+			}
+			else
+			{
+				m_eDirection = OBJ_LEFT;
+				m_wstrImageKey = m_wstrLImageKey;
+			}
+			m_eCurState = STATE_WALK;
+			if (m_eDirection == OBJ_RIGHT)
+				m_tInfo.fX += m_fSpeed / 2;
+			else
+				m_tInfo.fX -= m_fSpeed / 2;
+
 		}
 		else
 		{
-			m_eDirection = OBJ_LEFT;
-			m_wstrImageKey = m_wstrLImageKey;
+			if (sinf(+m_fCount / 180 * PI) >= 0)
+			{
+				m_eDirection = OBJ_RIGHT;
+				m_wstrImageKey = m_wstrRImageKey;
+			}
+			else
+			{
+				m_eDirection = OBJ_LEFT;
+				m_wstrImageKey = m_wstrLImageKey;
+			}
+			m_eCurState = STATE_WALK;
+			if (m_eDirection == OBJ_RIGHT)
+				m_tInfo.fX += m_fSpeed / 2;
+			else
+				m_tInfo.fX -= m_fSpeed / 2;
+
+
 		}
-		m_eCurState = STATE_WALK;
-		if (m_eDirection == OBJ_RIGHT)
-			m_tInfo.fX += m_fSpeed *0.5;
-		else
-			m_tInfo.fX -= m_fSpeed *0.5;
 
 	}
 	else//적발견

@@ -1,25 +1,25 @@
 #pragma once
 #include "GameObject.h"
-class CBlood :
+class CBulletTime :
 	public CGameObject
 {
 public:
-	CBlood();
-	CBlood(POINT pos,float fdgree);
-	~CBlood();
+	CBulletTime();
+	~CBulletTime();
 
 	// CGameObject을(를) 통해 상속됨
 	virtual void Initialize() override;
 	virtual int Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
-	
+	void BulletTime(HDC hdc);
+
 private:
-	void Animate();
-	void DirectionAni();
-private:
-	int m_iBlood;
-	HDC m_bloodHDC;
-	FRAME m_tBloodFrame;
+	//알파값변수
+	BLENDFUNCTION	m_BlendFuntion;
+	int				m_iAlpha;
+	float m_fBulletGage;
+
+
 };
 

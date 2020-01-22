@@ -41,18 +41,19 @@ void CBackGround::Render(HDC hdc)
 {
 	if (m_wstrImageKey == L"edit")
 	{
+		cout << m_WorldPos.y << endl;
 		HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey);
 		NULL_CHECK(hMemDC);
-		BitBlt(hdc, 0, 0, WinCX, WinCY, hMemDC, WinCX*0.5 - m_WorldPos.x, 700 - m_WorldPos.y, SRCCOPY);
+		BitBlt(hdc, 0, 0, WinCX, WinCY, hMemDC, WinCX*0.5 - m_WorldPos.x, 0-m_WorldPos.y+386, SRCCOPY);
 	}
 	if (m_wstrImageKey == L"bg")
 	{
 		HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(L"Black");
 		BitBlt(hdc, 0, 0, 3000, 1500, hMemDC,0,0, SRCCOPY);
-
+		
 		hMemDC= CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey);
 		NULL_CHECK(hMemDC);
-		BitBlt(hdc, 0, 0, WinCX, WinCY, hMemDC, WinCX*0.5 - m_WorldPos.x, 0 - m_WorldPos.y + 400, SRCCOPY);
+		BitBlt(hdc, 0, 0, WinCX, WinCY, hMemDC, WinCX*0.5 - m_WorldPos.x, 0 -m_WorldPos.y + 400, SRCCOPY);
 	}
 	else if (m_wstrImageKey == L"bg2")
 	{
@@ -63,7 +64,15 @@ void CBackGround::Render(HDC hdc)
 		NULL_CHECK(hMemDC);
 		BitBlt(hdc, 0, 0, WinCX, WinCY, hMemDC, WinCX*0.5 - m_WorldPos.x, 700 - m_WorldPos.y, SRCCOPY);
 	}
+	else if (m_wstrImageKey == L"bg3")
+	{
+		HDC hMemDC = CBmpManager::GetInstance()->GetMemDC(L"Black");//640 400
+		BitBlt(hdc, 0, 0, 3000, 2000, hMemDC, 0, 0, SRCCOPY);
 
+		hMemDC = CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey);//1200x800
+		NULL_CHECK(hMemDC);
+		BitBlt(hdc, 0, 0, WinCX, WinCY, hMemDC, WinCX*0.5 - m_WorldPos.x, 0 - m_WorldPos.y + 386, SRCCOPY);
+	}
 
 }
 

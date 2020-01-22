@@ -10,6 +10,8 @@
 #include "Door.h"
 #include "Fan.h"
 #include "UserInterface.h"
+#include "FrontGround.h"
+#include "BulletTime.h"
 CStage1::CStage1()
 {
 }
@@ -26,6 +28,7 @@ void CStage1::Initialize()
 	m_iMonCount = 4;
 	m_bIsNext = false;
 	CBmpManager::GetInstance()->LoadBmp(L"bg", L"../Image/BackGround/Stage1BG.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"fg", L"../Image/BackGround/Stage1FG2.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"bk", L"../Image/BackGround/BK.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_R", L"../Image/Player/Player_R.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_L", L"../Image/Player/Player_L.bmp");
@@ -33,20 +36,21 @@ void CStage1::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"Slash", L"../Image/Player/Player_AllSlashSheet242.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Tile", L"../Image/Tile/Tile20.bmp");
 	CObjectManager::GetInstance()->AddObject(BACKGROUND, CObjFactory<CBackGround>::CreateObject(L"bg"));
+
+
 	CObjectManager::GetInstance()->AddObject(TERRAIN, CObjFactory<CTerrain>::CreateObject());
 	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject(100, 500));
 	CObjectManager::GetInstance()->AddObject(UI, CObjFactory<CUserInterface>::CreateObject());
-	//CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<CFan>::CreateofObject(300,300));
-
+	CObjectManager::GetInstance()->AddObject(BULLETTIME, CObjFactory<CBulletTime>::CreateObject());
+	CObjectManager::GetInstance()->AddObject(FG, CObjFactory<CFrontGround>::CreateObject());
+	
 	CObjectManager::GetInstance()->AddObject(DOOR, CObjFactory<CDoor>::CreateObject(298, 288, 40, 57));
-	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(1280, 300, GUNSTER));
-	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(500, 530, GUNSTER));
-	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CMonster>::CreateObject(800, 530, GRUNT));
 
 
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1100, 300));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1400, 300));
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(500, 300));
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(800, 520));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1000, 300));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(900, 520));
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGrunt>::CreateObject(580, 530));
 
 	CGameObject* pTerrain = CObjectManager::GetInstance()->GetTerrain();
@@ -119,10 +123,11 @@ void CStage1::Render(HDC hDC)
 	//GdiTransparentBlt(hDC, 0, 0, 2132, 800, hMemDC, 0, 0, 1600, 600, SRCCOPY);
 	//CLineManager::GetInstance()->Render(hDC);
 
-
+	//불릿타임 몬스터 플레이어 트랩 fg ui  
 	CObjectManager::GetInstance()->Render(hDC);
-
-
+/*
+	GdiTransparentBlt(hDC, 0- g_fScrollX, 0, 1600,600,CBmpManager::GetInstance()->GetMemDC(L"fg")
+		, 0, 0, 1600, 600, RGB(0,0,0));*/
 	//Rectangle(hDC, 280, 260, 320, 320);
 	//BitBlt(hDC, 278-g_fScrollX, 258-g_fScrollY, 40, 60,
 	//	CBmpManager::GetInstance()->GetMemDC(L"bk"), 0, 0, SRCCOPY);

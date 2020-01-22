@@ -124,6 +124,9 @@
     <Filter Include="10.GameObject\09.Blood">
       <UniqueIdentifier>{e58c4bc7-913b-4253-8e65-93fd6d5bb6eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10.GameObject\04.Monster\HeadHunter">
+      <UniqueIdentifier>{51543931-82b4-4553-a4d0-e1a87c2e56ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -252,10 +255,21 @@
     <ClInclude Include="UserInterface.h">
       <Filter>10.GameObject\06.UI</Filter>
     </ClInclude>
-    <ClInclude Include="LaserTrap.h" />
-    <ClInclude Include="BossScene1.h" />
+    <ClInclude Include="BossScene1.h">
+      <Filter>90.Manager\06.SceneManager\05.BossStage1</Filter>
+    </ClInclude>
     <ClInclude Include="Blood.h">
       <Filter>10.GameObject\09.Blood</Filter>
+    </ClInclude>
+    <ClInclude Include="LaserTrap.h">
+      <Filter>10.GameObject\07.Trap\01.Laser</Filter>
+    </ClInclude>
+    <ClInclude Include="FrontGround.h" />
+    <ClInclude Include="HeadHunter.h">
+      <Filter>10.GameObject\04.Monster\HeadHunter</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletTime.h">
+      <Filter>10.GameObject\06.UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -358,10 +372,21 @@
     <ClCompile Include="UserInterface.cpp">
       <Filter>10.GameObject\06.UI</Filter>
     </ClCompile>
-    <ClCompile Include="LaserTrap.cpp" />
-    <ClCompile Include="BossScene1.cpp" />
+    <ClCompile Include="BossScene1.cpp">
+      <Filter>90.Manager\06.SceneManager\05.BossStage1</Filter>
+    </ClCompile>
     <ClCompile Include="Blood.cpp">
       <Filter>10.GameObject\09.Blood</Filter>
+    </ClCompile>
+    <ClCompile Include="LaserTrap.cpp">
+      <Filter>10.GameObject\07.Trap\01.Laser</Filter>
+    </ClCompile>
+    <ClCompile Include="FrontGround.cpp" />
+    <ClCompile Include="HeadHunter.cpp">
+      <Filter>10.GameObject\04.Monster\HeadHunter</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletTime.cpp">
+      <Filter>10.GameObject\06.UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
