@@ -22,7 +22,7 @@ public:
 	void InitMonster();
 	void UpdateDetectRect();
 	void Move();
-	void BeAttack(POINT targetInfo);
+	virtual void BeAttack(POINT targetInfo);
 	void KnockBack();
 	virtual	void Animate();
 	virtual void Attack();

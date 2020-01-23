@@ -127,6 +127,9 @@
     <Filter Include="10.GameObject\04.Monster\HeadHunter">
       <UniqueIdentifier>{51543931-82b4-4553-a4d0-e1a87c2e56ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10.GameObject\04.Monster\HeadHunterVer2">
+      <UniqueIdentifier>{74592507-e713-4e40-b6c9-2334556ad24b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">

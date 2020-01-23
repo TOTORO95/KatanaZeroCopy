@@ -12,7 +12,7 @@ CGrunt::CGrunt(float fposX, float fPosY)
 	m_tFixPos = { (LONG)fposX,(LONG)fPosY };
 	SetPos(fposX, fPosY);
 	SetSize(50, 50);
-	m_fSpeed = 5;
+	m_fSpeed = 3;
 	m_eDirection = OBJ_IDLE;
 	ZeroMemory(&m_tDetectRect, sizeof(m_tDetectRect));
 	m_wstrImageKey = L"Right";

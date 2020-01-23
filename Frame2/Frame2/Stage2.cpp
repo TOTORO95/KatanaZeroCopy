@@ -41,6 +41,7 @@ void CStage2::Initialize()
 	CObjectManager::GetInstance()->AddObject(UI, CObjFactory<CUserInterface>::CreateObject());
 	CObjectManager::GetInstance()->AddObject(DOOR, CObjFactory<CDoor>::CreateObject(298, 288, 40, 57));
 	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject(200, 800));
+	CObjectManager::GetInstance()->AddObject(BULLETTIME, CObjFactory<CBulletTime>::CreateObject());
 
 	//Trap
 	CObjectManager::GetInstance()->AddObject(TRAP, CObjFactory<CFan>::CreateObject(1578, 100));
@@ -50,7 +51,7 @@ void CStage2::Initialize()
 
 
 	//Monster
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGrunt>::CreateObject(580, 530));
+	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGrunt>::CreateObject(1100, 530));
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(800, 520,30));
 	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1578,150,10));
 

@@ -33,6 +33,18 @@ void CUserInterface::Initialize()
 int CUserInterface::Update()
 {
 	m_fGameTimer += 2.0f / g_fTime;
+	if (CKeyManager::GetInstance()->KeyPressing(KEY_SHIFT) && m_fBulletGage - 2>0)
+	{
+		m_fBulletGage -= 0.7f;
+	}
+	else
+	{
+		
+		if (m_fBulletGage < 100)
+			m_fBulletGage += 1.0f;
+		else if (m_fBulletGage > 100)
+			m_fBulletGage = 100;
+	}
 	return NO_EVENT;
 }
 
