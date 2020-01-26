@@ -23,7 +23,7 @@ public:
 	void UpdateDetectRect();
 	void Move();
 	virtual void BeAttack(POINT targetInfo);
-	void KnockBack();
+	virtual void KnockBack();
 	virtual	void Animate();
 	virtual void Attack();
 	virtual void Patroll();

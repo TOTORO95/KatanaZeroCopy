@@ -25,6 +25,8 @@ CBossScene1::~CBossScene1()
 
 void CBossScene1::Initialize()
 {
+	g_fScrollX = 0;
+	g_fScrollY = 0;
 	m_iMonCount = 8;
 	m_bIsNext = false;
 	CBmpManager::GetInstance()->LoadBmp(L"bg3", L"../Image/BackGround/BossStage1.bmp");

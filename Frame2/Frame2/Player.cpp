@@ -71,7 +71,7 @@ void CPlayer::Initialize()
 int CPlayer::Update()
 {
 
-	//cout << "g_Y" << g_fScrollY << endl;
+	//cout << "gx=" <<g_fScrollX<<" gy=" << g_fScrollY << endl;
 	//cout << "Player Local X=" << m_tInfo.fX << "   y= " << m_tInfo.fY << endl;
 
 	KeyInput();

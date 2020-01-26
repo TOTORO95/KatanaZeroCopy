@@ -32,7 +32,13 @@ CHeadHunter::~CHeadHunter()
 
 void CHeadHunter::Initialize()
 {
-	
+	// 1번째문 2번째문 3번째문	4번째문 높이450
+	// 210     480		820		1060
+	m_tGPatternPos[0] = { 1060,450 };
+	m_tGPatternPos[1] = { 210,450 };
+	m_tGPatternPos[2] = { 480,450 };
+	m_tGPatternPos[3] = { 820,450 };
+
 	InitBMP();
 	m_iDetectRange = 2000;
 	m_fJumpAcc = 0;
@@ -48,10 +54,16 @@ void CHeadHunter::Initialize()
 	m_iCount = 0;
 	m_fCount = 0;
 	//m_fRadian = 0;
+	m_iPatternNum = 0;
 	m_bisStop = false;
+	m_bIsAimEnd = false;
+	m_fAimRate = 0;
+	m_bIsInvincibility = false;
+	m_iRecoveryTime = 0;
+	m_bIsHide = false;
 	for (auto &count : m_fFrameCount)
 		count = 0;
-
+	m_fLaserRate = 1;
 }
 
 int CHeadHunter::Update()
@@ -59,16 +71,20 @@ int CHeadHunter::Update()
 	//cout << m_fAngle << endl;
 	//cout << "방향(0왼쪽 1오른쪽) = "<<m_eDirection << endl;
 	//cout << "State=" <<m_eCurState << endl;
+	//cout << m_iRecoveryTime << endl;
 	UpdateWorldPos2();
 	UpdateRect2();
 	UpdateDetectRect();
-	if (fabsf(m_fAngle) >= 90)
-		m_eDirection = OBJ_RIGHT;
-	else
-		m_eDirection = OBJ_LEFT;
+	if (!m_bIsInvincibility)
+	{
+		if (fabsf(m_fAngle) >= 90)
+			m_eDirection = OBJ_RIGHT;
+		else
+			m_eDirection = OBJ_LEFT;
+	}
 	DirectionAni();
 	Move();
-	
+	RecoveryIncible();
 
 
 	Pattern();
@@ -101,16 +117,44 @@ void CHeadHunter::Render(HDC hdc)
 	//		0,
 	//		m_tFrame.dwFrameX, m_tFrame.dwFrameY, RGB(0, 0, 0));
 	//}
-	//} 
 	//AimLine(hdc);
-	
-	
-	AimAni(hdc);
+	if (!m_bIsHide)
+	{
+		if (m_eCurState == STATE_AIMING)
+		{
+			AimAni(hdc);
+		}
+		else
+		{
+			GdiTransparentBlt(hdc, m_WorldPos.x - m_tFrame.dwFrameX*0.5, m_tRect.top - m_tFrame.dwFrameY*0.5, m_tFrame.dwFrameX*1.5, m_tFrame.dwFrameY*1.5,
+				CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey),
+				m_tFrame.dwFrameX*m_tFrame.dwFrameStart, 0,
+				m_tFrame.dwFrameX, m_tFrame.dwFrameY, RGB(0, 0, 0));
+		}
+		if(m_bIsAimEnd)
+			Laser(hdc, m_fAngle);
 
+
+	}
+
+
+
+	//if (m_bIsAimEnd == true)
+	//{
+	//	GdiTransparentBlt(hdc, m_WorldPos.x - m_tFrame.dwFrameX*0.5, m_tRect.top - m_tFrame.dwFrameY*0.5, m_tFrame.dwFrameX*1.5, m_tFrame.dwFrameY*1.5,
+	//		CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey),
+	//		m_tFrame.dwFrameX*m_tFrame.dwFrameStart,
+	//		0,
+	//		m_tFrame.dwFrameX, m_tFrame.dwFrameY, RGB(0, 0, 0));
+	//}
+	//else
+	//{
+	//	//AimAni(hdc);
+	//}
 	if (CKeyManager::GetInstance()->KeyPressing(KEY_O))
 	{
 		Rectangle(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-		Rectangle(hdc, m_tDetectRect.left, m_tDetectRect.top, m_tDetectRect.right, m_tDetectRect.bottom);
+		//Rectangle(hdc, m_tDetectRect.left, m_tDetectRect.top, m_tDetectRect.right, m_tDetectRect.bottom);
 	}
 }
 
@@ -120,7 +164,7 @@ void CHeadHunter::Patroll()
 
 void CHeadHunter::BeAttack(POINT targetInfo)
 {
-	if (m_iHP>0 &&!m_bIsDead)
+	if (m_iHP>0 &&!m_bIsInvincibility)
 	{
 		m_iHP--;
 		if (m_WorldPos.x < targetInfo.x)
@@ -133,14 +177,14 @@ void CHeadHunter::BeAttack(POINT targetInfo)
 		else
 			m_eCurState = STATE_DEAD;
 
-
+		//cout <<"hp= "<<m_iHP << endl;
 		SetAngle(targetInfo.x, targetInfo.y);
 		m_fBloodAngle = m_fAngle;
 		m_tOldPos = { (LONG)m_tInfo.fX, (LONG)m_tInfo.fY };
-		m_bIsDead = true;
+		//m_bIsDead = true;
 		//m_bisStop = true;
+		m_bIsInvincibility = true;
 		m_fCount = 0;
-		//cout <<" OldPos="<< m_tOldPos.x << endl;
 	}
 }
 
@@ -162,9 +206,9 @@ void CHeadHunter::DirectionAni()
 		break;
 	case STATE_KNOCKBACK:
 		if (m_eDirection == OBJ_RIGHT)
-			m_wstrImageKey = L"LKnockback";
-		else
 			m_wstrImageKey = L"RKnockback";
+		else
+			m_wstrImageKey = L"LKnockback";
 		break;
 	case STATE_AIMING:
 		if (m_eDirection == OBJ_RIGHT)
@@ -175,14 +219,20 @@ void CHeadHunter::DirectionAni()
 	case STATE_DEAD:
 			m_wstrImageKey = L"Dead";
 		break;
+	case STATE_LASER_SHOT:
+		if (m_eDirection == OBJ_RIGHT)
+			m_wstrImageKey = L"LPutbackLaserGun";
+		else
+			m_wstrImageKey = L"RPutbackLaserGun";
+		break;
 	case STATE_TELEPORT_VERTICAL_LASER:
 			m_wstrImageKey = L"RHeadIdle";
 		break;
 	case STATE_TELEPORT_HORIZON_LASER:
 		if (m_eDirection == OBJ_RIGHT)
-			m_wstrImageKey = L"LGTeleportLaser";
-		else
 			m_wstrImageKey = L"RGTeleportLaser";
+		else
+			m_wstrImageKey = L"LGTeleportLaser";
 		break;
 	case STATE_TELEPORT_SWIP_LASER:
 		if (m_eDirection == OBJ_RIGHT)
@@ -202,11 +252,23 @@ void CHeadHunter::DirectionAni()
 		else
 			m_wstrImageKey = L"RDashAttack";
 		break;
+	case STATE_PUTBACK_LASERGUN:
+		if (m_eDirection == OBJ_RIGHT)
+			m_wstrImageKey = L"LPutbackLaserGun";
+		else
+			m_wstrImageKey = L"RPutbackLaserGun";
+		break;
+	case STATE_TAKEOUT_LASERGUN:
+		if (m_eDirection == OBJ_RIGHT)
+			m_wstrImageKey = L"LTakeOutLaserGun";
+		else
+			m_wstrImageKey = L"RTakeOutLaserGun";
+		break;
 	case STATE_DASH_END:
 		if (m_eDirection == OBJ_RIGHT)
-			m_wstrImageKey = L"LDashAttackEnd";
+			m_wstrImageKey = L"LTakeOutLaserGun";
 		else
-			m_wstrImageKey = L"RDashAttackEnd";
+			m_wstrImageKey = L"RTakeOutLaserGun";
 		break;
 	default:
 		break;
@@ -222,19 +284,31 @@ void CHeadHunter::Release()
 void CHeadHunter::Pattern()
 {// 1번째문 2번째문 3번째문	4번째문 높이450
 	// 210     480		820		1060
-	switch (m_eCurState)
+	if (m_eCurState == STATE_IDLE)
 	{
-	case STATE_AIMING:
-		break;
-	case STATE_TELEPORT_VERTICAL_LASER:
-		break;
-	case STATE_TELEPORT_HORIZON_LASER:
-		break;
-	case STATE_TELEPORT_SWIP_LASER:
-		break;
-	default:
-		break;
+		m_iPatternNum++;
+		if (m_iPatternNum >= 50)
+		{
+			m_eCurState = STATE_TAKEOUT_LASERGUN;
+		}
 	}
+
+	TakeOutGun();
+	if (m_bIsHide)
+	{
+		int i = fabsl(sinf(GetTickCount())*1.5);
+		SetPos((float)m_tGPatternPos[i].x, (float)m_tGPatternPos[i].y);
+		m_bIsHide = false;
+		m_bIsInvincibility = false;
+		m_eCurState = STATE_IDLE;
+	}
+	//	break;
+	//	case STATE_LASER_SHOT:
+	//		m_eCurState = STATE_LASER_SHOT;
+	//	default:
+	//		break;
+	//	}
+	//}
 }
 
 void CHeadHunter::RightShot(HDC hdc)
@@ -249,15 +323,17 @@ void CHeadHunter::Animate()
 	DWORD dwCurTime = GetTickCount();
 	if (m_eCurState != STATE_DEAD)
 	{
-		//cout << m_tFrame.dwFrameStart << endl;
-		if (m_tFrame.dwOldTime + m_tFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+		if (m_eCurState)
 		{
-			++m_tFrame.dwFrameStart;
-			m_tFrame.dwOldTime = dwCurTime;
-		}
+			if (m_tFrame.dwOldTime + m_tFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+			{
+				++m_tFrame.dwFrameStart;
+				m_tFrame.dwOldTime = dwCurTime;
+			}
 
-		if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount)
-			m_tFrame.dwFrameStart = 0;
+			if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount)
+				m_tFrame.dwFrameStart = 0;
+		}
 
 
 		if (m_tHorizonLaserFrame.dwOldTime + m_tHorizonLaserFrame.dwFrameSpeed / g_fTime <= dwCurTime)
@@ -269,49 +345,68 @@ void CHeadHunter::Animate()
 		if (m_tHorizonLaserFrame.dwFrameStart == m_tHorizonLaserFrame.dwFrameCount)
 		{
 			m_tHorizonLaserFrame.dwFrameStart = 0;
+			m_bIsAimEnd = false;
+
 		}
 	}
 	else
 	{
-		if (m_tFrame.dwOldTime + m_tFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+		if (m_bIsAimEnd)//TODO: 요기수정중 현제 레이저쏜후에  <- 이곳에 AimEnd 값 넣어주기 
 		{
-			++m_tFrame.dwFrameStart;
-			m_tFrame.dwOldTime = dwCurTime;
-		}
+			if (m_tFrame.dwOldTime + m_tFrame.dwFrameSpeed / g_fTime <= dwCurTime)
+			{
+				++m_tFrame.dwFrameStart;
+				m_tFrame.dwOldTime = dwCurTime;
+			}
 
-		if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount)
-			m_tFrame.dwFrameStart = 0;
+			if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount)
+				m_tFrame.dwFrameStart = 0; // < - 요기 건들이기
+
+		}
 
 	}
 
+}
+
+void CHeadHunter::TakeOutGun()
+{
+	if (m_eCurState == STATE_TAKEOUT_LASERGUN)
+	{
+		if (m_tFrame.dwFrameStart >= m_tFrame.dwFrameCount - 2)
+		{
+			m_eCurState = STATE_AIMING;
+			m_iPatternNum = 0;
+
+		}
+	}
 }
 
 void CHeadHunter::Laser(HDC hdc,float fDgree)
 {
-	if (m_eCurState == STATE_TELEPORT_VERTICAL_LASER)
+	if (m_bIsAimEnd)
 	{
-		RotateSizingImage(hdc, m_hBitLaser[m_iCount], 180 - fDgree, 1280, 7.5, m_WorldPos.x + 5, m_WorldPos.y - 12, m_fLaserRate);
-		if (m_fLaserRate <= 0)
-			m_fLaserRate = 1;
-		else
-			m_fLaserRate -= 0.25;
-		m_iCount++;
-		if (m_iCount >= 7)
+		//cout << m_tHorizonLaserFrame.dwFrameStart << endl;
+		RotateSizingImage(hdc, m_hBitLaser[m_tHorizonLaserFrame.dwFrameStart], 180 - fDgree, 1280, 7.5, m_WorldPos.x - 20, m_WorldPos.y - 20,
+			m_fLaserRate - m_tHorizonLaserFrame.dwFrameStart*0.05);
+		cout << m_tHorizonLaserFrame.dwFrameStart << endl;
+		if (m_tHorizonLaserFrame.dwFrameStart == m_tHorizonLaserFrame.dwFrameCount - 1)
 		{
-			m_iCount = 0;
+			m_bIsAimEnd = false;
+			m_eCurState = STATE_IDLE;
 		}
 	}
+	
+
 }
 
 void CHeadHunter::AimLine(HDC hdc)
 {
-
-	HPEN pen = (HPEN)CreatePen(PS_SOLID, 1, RGB(255, 255, 0));
-	HPEN open = (HPEN)SelectObject(hdc, pen);
-	MoveToEx(hdc,m_WorldPos.x + cosf(m_fRadian)*15+10, m_WorldPos.y- sinf(m_fRadian)*15 -11, NULL);
-	LineTo(hdc, m_WorldPos.x+cosf(m_fRadian)*1280, m_WorldPos.y-sinf(m_fRadian) * 1280);
-	SelectObject(hdc, open);
-	DeleteObject(pen);
+		HPEN pen = (HPEN)CreatePen(PS_SOLID, 1, RGB(255, 255, 0));
+		HPEN open = (HPEN)SelectObject(hdc, pen);
+		MoveToEx(hdc,m_WorldPos.x + cosf(m_fRadian)*15+10, m_WorldPos.y- sinf(m_fRadian)*15 -11, NULL);
+		LineTo(hdc, m_WorldPos.x+cosf(m_fRadian)*1280, m_WorldPos.y-sinf(m_fRadian) * 1280);
+		SelectObject(hdc, open);
+		DeleteObject(pen);
 
 }
 
@@ -331,6 +426,10 @@ void CHeadHunter::InitBMP()
 	//Teleport Swip
 	CBmpManager::GetInstance()->LoadBmp(L"RTLaserSwip", L"../Image/HeadHunter/Laser/TLaserSwip/RTLaserSwipFull.bmp");//1475x46
 	CBmpManager::GetInstance()->LoadBmp(L"LTLaserSwip", L"../Image/HeadHunter/Laser/TLaserSwip/LTLaserSwipFull.bmp");//1475x46
+	//LaserShot
+	CBmpManager::GetInstance()->LoadBmp(L"LeftLaserShot", L"../Image/HeadHunter/Laser/LeftLaserShot.bmp");//304x43
+	CBmpManager::GetInstance()->LoadBmp(L"RightLaserShot", L"../Image/HeadHunter/Laser/RightLaserShot.bmp");//304x43
+
 	//Ready LaserGun 
 	CBmpManager::GetInstance()->LoadBmp(L"RTakeOutLaserGun", L"../Image/HeadHunter/Laser/RTakeOutLaserGun.bmp");//304x43
 	CBmpManager::GetInstance()->LoadBmp(L"LTakeOutLaserGun", L"../Image/HeadHunter/Laser/LTakeOutLaserGun.bmp");//304x43
@@ -355,6 +454,13 @@ void CHeadHunter::InitBMP()
 	//DashAttackEnd
 	CBmpManager::GetInstance()->LoadBmp(L"RDashAttackEnd", L"../Image/HeadHunter/DashAttack/RDashAttackEnd.bmp");//500x47
 	CBmpManager::GetInstance()->LoadBmp(L"LDashAttackEnd", L"../Image/HeadHunter/DashAttack/LDashAttackEnd.bmp");//500x47
+	//PutBackLaserGun
+	CBmpManager::GetInstance()->LoadBmp(L"LPutbackLaserGun", L"../Image/HeadHunter/DashAttack/LPutbackLaserGun.bmp");//500x47
+	CBmpManager::GetInstance()->LoadBmp(L"RPutbackLaserGun", L"../Image/HeadHunter/DashAttack/RPutbackLaserGun.bmp");//500x47
+	//TakeOutLaserGun
+	CBmpManager::GetInstance()->LoadBmp(L"LTakeOutLaserGun", L"../Image/HeadHunter/DashAttack/LTakeOutLaserGun.bmp");//500x47
+	CBmpManager::GetInstance()->LoadBmp(L"RTakeOutLaserGun", L"../Image/HeadHunter/DashAttack/RTakeOutLaserGun.bmp");//500x47
+
 
 	//DEAD																										 //DEAD
 	CBmpManager::GetInstance()->LoadBmp(L"Dead", L"../Image/HeadHunter/Dead/Dead.bmp");//1064x21
@@ -368,19 +474,21 @@ void CHeadHunter::InitBMP()
 	LoadBmp(m_hBitLaser[5], L"../Image/HeadHunter/Laser/Beam/Beam6.bmp");
 	LoadBmp(m_hBitLaser[6], L"../Image/HeadHunter/Laser/Beam/Beam1.bmp");
 
-	m_tHorizonLaserFrame.dwFrameCount = 10;
-	m_tHorizonLaserFrame.dwFrameSpeed = 50;
+	m_tHorizonLaserFrame.dwFrameCount = 7;
+	m_tHorizonLaserFrame.dwFrameSpeed = 100;
 	m_tHorizonLaserFrame.dwFrameStart = 0;
 	m_tHorizonLaserFrame.dwFrameX = 1280;
 	m_tHorizonLaserFrame.dwFrameY = 30;
 	m_tHorizonLaserFrame.dwOldTime = GetTickCount();
 	 
 
-
-
 }
 
 
+
+void CHeadHunter::KnockBack()
+{
+}
 
 void CHeadHunter::ChangeState()
 {
@@ -407,8 +515,8 @@ void CHeadHunter::ChangeState()
 		case STATE_TELEPORT_HORIZON_LASER:
 			m_tFrame.dwFrameStart = 0;
 			m_tFrame.dwFrameCount = 8;
-			m_tFrame.dwFrameX = 50;
-			m_tFrame.dwFrameY = 100;
+			m_tFrame.dwFrameX = 41;
+			m_tFrame.dwFrameY = 35;
 			m_tFrame.dwFrameSpeed = 200; // 0.2초 간격
 			m_tFrame.dwOldTime = GetTickCount();
 			break;
@@ -428,6 +536,14 @@ void CHeadHunter::ChangeState()
 			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
 			m_tFrame.dwOldTime = GetTickCount();
 			break;
+		case STATE_LASER_SHOT://1064
+			m_tFrame.dwFrameStart = 0;
+			m_tFrame.dwFrameCount = 8;
+			m_tFrame.dwFrameX = 38;
+			m_tFrame.dwFrameY = 43;
+			m_tFrame.dwFrameSpeed = 140; // 0.2초 간격
+			m_tFrame.dwOldTime = GetTickCount();
+			break;
 		case STATE_DEAD://1064
 			m_tFrame.dwFrameStart = 0;
 			m_tFrame.dwFrameCount = 19;
@@ -436,6 +552,15 @@ void CHeadHunter::ChangeState()
 			m_tFrame.dwFrameSpeed = 140; // 0.2초 간격
 			m_tFrame.dwOldTime = GetTickCount();
 			break;
+		case STATE_TAKEOUT_LASERGUN://1064
+			m_tFrame.dwFrameStart = 0;
+			m_tFrame.dwFrameCount = 8;
+			m_tFrame.dwFrameX =38;
+			m_tFrame.dwFrameY = 43;
+			m_tFrame.dwFrameSpeed = 140; // 0.2초 간격
+			m_tFrame.dwOldTime = GetTickCount();
+			break;
+
 		default:
 			break;
 		}
@@ -451,23 +576,54 @@ void CHeadHunter::VerticalLaser()
 
 void CHeadHunter::AimAni(HDC hdc)
 {
-	m_eCurState = STATE_AIMING;
-	if (m_eDirection == OBJ_LEFT)
-		m_wstrImageKey = L"RHeadAim";
-	else
-		m_wstrImageKey = L"LHeadAim";
-
-	if (m_fAngle >= 90 && m_fAngle <= 180)
+	if (m_eCurState == STATE_AIMING)
 	{
-		m_iAimNum = 9 + (20 - (m_fAngle + 5) / 9);
-	}
-	else if (m_fAngle < 90 && m_fAngle >= 0)
-	{
-		m_iAimNum = 9 + ((m_fAngle + 5) / 9);
-	}
-		GdiTransparentBlt(hdc, m_WorldPos.x - m_tFrame.dwFrameX*0.5, m_tRect.top - m_tFrame.dwFrameY*0.5, m_tFrame.dwFrameX*1.5, m_tFrame.dwFrameY*1.5,
+		m_fAimRate++;
+		if (m_eDirection == OBJ_LEFT)
+			m_wstrImageKey = L"RHeadAim";
+		else
+			m_wstrImageKey = L"LHeadAim";
+		if (m_fAngle >= 90 && m_fAngle <= 180)
+		{
+			m_iAimNum = 9 + (20 - (m_fAngle + 5) / 9);
+		}
+		else if (m_fAngle < 90 && m_fAngle >= 0)
+		{
+			m_iAimNum = 9 + ((m_fAngle + 5) / 9);
+		}
+		AimLine(hdc);
+		GdiTransparentBlt(hdc, m_WorldPos.x - m_tFrame.dwFrameX*0.5, m_tRect.top - m_tFrame.dwFrameY*0.5-5, m_tFrame.dwFrameX*1.5, m_tFrame.dwFrameY*1.5,
 			CBmpManager::GetInstance()->GetMemDC(m_wstrImageKey),
-			39*m_iAimNum,0,39, 52, RGB(0, 0, 0));
+			39 * m_iAimNum, 0, 39, 52, RGB(0, 0, 0));
+		if (m_fAimRate >= 60)
+		{
+			m_bIsAimEnd = true;
+			m_fAimRate = 0;
+			m_eCurState = STATE_LASER_SHOT;
+		}
+
+	}
+	
+}
+
+void CHeadHunter::RecoveryIncible()
+{
+	if (m_bIsInvincibility&&!m_bIsHide)
+	{
+		if (m_tFrame.dwFrameStart >= m_tFrame.dwFrameCount - 1)
+		{
+			m_bIsHide = true;
+		}
+		//cout << m_tFrame.dwFrameStart << endl;
+		if (m_tFrame.dwFrameStart<=7)
+		{
+			if (m_eDirection == OBJ_RIGHT)
+				m_tInfo.fX -= 3;
+			else
+				m_tInfo.fX += 3;
+		}
+
+	}
 }
 
 bool CHeadHunter::LoadBmp(HBITMAP & hmp, const wstring & wstrFilePath)

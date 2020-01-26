@@ -78,7 +78,7 @@ void CBullet::Render(HDC hdc)
 	if (m_Reverce)
 	{
 		Animate();
-		GdiTransparentBlt(hdc, m_tEffectPos.x-64, m_tEffectPos.y-64, 128, 128,
+		GdiTransparentBlt(hdc, m_tEffectPos.x-80, m_tEffectPos.y-80, 160, 160,
 			CBmpManager::GetInstance()->GetMemDC(L"BulletReflect"),m_frame.dwFrameX*m_frame.dwFrameStart ,m_frame.dwFrameY , 70, 64, RGB(0, 0, 0));
 	}
 }
