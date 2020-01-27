@@ -55,10 +55,14 @@ void CGunster::Initialize()
 	m_fCount = 0;
 	m_fRadian = 0;
 	m_bisStop = false;
+	m_bIsDelete = false;
 }
 
 int CGunster::Update()
 {
+
+	if (m_bIsDelete)
+		return DEAD_OBJ;
 	if (m_bIsDead)
 	{
 		

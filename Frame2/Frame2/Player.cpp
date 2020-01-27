@@ -499,7 +499,7 @@ void CPlayer::ChangeState()
 			m_tFrame.dwFrameCount = 7;
 			m_tFrame.dwFrameX = 50;
 			m_tFrame.dwFrameY = 100;
-			m_tFrame.dwFrameSpeed = 100; // 0.2초 간격
+			m_tFrame.dwFrameSpeed = 60; // 0.2초 간격
 			m_tFrame.dwOldTime = GetTickCount();
 			break;
 		case STATE_WALLGRIP:

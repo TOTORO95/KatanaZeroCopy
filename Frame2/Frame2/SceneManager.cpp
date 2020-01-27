@@ -6,6 +6,7 @@
 #include "Stage1.h"
 #include "Stage2.h"
 #include "BossScene1.h"
+#include "BossStage2.h"
 CSceneManager* CSceneManager::m_pInstance = nullptr;
 CSceneManager * CSceneManager::GetInstance()
 {
@@ -65,12 +66,12 @@ void CSceneManager::SceneChange(SCENE_TYPE eCurType)
 		case SCENE_BOSS1:
 			m_pCurScene->Release();
 			SafeDelete(m_pCurScene);
-			m_pCurScene = new CStage2;
+			m_pCurScene = new CBossScene1;
 			break;
 		case SCENE_BOSS2:
 			m_pCurScene->Release();
 			SafeDelete(m_pCurScene);
-			m_pCurScene = new CStage2;
+			m_pCurScene = new CBossStage2;
 			break;
 
 		case SCENE_EDIT:
@@ -111,6 +112,15 @@ void CSceneManager::Update()
 		m_pCurScene = new CBossScene1;
 		m_pCurScene->Initialize();
 		m_ePreSceneType = SCENE_BOSS1;
+		m_iEvent = CHANGE_SCENE;
+	}
+	if (CKeyManager::GetInstance()->KeyDown(KEY_4))
+	{
+		m_pCurScene->Release();
+		SafeDelete(m_pCurScene);
+		m_pCurScene = new CBossStage2;
+		m_pCurScene->Initialize();
+		m_ePreSceneType = SCENE_BOSS2;
 		m_iEvent = CHANGE_SCENE;
 	}
 	//if (CKeyManager::GetInstance()->KeyDown(KEY_4))

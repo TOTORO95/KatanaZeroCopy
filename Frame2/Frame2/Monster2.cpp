@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "Monster.h"
+#include "Monster2.h"
 #include "Bullet.h"
 #include "Blood.h"
-CMonster::CMonster()
+CMonster2::CMonster2()
 {
 	CBmpManager::GetInstance()->LoadBmp(L"RFB", L"../Image/Monster/RFlatBlood.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"LFB", L"../Image/Monster/LFlatBlood.bmp");
@@ -28,7 +28,7 @@ CMonster::CMonster()
 	m_tBloodFrame.dwOldTime = GetTickCount();
 }
 
-CMonster::CMonster(MONSTER_TYPE eMonster_Type,float fposX, float fPosY)
+CMonster2::CMonster2(MONSTER_TYPE eMonster_Type, float fposX, float fPosY)
 {
 	m_eObjType = MONSTER;
 	m_tFixPos = { (LONG)fposX,(LONG)fPosY };
@@ -41,32 +41,29 @@ CMonster::CMonster(MONSTER_TYPE eMonster_Type,float fposX, float fPosY)
 
 	m_eMonsterType = eMonster_Type;
 	m_bIsTargetSet = false;
-	
-	
-	
+
+
+
 }
 
 
-CMonster::~CMonster()
+CMonster2::~CMonster2()
 {
 }
 
-void CMonster::Initialize()
+void CMonster2::Initialize()
 {
 
 	LoadBmp();
 	InitMonster();
 	m_iCount = 0;
 	m_fCount = 0;
-	m_fRadian=0;
+	m_fRadian = 0;
 	m_bisStop = false;
-	m_bIsDelete = false;
 }
 
-int CMonster::Update()
+int CMonster2::Update()
 {
-	if (m_bIsDelete)
-		return DEAD_OBJ;
 	if (m_bIsDead)
 	{
 		UpdateWorldPos2();
@@ -84,12 +81,12 @@ int CMonster::Update()
 	Animate();
 	ChangeState();
 	Move();
-	
-	
+
+
 	return NO_EVENT;
 }
 
-void CMonster::Render(HDC hdc)
+void CMonster2::Render(HDC hdc)
 {
 
 	switch (m_eMonsterType)
@@ -157,8 +154,8 @@ void CMonster::Render(HDC hdc)
 	default:
 		break;
 	}
-	
-	
+
+
 	if (CKeyManager::GetInstance()->KeyPressing(KEY_O))
 	{
 		Rectangle(hdc, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
@@ -166,11 +163,11 @@ void CMonster::Render(HDC hdc)
 	}
 }
 
-void CMonster::Release()
+void CMonster2::Release()
 {
 }
 
-void CMonster::LoadBmp()
+void CMonster2::LoadBmp()
 {
 	switch (m_eMonsterType)
 	{
@@ -202,7 +199,7 @@ void CMonster::LoadBmp()
 	}
 }
 
-void CMonster::InitMonster()
+void CMonster2::InitMonster()
 {
 	switch (m_eMonsterType)
 	{
@@ -238,23 +235,23 @@ void CMonster::InitMonster()
 	default:
 		break;
 	}
-	
+
 }
 
-void CMonster::UpdateDetectRect()
+void CMonster2::UpdateDetectRect()
 {
 	if (m_eMonsterType != HEADHUNTER)
 	{
 		if (m_eDirection == OBJ_LEFT)
 		{
 			m_tDetectRect = { (LONG)(m_WorldPos.x - m_iDetectRange),
-			(LONG)(m_WorldPos.y - m_iDetectRange*0.5),
-			(LONG)(m_WorldPos.x+ (m_iDetectRange*0.5)),
-			(LONG)m_tRect.bottom };
+				(LONG)(m_WorldPos.y - m_iDetectRange*0.5),
+				(LONG)(m_WorldPos.x + (m_iDetectRange*0.5)),
+				(LONG)m_tRect.bottom };
 		}
 		else if (m_eDirection == OBJ_RIGHT)
 		{
-			m_tDetectRect = { (LONG)(m_WorldPos.x- (m_iDetectRange*0.5)) ,
+			m_tDetectRect = { (LONG)(m_WorldPos.x - (m_iDetectRange*0.5)) ,
 				(LONG)(m_WorldPos.y - m_iDetectRange*0.5),
 				(LONG)(m_WorldPos.x + m_iDetectRange),
 				(LONG)m_tRect.bottom };
@@ -266,12 +263,12 @@ void CMonster::UpdateDetectRect()
 		m_tDetectRect = { (LONG)(m_WorldPos.x - m_iDetectRange),
 			(LONG)(m_WorldPos.y - m_iDetectRange*0.5),
 			(LONG)(m_WorldPos.x + m_iDetectRange),
-			(LONG)(m_tRect.bottom +m_iDetectRange*0.5)};
+			(LONG)(m_tRect.bottom + m_iDetectRange*0.5) };
 	}
 
 }
 
-void CMonster::Move()
+void CMonster2::Move()
 {
 	if (!m_bIsColl)
 	{
@@ -290,12 +287,12 @@ void CMonster::Move()
 
 }
 
-void CMonster::Attack()
+void CMonster2::Attack()
 {
-	
+
 }
 
-void CMonster::BeAttack(POINT targetInfo)
+void CMonster2::BeAttack(POINT targetInfo)
 {
 	if (!m_bIsDead)
 	{
@@ -306,7 +303,7 @@ void CMonster::BeAttack(POINT targetInfo)
 
 		SetAngle(targetInfo.x, targetInfo.y);
 		m_fBloodAngle = m_fAngle;
-		m_tOldPos = { (LONG)m_tInfo.fX, (LONG)m_tInfo.fY};
+		m_tOldPos = { (LONG)m_tInfo.fX, (LONG)m_tInfo.fY };
 		m_eCurState = STATE_DEAD;
 		m_bIsDead = true;
 		//m_bisStop = true;
@@ -314,15 +311,15 @@ void CMonster::BeAttack(POINT targetInfo)
 		//cout <<" OldPos="<< m_tOldPos.x << endl;
 	}
 }
-void CMonster::KnockBack()
+void CMonster2::KnockBack()
 {
-	m_tInfo.fX -= cosf(m_fRadian)*20;
-	m_tInfo.fY += sinf(m_fRadian)*15;
+	m_tInfo.fX -= cosf(m_fRadian) * 30;
+	m_tInfo.fY += sinf(m_fRadian) * 15;
 }
 
-void CMonster::Pattern()
+void CMonster2::Pattern()
 {
-	
+
 	switch (m_eMonsterType)
 	{
 	case GRUNT:
@@ -340,12 +337,12 @@ void CMonster::Pattern()
 	default:
 		break;
 	}
-	
+
 
 }
-void CMonster::Patroll()
+void CMonster2::Patroll()
 {
-	if(!m_bIsDead)
+	if (!m_bIsDead)
 		m_fCount++;
 
 	if (!m_bIsTargetSet)
@@ -432,7 +429,7 @@ void CMonster::Patroll()
 
 	}
 }
-void CMonster::Animate()
+void CMonster2::Animate()
 {
 	DWORD dwCurTime = GetTickCount();
 	if (m_eCurState != STATE_DEAD)
@@ -463,10 +460,10 @@ void CMonster::Animate()
 
 		if (m_tFrame.dwFrameStart < m_tFrame.dwFrameCount - 1 && !m_bisStop)
 		{
-			if((int)m_fCount% 2 ==0&&m_fCount<20 )
+			if ((int)m_fCount % 2 == 0 && m_fCount<20)
 			{
-			CObjectManager::GetInstance()->AddObject(BLOOD, 
-				CObjFactory<CBlood>::CreateObject(m_WorldPos, m_fBloodAngle));
+				CObjectManager::GetInstance()->AddObject(BLOOD,
+					CObjFactory<CBlood>::CreateObject(m_WorldPos, m_fBloodAngle));
 
 			}
 			if (m_fCount == 0)
@@ -474,11 +471,11 @@ void CMonster::Animate()
 				m_OldScroll = { (LONG)g_fScrollX,(LONG)g_fScrollY };
 				g_fTime = 0.5;
 			}m_fCount++;
-			if (m_fCount==4)
+			if (m_fCount == 4)
 				g_fTime = 1;
 			if (m_fCount < 6)
 			{
-				if ((int)m_fCount&1)
+				if ((int)m_fCount & 1)
 				{
 					g_fScrollX += sinf(GetTickCount()) * 15;
 					g_fScrollY += cosf(GetTickCount()) * 15;
@@ -503,7 +500,7 @@ void CMonster::Animate()
 				if (m_tFrame.dwFrameStart == m_tFrame.dwFrameCount - 1)
 				{
 					m_bisStop = true;
-					
+
 				}
 			}
 			//이펙트
@@ -513,7 +510,7 @@ void CMonster::Animate()
 				m_tBeattackFrame.dwOldTime = dwCurTime;
 			}
 
-			if (m_tBeattackFrame.dwFrameStart == m_tBeattackFrame.dwFrameCount&&!m_bIsBettackEnd)
+			if (m_tBeattackFrame.dwFrameStart == m_tBeattackFrame.dwFrameCount && !m_bIsBettackEnd)
 			{
 				m_tBeattackFrame.dwFrameStart = 0;
 				m_bIsBettackEnd = true;
@@ -523,13 +520,13 @@ void CMonster::Animate()
 	}
 }
 
-void CMonster::ChangeState()
+void CMonster2::ChangeState()
 {
-	
-	
+
+
 }
 
-//void CMonster::BloodAni()
+//void CMonster2::BloodAni()
 //{
 //	if (m_fBloodAngle >-10)//0~10사이는 0  10~30은 1  30~50 2 
 //		m_iBlood = ((int)m_fBloodAngle + 10) / 20;
@@ -539,7 +536,7 @@ void CMonster::ChangeState()
 //}
 
 
-void CMonster::SetTarget(POINT targetInfo,bool isTarget)
+void CMonster2::SetTarget(POINT targetInfo, bool isTarget)
 {
 	m_tTargetPos = targetInfo;
 

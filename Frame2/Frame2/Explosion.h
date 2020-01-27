@@ -1,23 +1,23 @@
 #pragma once
 #include "GameObject.h"
-class CBackGround :
+class CExplosion :
 	public CGameObject
 {
 public:
-	CBackGround();
-	CBackGround(wstring backGround);
-	~CBackGround();
-	bool GetTrigger() { return m_Trigger; }
-	void SetTrigger(bool val) { m_Trigger = val; }
-	
+	CExplosion();
+	CExplosion(float fx, float fy);
+	~CExplosion();
+
 	// CGameObject을(를) 통해 상속됨
 	virtual void Initialize() override;
 	virtual int Update() override;
 	virtual void Render(HDC hdc) override;
 	virtual void Release() override;
+	void Animate();
 	
-	
-	bool m_Trigger;
-	
+
+private:
+	bool m_bIsEnd;
+
 };
 

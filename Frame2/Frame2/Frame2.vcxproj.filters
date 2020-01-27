@@ -130,6 +130,12 @@
     <Filter Include="10.GameObject\04.Monster\HeadHunterVer2">
       <UniqueIdentifier>{74592507-e713-4e40-b6c9-2334556ad24b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10.GameObject\04.Monster\Monster2">
+      <UniqueIdentifier>{483d1812-35b3-4c8a-bc40-2d1ea2f98b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.GameObject\10.Explosion">
+      <UniqueIdentifier>{5ce65429-23de-4d62-b4bd-f0a0c4cca9c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -274,6 +280,9 @@
     <ClInclude Include="BulletTime.h">
       <Filter>10.GameObject\06.UI</Filter>
     </ClInclude>
+    <ClInclude Include="Monster2.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="BossStage2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Frame2.cpp">
@@ -391,6 +400,9 @@
     <ClCompile Include="BulletTime.cpp">
       <Filter>10.GameObject\06.UI</Filter>
     </ClCompile>
+    <ClCompile Include="Monster2.cpp" />
+    <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="BossStage2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Frame2.ico">

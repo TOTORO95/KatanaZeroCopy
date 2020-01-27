@@ -59,7 +59,13 @@ public:
 
 		return pObject;
 	}
+	static CGameObject* CreateObject(float x, float y, int option, MONSTER_TYPE montype)
+	{
+		CGameObject* pObject = new T(x, y, option);
+		pObject->Initialize();
 
+		return pObject;
+	}
 	static CGameObject* CreateObject(float x, float y, float degree)
 	{
 		CGameObject* pObject = new T;

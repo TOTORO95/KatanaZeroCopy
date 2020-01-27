@@ -31,6 +31,8 @@ public:
 	void SetObjType(OBJ_TYPE val) { m_eObjType=val; }
 	void SetStop(bool val) { m_bisStop = val; }
 	bool GetStop() { return m_bisStop; }
+	void AddForce(LONG Force) { m_WorldPos.y += Force; }
+	void SetDelete(bool val) { m_bIsDelete = val; }
 
 public:
 	virtual void Initialize()=0;
@@ -77,5 +79,6 @@ protected:
 	FRAME		m_tBloodFrame;
 	POINT		m_OldScroll;
 	bool		m_bisStop;
+	bool		m_bIsDelete;
 };
 

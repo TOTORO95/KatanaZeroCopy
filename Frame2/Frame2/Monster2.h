@@ -1,12 +1,13 @@
 #pragma once
 #include "GameObject.h"
-class CMonster :
+class CMonster2 :
 	public CGameObject
 {
 public:
-	CMonster();
-	CMonster(MONSTER_TYPE eMonster_Type,float fposX,float fPosY);
-	~CMonster();
+	CMonster2();
+	CMonster2(MONSTER_TYPE eMonster_Type, float fposX, float fPosY);
+	~CMonster2();
+
 
 public:
 	// CGameObject을(를) 통해 상속됨
@@ -48,7 +49,7 @@ protected:
 	wstring m_wstrRImageKey;
 	float m_HitRange;
 	int m_iAttackRate;
-	
+
 	float m_fBloodAngle;
 	bool m_bIsBettackEnd;
 	FRAME m_tBeattackFrame;

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ObjectManager.h"
 #include "GameObject.h"
+#include "BackGround.h"
 #include "AfterImage.h"
 #include "Player.h"
 CObjectManager* CObjectManager::m_pInstance = nullptr;
@@ -112,35 +113,41 @@ int CObjectManager::Update()
 		}
 	}
 	
-
-	CCollisionManager::CollisionRectEx(m_ObjectList[TILE], m_ObjectList[PLAYER]);
-	CCollisionManager::CollisionRect(m_ObjectList[MONSTER], m_ObjectList[TILE]);
-	CCollisionManager::CollisionDoor(m_ObjectList[DOOR], m_ObjectList[PLAYER]);
-	CCollisionManager::CollisionLaserTrap(m_ObjectList[TRAP], m_ObjectList[PLAYER]);
-
-	if (!m_ObjectList[AFTERIMAGE].empty())
+	if (!dynamic_cast<CBackGround*>(m_ObjectList[BACKGROUND].front())->GetTrigger())
 	{
-		m_ObjectList[AFTERIMAGE].front()->SetImageKey(m_ObjectList[PLAYER].front()->GetImageKey());
-		if (m_iCount % 3 == 0)
+		CCollisionManager::CollisionRectEx(m_ObjectList[TILE], m_ObjectList[PLAYER]);
+		CCollisionManager::CollisionRect(m_ObjectList[MONSTER], m_ObjectList[TILE]);
+		CCollisionManager::CollisionRect(m_ObjectList[BOSS], m_ObjectList[TILE]);
+		CCollisionManager::CollisionDoor(m_ObjectList[DOOR], m_ObjectList[PLAYER]);
+		CCollisionManager::CollisionLaserTrap(m_ObjectList[TRAP], m_ObjectList[PLAYER]);
+
+		if (!m_ObjectList[AFTERIMAGE].empty())
 		{
-			dynamic_cast<CAfterImage*>(m_ObjectList[AFTERIMAGE].front())->SetPlayerInfo(m_ObjectList[PLAYER].front()->GetWorldPos(), m_ObjectList[PLAYER].front()->GetFrame());
-			m_iCount = 0;
+			m_ObjectList[AFTERIMAGE].front()->SetImageKey(m_ObjectList[PLAYER].front()->GetImageKey());
+			if (m_iCount % 3 == 0)
+			{
+				dynamic_cast<CAfterImage*>(m_ObjectList[AFTERIMAGE].front())->SetPlayerInfo(m_ObjectList[PLAYER].front()->GetWorldPos(), m_ObjectList[PLAYER].front()->GetFrame());
+				m_iCount = 0;
+			}
+
 		}
-	
-	}
-	CDetectManager::GetInstance()->CollisionRect(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
-	
-	if (!dynamic_cast<CPlayer*>(m_ObjectList[PLAYER].front())->GetIsRoll())// 구를때 무적
-	{
-		CCollisionManager::CollisionSphere(m_ObjectList[PLAYER], m_ObjectList[BULLET]);
-	
-	}
-	CCollisionManager::CollisionSphere(m_ObjectList[MONSTER], m_ObjectList[BULLET]);
-	if (m_ObjectList[PLAYER].front()->GetIsAttk())//공격할때 
-	{
-		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[BULLET]);
-		CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[MONSTER], m_ObjectList[PLAYER].front()->GetWorldPos());
-		//CCollisionManager::CollisionRectKatanaEfx(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
+		CDetectManager::GetInstance()->CollisionRect(m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
+		CDetectManager::GetInstance()->CollisionRect(m_ObjectList[BOSS], m_ObjectList[PLAYER]);
+
+		if (!dynamic_cast<CPlayer*>(m_ObjectList[PLAYER].front())->GetIsRoll())// 구를때 무적
+		{
+			CCollisionManager::CollisionSphere(m_ObjectList[PLAYER], m_ObjectList[BULLET]);
+
+		}
+		CCollisionManager::CollisionSphere(m_ObjectList[MONSTER], m_ObjectList[BULLET]);
+		CCollisionManager::CollisionSphere(m_ObjectList[BOSS], m_ObjectList[BULLET]);
+		if (m_ObjectList[PLAYER].front()->GetIsAttk())//공격할때 
+		{
+			CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[BULLET]);
+			CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[MONSTER], m_ObjectList[PLAYER].front()->GetWorldPos());
+			CCollisionManager::CollisionRectKatana(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[BOSS], m_ObjectList[PLAYER].front()->GetWorldPos());
+			//CCollisionManager::CollisionRectKatanaEfx(m_ObjectList[PLAYER].front()->GetHitBox(), m_ObjectList[MONSTER], m_ObjectList[PLAYER]);
+		}
 	}
 	return iEvent;
 }

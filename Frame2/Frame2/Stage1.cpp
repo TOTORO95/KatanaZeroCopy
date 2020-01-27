@@ -73,7 +73,7 @@ void CStage1::Initialize()
 		}
 	}
 	CObjectManager::GetInstance()->DeleteGroup(TERRAIN);
-	m_pMonList	= CObjectManager::GetInstance()->GetObjList(MONSTER);
+	m_pMonList = CObjectManager::GetInstance()->GetObjList(MONSTER);
 	m_pDoor	= CObjectManager::GetInstance()->GetObjList(DOOR);
 
 

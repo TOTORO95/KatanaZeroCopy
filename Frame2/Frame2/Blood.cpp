@@ -54,7 +54,7 @@ void CBlood::Render(HDC hdc)
 	
 	if (!m_bisStop)
 	{
-		GdiTransparentBlt(hdc, m_tRect.left+g_fScrollX-40, m_tRect.top+g_fScrollY-20, 60, 60,//원래48
+		GdiTransparentBlt(hdc, m_tRect.left+g_fScrollX-40, m_tRect.top+g_fScrollY-20, 48, 48,//원래48
 			CBmpManager::GetInstance()->GetMemDC(L"Blood")
 			, 32 * m_iBlood, m_tBloodFrame.dwFrameY*m_tBloodFrame.dwFrameStart, 32, 32, RGB(0, 0, 0));
 

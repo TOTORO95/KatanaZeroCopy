@@ -18,7 +18,7 @@ void CMyEdit::Initialize()
 	CBmpManager::GetInstance()->LoadBmp(L"Tile", L"../Image/Tile/Tile20.bmp");
 
 	// BackGround Image
-	CBmpManager::GetInstance()->LoadBmp(L"edit", L"../Image/BackGround/BossStage1.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"edit", L"../Image/BackGround/LastStage.bmp");
 	CObjectManager::GetInstance()->AddObject(BACKGROUND, CObjFactory<CBackGround>::CreateObject(L"edit"));
 
 	// Terrain

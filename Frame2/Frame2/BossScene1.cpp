@@ -13,6 +13,7 @@
 #include "FrontGround.h"
 #include "BulletTime.h"
 #include "HeadHunter.h"
+#include "Explosion.h"
 CBossScene1::CBossScene1()
 {
 
@@ -30,6 +31,7 @@ void CBossScene1::Initialize()
 	m_iMonCount = 8;
 	m_bIsNext = false;
 	CBmpManager::GetInstance()->LoadBmp(L"bg3", L"../Image/BackGround/BossStage1.bmp");
+	CBmpManager::GetInstance()->LoadBmp(L"bg3-1", L"../Image/BackGround/BossStage2.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"bk", L"../Image/BackGround/BK.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_R", L"../Image/Player/Player_R.bmp");
 	CBmpManager::GetInstance()->LoadBmp(L"Player_L", L"../Image/Player/Player_L.bmp");
@@ -41,12 +43,12 @@ void CBossScene1::Initialize()
 	// 1번째문 2번째문 3번째문	4번째문 높이450
 	// 210     480		820		1060
 	CObjectManager::GetInstance()->AddObject(TERRAIN, CObjFactory<CTerrain>::CreateObject());
-	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject(900, 300));
+	CObjectManager::GetInstance()->AddObject(PLAYER, CObjFactory<CPlayer>::CreateObject(300, 300));
 	CObjectManager::GetInstance()->AddObject(UI, CObjFactory<CUserInterface>::CreateObject());
 	CObjectManager::GetInstance()->AddObject(BULLETTIME, CObjFactory<CBulletTime>::CreateObject());
 	//CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1060, 450));
 	m_iSpawn = 0;
-	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CHeadHunter>::CreateObject(1060, 450));
+	CObjectManager::GetInstance()->AddObject(BOSS,CObjFactory<CHeadHunter>::CreateObject(1060, 450,1,HEADHUNTER));
 
 
 
@@ -70,14 +72,18 @@ void CBossScene1::Initialize()
 		}
 	}
 	CObjectManager::GetInstance()->DeleteGroup(TERRAIN);
-	m_pMonList = CObjectManager::GetInstance()->GetObjList(MONSTER);
 	m_pDoor = CObjectManager::GetInstance()->GetObjList(DOOR);
 
+	pHeadHunter = CObjectManager::GetInstance()->GetObjList(BOSS).front();
+	pBG = CObjectManager::GetInstance()->GetObjList(BACKGROUND).front();
+	pPlayer = CObjectManager::GetInstance()->GetObjList(PLAYER).front();
+	
+	m_iExplosionRate = 0;
 }
 
 int CBossScene1::Update()
 {
-	
+
 	CObjectManager::GetInstance()->Update();
 	//타일 객체생성 완료 이제 충돌 처리 할차례
 	if (-200.f > g_fScrollX)
@@ -88,31 +94,45 @@ int CBossScene1::Update()
 		g_fScrollX = float(TILE_COUNT_X * TILECX - WinCX);
 	if (float(TILE_COUNT_Y * TILECY - WinCY) < g_fScrollY)
 		g_fScrollY = float(TILE_COUNT_Y * TILECY - WinCY);
-	//m_iSpawn++;
-	//if (m_iSpawn % 200 == 0)
-	//{
-	//	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(210, 450));
-	//	CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1060, 450));
-	//}
-
-
-	int iMC = 0;
-	for (auto pMon : m_pMonList)
+	
+	
+	m_iSpawn++;
+	if (m_iSpawn % 200 == 0&& !dynamic_cast<CBackGround*>(pBG)->GetTrigger())
 	{
-		if (pMon->GetStop())
-			iMC++;
-		if (iMC == m_iMonCount)
-		{
-			dynamic_cast<CDoor*>(m_pDoor.front())->SetNext(true);
-			if (dynamic_cast<CDoor*>(m_pDoor.front())->GetisCOll())
-			{
-				cout << "씬전환" << endl;
-				CSceneManager::GetInstance()->SceneChange(SCENE_STAGE2);
-				return CHANGE_SCENE;
+		CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(210, 450));
+		CObjectManager::GetInstance()->AddObject(MONSTER, CObjFactory<CGunster>::CreateObject(1060, 450));
+		m_pMonList=CObjectManager::GetInstance()->GetObjList(MONSTER);
 
-			}
+	}
+	
+	if (dynamic_cast<CHeadHunter*>(pHeadHunter)->GetHP() <=3
+		&& m_iExplosionRate<=105)
+	{
+		for (auto &pMon : m_pMonList)
+		{
+			pMon->SetDelete(true);
+		}
+		pHeadHunter->SetDelete(true);
+		pPlayer->SetIsColl(false);
+
+		m_iExplosionRate++;
+		if (m_iExplosionRate % 2 == 0)
+		{
+			CObjectManager::GetInstance()->AddObject(EXPLOSION,
+				CObjFactory<CExplosion>::CreateObject(-100+84 * (m_iExplosionRate / 2), 400));
+
 
 		}
+		if (m_iExplosionRate == 50)
+			dynamic_cast<CBackGround*>(pBG)->SetTrigger(true);
+
+
+	}
+
+	if (pPlayer->GetWorldPos().y > 1000)
+	{
+		CSceneManager::GetInstance()->SceneChange(SCENE_BOSS2);
+		return CHANGE_SCENE;
 	}
 
 	return NO_EVENT;
@@ -121,9 +141,14 @@ int CBossScene1::Update()
 void CBossScene1::Render(HDC hDC)
 {
 	CObjectManager::GetInstance()->Render(hDC);
+
+
 }
+
 
 void CBossScene1::Release()
 {
 	CObjectManager::GetInstance()->Release();
 }
+
+
